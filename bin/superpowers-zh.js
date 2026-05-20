@@ -63,6 +63,7 @@ const TARGETS = [
   { name: 'Qwen Code',     dir: '.qwen/skills',             detect: '.qwen' },
   { name: 'Hermes Agent',  dir: '.hermes/skills',            detect: ['.hermes', 'HERMES.md', '.hermes.md'] },
   { name: 'Claw Code',     dir: '.claw/skills',              detect: ['.claw', 'CLAW.md'] },
+  { name: 'Qoder',         dir: '.qoder/skills',             detect: '.qoder' },
 ];
 
 function countDirs(dir) {
@@ -139,6 +140,51 @@ ${skillTable}
   const rulePath = resolve(rulesDir, 'superpowers-zh.md');
   writeFileSync(rulePath, rule, 'utf8');
   console.log(`  ✅ Trae: bootstrap rule -> ${rulePath}`);
+}
+
+function generateQoderBootstrap(projectDir) {
+  const rulesDir = resolve(projectDir, '.qoder', 'rules');
+  mkdirSync(rulesDir, { recursive: true });
+
+  const skillEntries = scanSkillEntries(SKILLS_SRC);
+  const skillTable = skillEntries.map(s => `| ${s.name} | ${s.desc} |`).join('\n');
+
+  // Qoder rules schema（来源：社区实际样本，docs.qoder.com/zh/user-guide/rules 没公开）
+  // trigger: always_on  → "始终生效"，适用于所有智能会话和内联对话
+  // trigger: model_decision + description: ...  → 模型按描述自主决定
+  // trigger: manual  → 仅 @rule 手动触发
+  const rule = `---
+trigger: always_on
+alwaysApply: true
+---
+
+# Superpowers-ZH 中文增强版
+
+你已加载 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
+
+## 核心规则
+
+1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
+2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
+3. **测试先于实现** — 写代码前先写测试（TDD）
+4. **验证先于完成** — 声称完成前必须运行验证命令
+
+## 可用 Skills
+
+Skills 位于 \`.qoder/skills/\` 目录，每个 skill 有独立的 \`SKILL.md\` 文件。
+
+| Skill | 触发条件 |
+|-------|---------|
+${skillTable}
+
+## 如何使用
+
+当任务匹配某个 skill 的触发条件时，读取对应的 \`.qoder/skills/<skill-name>/SKILL.md\` 并严格遵循其流程。也可输入 \`/<skill-name>\` 显式调用。
+`;
+
+  const rulePath = resolve(rulesDir, 'superpowers-zh.md');
+  writeFileSync(rulePath, rule, 'utf8');
+  console.log(`  ✅ Qoder: bootstrap rule -> ${rulePath}`);
 }
 
 function generateAntigravityBootstrap(projectDir) {
@@ -385,6 +431,7 @@ const TOOL_ALIASES = {
   'claw':         'Claw Code',
   'claw-code':    'Claw Code',
   'clawcode':     'Claw Code',
+  'qoder':        'Qoder',
 };
 
 function showHelp() {
@@ -437,6 +484,10 @@ function installForTarget(target) {
     generateTraeBootstrapRule(PROJECT_DIR);
   }
 
+  if (target.name === 'Qoder') {
+    generateQoderBootstrap(PROJECT_DIR);
+  }
+
   if (target.name === 'Antigravity') {
     generateAntigravityBootstrap(PROJECT_DIR);
   }
@@ -469,6 +520,7 @@ function isHomeDir(p) {
 // 卸载支持：完整删除的 bootstrap 文件、需要清理段落的 bootstrap 文件
 const BOOTSTRAP_DELETE = [
   '.trae/rules/superpowers-zh.md',
+  '.qoder/rules/superpowers-zh.md',
   '.antigravity/rules.md',
 ];
 const BOOTSTRAP_CLEAN_SECTION = [

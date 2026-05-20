@@ -2,7 +2,7 @@
 # 质量审计脚本 —— 跑 4 类检查防漂移
 #
 # 1. 静态校验：JSON parse / SKILL.md frontmatter / symlink / hook 可执行性
-# 2. Installer 功能：17 款工具装 / 卸载 / 幂等
+# 2. Installer 功能：18 款工具装 / 卸载 / 幂等
 # 3. 上游对齐：hooks 3 文件 + brainstorm scripts 3 文件 + 14 翻译 skill 结构层级
 # 4. 交叉引用：README → docs/ 链接 + skill 间引用 + bootstrap 注入路径
 #
@@ -92,10 +92,10 @@ done
 
 #==============================================================================
 if [ "$QUICK" != "1" ]; then
-hdr "Category 2: Installer 功能测试（17 款工具）"
+hdr "Category 2: Installer 功能测试（18 款工具）"
 #==============================================================================
 
-declare -a TOOLS=(claude cursor codex kiro deerflow trae antigravity vscode openclaw windsurf gemini aider opencode qwen hermes claw copilot)
+declare -a TOOLS=(claude cursor codex kiro deerflow trae antigravity vscode openclaw windsurf gemini aider opencode qwen hermes claw copilot qoder)
 
 for tool in "${TOOLS[@]}"; do
   TMP=$(mktemp -d)
