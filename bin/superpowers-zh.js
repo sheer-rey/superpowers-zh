@@ -63,6 +63,7 @@ const TARGETS = [
   { name: 'Qwen Code',     dir: '.qwen/skills',             detect: '.qwen' },
   { name: 'Hermes Agent',  dir: '.hermes/skills',            detect: ['.hermes', 'HERMES.md', '.hermes.md'] },
   { name: 'Claw Code',     dir: '.claw/skills',              detect: ['.claw', 'CLAW.md'] },
+  { name: 'Cline',         dir: '.cline/skills',              detect: ['.clinerules', '.cline'] },
   { name: 'Qoder',         dir: '.qoder/skills',             detect: '.qoder' },
 ];
 
@@ -403,6 +404,54 @@ ${skillList}
   }
 }
 
+function generateClineBootstrap(projectDir) {
+  const skillEntries = scanSkillEntries(SKILLS_SRC);
+  const skillList = skillEntries.map(s => `- **${s.name}**: ${s.desc}`).join('\n');
+
+  const content = `# Superpowers-ZH 中文增强版
+
+本项目已安装 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
+
+## 核心规则
+
+1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
+2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
+3. **测试先于实现** — 写代码前先写测试（TDD）
+4. **验证先于完成** — 声称完成前必须运行验证命令
+
+## 工具映射
+
+技能中引用的 Claude Code 工具名称对应 Cline 的等价工具：
+- \`Read\` → \`read_files\`
+- \`Write\` → \`write_to_file\`
+- \`Edit\` → \`replace_in_file\` / \`apply_patch\`
+- \`Bash\` → \`execute_command\`
+- \`Grep\` / \`Glob\` → \`search_files\`
+- \`Task\`（子智能体） → \`delegate\` / \`new_task\`
+- \`AskUserQuestion\` → \`ask_followup_question\`
+- \`WebFetch\` / \`WebSearch\` → \`web_search\` / \`url_screenshot\`
+- \`AttemptComplete\` → \`attempt_completion\`
+- \`TodoWrite\` → \`list_tasks\` / \`set_task_done\`
+
+## 可用 Skills
+
+Skills 位于 \`.cline/skills/\` 目录，每个 skill 有独立的 \`SKILL.md\` 文件。
+
+${skillList}
+
+## 如何使用
+
+Cline 自动加载 \`.clinerules/\` 目录下的所有 markdown 文件。当任务匹配某个 skill 时，读取对应的 \`.cline/skills/<skill-name>/SKILL.md\` 并严格遵循其流程。Cline 支持 Plan 模式（探索与提问）和 Act 模式（执行），请善用模式切换。
+`;
+
+  // 写入 .clinerules/superpowers-zh.md（Cline 自动加载此目录下所有 .md 文件）
+  const rulesDir = resolve(projectDir, '.clinerules');
+  mkdirSync(rulesDir, { recursive: true });
+  const rulePath = resolve(rulesDir, 'superpowers-zh.md');
+  writeFileSync(rulePath, content, 'utf8');
+  console.log(`  ✅ Cline: bootstrap rule -> ${rulePath}`);
+}
+
 // 工具名称别名映射（用户输入 -> TARGETS.name）
 const TOOL_ALIASES = {
   'claude':       'Claude Code',
@@ -432,6 +481,7 @@ const TOOL_ALIASES = {
   'claw-code':    'Claw Code',
   'clawcode':     'Claw Code',
   'qoder':        'Qoder',
+  'cline':        'Cline',
 };
 
 function showHelp() {
@@ -507,6 +557,10 @@ function installForTarget(target) {
   if (target.name === 'Claude Code') {
     generateClaudeCodeBootstrap(PROJECT_DIR);
   }
+
+  if (target.name === 'Cline') {
+    generateClineBootstrap(PROJECT_DIR);
+  }
 }
 
 function isHomeDir(p) {
@@ -522,6 +576,7 @@ const BOOTSTRAP_DELETE = [
   '.trae/rules/superpowers-zh.md',
   '.qoder/rules/superpowers-zh.md',
   '.agents/rules.md',
+  '.clinerules/superpowers-zh.md',
 ];
 const BOOTSTRAP_CLEAN_SECTION = [
   'CLAUDE.md',

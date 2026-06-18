@@ -6,6 +6,51 @@
 
 ---
 
+## v1.6.0 (2026-06-18)
+
+### 🆕 Cline 适配（第 19 款工具）
+
+Cline 是开源 AI 编码助手，支持 VS Code / JetBrains / CLI 三端，社区有用户提需求要求支持。本版本完成端到端适配：
+
+- `bin/superpowers-zh.js` — `TARGETS` 加 Cline（`dir: .cline/skills`，`detect: ['.clinerules', '.cline']`），`TOOL_ALIASES` 加 `cline`
+- `generateClineBootstrap()` — 生成 `.clinerules/superpowers-zh.md`，Cline 自动加载此目录下所有 `.md` 文件作为项目规则
+- `skills/using-superpowers/references/cline-tools.md` — 新增工具映射 reference（Cline 工具名与 Claude Code 有差异：`Read` → `read_files`、`Bash` → `execute_command` 等）
+- `skills/using-superpowers/SKILL.md` — 平台适配段加 Cline reference 引用
+- `docs/README.cline.md` — 完整安装/使用/卸载/故障排查指南
+- `scripts/audit.sh` — `TOOLS` 数组加 cline，CI 自动跑 19 款工具的 install/idempotent/uninstall 回归
+- `README.md` — 支持工具表从 18 款更新到 19 款，加 Cline 行
+
+**安装方法：**
+
+```bash
+cd /your/project
+npx superpowers-zh --tool cline     # 显式
+# 或在有 .clinerules/ 或 .cline/ 的项目里：
+npx superpowers-zh                  # 自动检测
+```
+
+装完重启 Cline，`.clinerules/superpowers-zh.md` 会被自动加载。
+
+### Cline 配置机制说明
+
+Cline 的配置加载方式与其他工具略有不同：
+
+| 方式 | 文件/目录 | 说明 |
+|------|----------|------|
+| Rules | `.clinerules/` 目录下的所有 `.md` 文件 | 自动加载，每个会话生效 |
+| Skills | `.cline/skills/<name>/SKILL.md` | 按需读取 |
+| 跨工具指令 | `AGENTS.md`（项目根） | Cline 递归向上搜索 |
+| 全局配置 | `~/.clinerules/` | 影响所有项目 |
+
+Cline 没有 Claude Code 的 `Skill` 专用工具，skills 通过 `.clinerules/` 规则文件引用，在对话中显式说明 skill 名称即可触发。
+
+### 🔧 文案对齐
+
+- README、package.json description：18 款 → 19 款
+- scripts/audit.sh 注释：18 款 → 19 款
+
+---
+
 ## v1.5.0 (2026-05-21)
 
 ### 🆕 Qoder 适配（第 18 款工具，#26、#34）
