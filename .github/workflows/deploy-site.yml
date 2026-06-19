@@ -1,0 +1,33 @@
+name: Deploy site to Cloudflare Pages
+
+# 官网自动部署：site/ 或 skills/ 变更时重建并发布。
+# 需在仓库 Settings → Secrets 配置 CLOUDFLARE_API_TOKEN 与 CLOUDFLARE_ACCOUNT_ID。
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'skills/**'
+      - '.github/workflows/deploy-site.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      # Action 全部 SHA 固定（防供应链/标签劫持，因本 job 持有可写的 Cloudflare token）
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+      - name: Build site
+        run: node site/build.mjs
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy site/dist --project-name=superpowers-zh-site

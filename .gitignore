@@ -6,6 +6,9 @@ node_modules/
 inspo
 triage/
 
+# 官网生成产物（源在 site/build.mjs + site/template/）
+site/dist/
+
 # 安装器生成的 skills 副本（源在 skills/ 目录）
 .codex/skills/
 .gemini/skills/
