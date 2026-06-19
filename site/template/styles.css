@@ -396,7 +396,7 @@ a.card:hover .card-more { color: var(--accent); }
 .foot-col a:hover { color: var(--accent-2); }
 
 /* ========== Skill 详情(操作文档)页 ========== */
-.doc { max-width: 820px; padding-top: 36px; }
+.doc { max-width: 820px; margin: 0 auto; padding: 36px 24px 0; }
 .doc-back { display: inline-block; font-size: 14px; color: var(--text-dim); margin: 8px 0 24px; transition: color .2s; }
 .doc-back:hover { color: var(--accent-2); }
 .doc-head { border-bottom: 1px solid var(--border-soft); padding-bottom: 28px; margin-bottom: 8px; }
