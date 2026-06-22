@@ -77,7 +77,7 @@ skills 中引用的 Claude Code 工具名称（`Read` / `Write` / `Edit` / `Bash
 
 Qoder 按 description 文本匹配用户意图来决定何时调用 skill。如果某个 skill 自动调用不可靠，可在对话中显式输入 `/<skill-name>` 手动触发。
 
-中国原创的 4 个 `chinese-*` skill 本身就是**手动触发**设计（避免污染上游 skill 的自动调度），需要显式 `/chinese-code-review` / `/chinese-commit-conventions` 等。
+中国原创的 3 个 `chinese-*` skill 以及 `commit-conventions` 本身就是**手动触发**设计（避免污染上游 skill 的自动调度），需要显式 `/chinese-code-review` / `/commit-conventions` 等。
 
 ## 卸载
 

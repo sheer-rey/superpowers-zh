@@ -139,7 +139,7 @@ AI：在开始实现之前，我需要了解几个关键问题：
 
 ### 🇨🇳 中国特色 Skills（6 个）
 
-> ⚠️ **下表前 4 个 chinese-\* 为「手动调用」skill**——不会自动触发，需在对话中显式输入 `/chinese-xxx` 才会加载。
+> ⚠️ **下表前 3 个 chinese-\* 以及 commit-conventions 为「手动调用」skill**——不会自动触发，需在对话中显式输入 `/chinese-xxx` 或 `/commit-conventions` 才会加载。
 > 设计为参考资料而非工作流，避免污染上游 skill 的自动调度（如 `requesting-code-review`、`brainstorming` 等）。
 
 | Skill | 用途 | 调用方式 | 上游有吗？ |
@@ -147,7 +147,7 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | **中文代码审查** (chinese-code-review) | 符合国内团队文化的代码审查规范 | `/chinese-code-review`（手动） | 无 |
 | **中文 Git 工作流** (chinese-git-workflow) | 适配 Gitee/Coding/极狐 GitLab/CNB | `/chinese-git-workflow`（手动） | 无 |
 | **中文技术文档** (chinese-documentation) | 中文排版规范、中英混排、告别机翻味 | `/chinese-documentation`（手动） | 无 |
-| **中文提交规范** (chinese-commit-conventions) | 适配国内团队的 commit message 规范 | `/chinese-commit-conventions`（手动） | 无 |
+| **Git提交规范** (commit-conventions) | commit message 规范 | `/commit-conventions`（手动） | 无 |
 | **MCP 服务器构建** (mcp-builder) | 构建生产级 MCP 工具，扩展 AI 能力边界 | 自动 | 无 |
 | **工作流执行器** (workflow-runner) | 在 AI 工具内运行多角色 YAML 工作流 | 自动 | 无 |
 
