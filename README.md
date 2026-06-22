@@ -6,6 +6,18 @@
 
 Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 20 skills across 19 AI coding tools, including full translations and China-specific development skills.
 
+> **Note:** This repository is a fork of [jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh) (🦸 AI 编程超能力 · 中文增强版 — superpowers 完整汉化 + 6 个中国原创 skills，支持 16 款 AI 编程工具). 本分支在此基础上增加了 Cline 工具适配、chinese-commit-conventions 重命名为 commit-conventions 并全英文化、chinese-code-review 代码示例全英文化等改动。
+
+### 📝 本分支改动说明
+
+| 改动项 | 说明 |
+|--------|------|
+| **Cline 工具适配** | 新增第 19 款工具支持，自动检测 `.clinerules` / `.cline`，生成 `.clinerules/superpowers-zh.md` bootstrap 文件，提供完整的工具映射表（`skills/using-superpowers/references/cline-tools.md`）和安装指南（`docs/README.cline.md`） |
+| **commit-conventions 重命名** | `chinese-commit-conventions` → `commit-conventions`，SKILL.md 全英文翻译，采用 emoji 前缀的 commit 格式（🎉 feat / 🛠️ fix / 📜 docs 等），trigger 从 `/chinese-commit-conventions` 改为 `/commit-conventions` |
+| **chinese-code-review 英文化** | 所有代码示例、代码注释、git commit message 示例全部改为英文，保留中文方法论叙述 |
+| **仓库元信息更新** | README 更新 fork 说明、移除赞助商章节、更新工具数量 18→19、更新所有引用 |
+| **依赖文件更新** | package.json 版本号、keywords 更新；scripts/audit.sh 添加 cline 工具 |
+
 [![GitHub stars](https://img.shields.io/github/stars/jnMetaCode/superpowers-zh?style=social)](https://github.com/jnMetaCode/superpowers-zh)
 [![npm version](https://img.shields.io/npm/v/superpowers-zh)](https://www.npmjs.com/package/superpowers-zh)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -18,21 +30,6 @@ Chinese community edition of [superpowers](https://github.com/obra/superpowers) 
 | 📦 翻译 Skills | 🇨🇳 中国特色 Skills | 🤖 支持工具 |
 |:---:|:---:|:---:|
 | **14** | **6** | **Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Codex / Aider / Trae / VS Code (Copilot) / DeerFlow / OpenCode / OpenClaw / Qwen Code / Antigravity / Claw Code / Cline / Qoder** |
-
----
-
-## ❤️ 赞助商 &nbsp;<sub>🙏 想出现在这里？联系 **jnMetaCode@qq.com** 赞助</sub>
-
-<table>
-<tr>
-<td width="200" align="center">
-<a href="https://www.5cookie.cc/sign-up?aff=Pj7u"><img src="assets/sponsors/5cookie-code.png" width="180" alt="5Cookie Code"></a>
-</td>
-<td>
-<a href="https://www.5cookie.cc/sign-up?aff=Pj7u"><b>5Cookie Code</b></a> 是一家稳定高速的 API 中继服务提供商，为 Claude Code、Codex 等平台或模型提供 API 中继服务。面向个人、团队和企业用户提供 AI 编码服务和 AI 生图服务。
-</td>
-</tr>
-</table>
 
 ---
 
