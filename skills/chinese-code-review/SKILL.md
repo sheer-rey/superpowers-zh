@@ -63,35 +63,16 @@ metadata:
 参考：https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
 ```
 
-## 中英混排代码注释规范
+## 代码注释规范
 
-### 何时用中文
+### 规范
 
-- **业务逻辑说明** — 用中文解释业务背景和需求来源
-- **复杂算法注释** — 用中文写思路，确保团队成员都能理解
-- **TODO / FIXME** — 用中文描述待办事项，方便搜索和追踪
-- **文档注释（内部项目）** — JSDoc / Javadoc 中的描述文字用中文
+代码注释文本中使用全英文，包括但不限于：
 
-```typescript
-/**
- * 计算用户的会员等级折扣
- *
- * 业务规则：
- * - 普通会员 9.5 折
- * - 银卡会员 9 折
- * - 金卡会员 8.5 折
- * - 钻石会员 8 折
- *
- * @param level - 会员等级（MemberLevel enum）
- * @param amount - 原始金额（单位：分）
- * @returns 折后金额（单位：分）
- */
-function calculateDiscount(level: MemberLevel, amount: number): number {
-  // ...
-}
-```
-
-### 何时用英文
+- **业务逻辑说明** — 用英文解释业务背景和需求来源
+- **复杂算法注释** — 用英文写思路，确保团队成员都能理解
+- **TODO / FIXME** — 用英文描述待办事项，方便搜索和追踪
+- **文档注释** — JSDoc / Javadoc 中的描述文字用英文
 
 - **变量名、函数名、类名** — 始终用英文命名，遵循团队命名规范
 - **Git commit message** — 参考下方 commit 规范
@@ -99,71 +80,87 @@ function calculateDiscount(level: MemberLevel, amount: number): number {
 - **错误信息和日志** — 生产环境的 error message 用英文（避免编码问题）
 - **API 接口文档** — 对外暴露的 API 用英文
 
-### 混排格式要求
-
-```typescript
-// 好：中英文之间加空格
-// 使用 Redis 缓存来减少 MySQL 的查询压力
-
-// 坏：中英文之间没有空格
-// 使用Redis缓存来减少MySQL的查询压力
-
-// 好：技术术语保留英文
-// 这里用 debounce 防抖处理，避免频繁触发 API 请求
-
-// 坏：强行翻译技术术语
-// 这里用防抖动处理，避免频繁触发应用程序接口请求
-```
-
-## Commit Message 中英双语格式
-
-### 推荐格式
-
-团队内部项目使用中文 commit message，采用约定式提交（Conventional Commits）的中文版：
-
-```
-<类型>(<范围>): <简要描述>
-
-<详细说明（可选）>
-
-<关联信息（可选）>
-```
-
-### 类型对照表
-
-| 类型 | 含义 | 示例 |
-|------|------|------|
-| feat | 新功能 | feat(用户): 新增手机号登录功能 |
-| fix | 修复 Bug | fix(支付): 修复微信支付回调重复处理的问题 |
-| docs | 文档变更 | docs: 更新 API 接口文档 |
-| style | 代码格式 | style: 统一缩进为 2 个空格 |
-| refactor | 重构 | refactor(订单): 拆分订单服务，提取公共逻辑 |
-| perf | 性能优化 | perf(列表): 虚拟滚动优化长列表渲染性能 |
-| test | 测试 | test(auth): 补充登录模块单元测试 |
-| chore | 构建/工具 | chore: 升级 Node.js 至 v20 |
-
 ### 示例
 
+```typescript
+/**
+ * Calculate member discount based on membership level
+ *
+ * Discount rates by tier:
+ * - Regular member: 0.95x
+ * - Silver member: 0.90x
+ * - Gold member: 0.85x
+ * - Platinum member: 0.80x
+ *
+ * @param level - Member tier (MemberLevel enum)
+ * @param amount - Original amount in cents
+ * @returns Discounted amount in cents
+ */
+function calculateDiscount(level: MemberLevel, amount: number): number {
+  // ...
+}
 ```
-fix(支付): 修复支付宝异步回调签名校验失败的问题
 
-原因：升级 SDK 后签名算法从 RSA 变为 RSA2，但回调校验仍使用旧算法。
-方案：回调处理中同时兼容 RSA 和 RSA2 签名校验。
+```typescript
+// Use Redis cache to reduce database pressure
+// Use debounce to prevent frequent API calls
+// Apply mutex lock to ensure thread safety
+
+// Bad examples to avoid:
+// Use Redis to reduce the MySQL pressure (incomplete)
+// Use debounce prevent frequent calls (grammatically incorrect)
+// Use lock to ensure thread safe (missing article)
+```
+
+## Git Commit Message Format
+
+### Recommended Format
+
+Use emoji-prefixed commit messages with Conventional Commits convention:
+
+```
+<emoji> <type>[scope]: <description>
+
+<Detailed explanation (optional)>
+
+<Related information (optional)>
+```
+
+### Commit Type Reference
+
+| Emoji | Type | Description | Example |
+|-------|------|-------------|----------|
+| 🎉 | feat | New feature | 🎉 feat[auth]: Add one-click login via carrier |
+| 🛠️ | fix | Bug fix | 🛠️ fix[payment]: Fix WeChat callback duplicate handling |
+| 📜 | docs | Documentation | 📜 docs[api]: Update API documentation |
+| 🪄 | style | Code format | 🪄 style: Standardize indentation to 2 spaces |
+| 🎊 | refactor | Refactoring | 🎊 refactor[order]: Split order service logic |
+| ✨ | perf | Performance | ✨ perf[list]: Optimize virtual scroll rendering |
+| 🔎 | test | Tests | 🔎 test[auth]: Add login module unit tests |
+| 🌈 | chore | Build/tools | 🌈 chore: Upgrade Node.js to v20 |
+
+### Examples
+
+```
+🛠️ fix[payment]: Fix Alipay async callback signature verification
+
+Reason: SDK upgrade changed signature algorithm from RSA to RSA2,
+but callback handler still used old algorithm.
+
+Solution: Support both RSA and RSA2 in callback handler.
 
 Closes #1234
 ```
 
-### 面向国际社区的项目
-
-如果项目面向国际社区或有外籍成员，commit message 用英文，PR 描述中可附加中文说明：
-
 ```
-fix(payment): fix Alipay async callback signature verification failure
+🎉 feat[auth]: Add one-click login support for all carriers
 
-The SDK upgrade changed the signature algorithm from RSA to RSA2,
-but the callback handler still used the old algorithm.
+Implement carrier one-click login SDK integration:
+- Support China Mobile, Unicom, and Telecom networks
+- Automatic fallback to SMS verification if login fails
+- Works on both iOS and Android platforms
 
-Closes #1234
+Closes #5678
 ```
 
 ## 常见反模式与对策

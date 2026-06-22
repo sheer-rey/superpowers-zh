@@ -65,7 +65,7 @@ OpenClaw 与 Claude Code 使用相同的工具名称，skills 无需额外适配
 安装完成后重启 OpenClaw，所有 skills 会自动生效。AI 会按任务上下文自动调用对应 skill：
 
 - 新任务 / 新功能 → `brainstorming`（头脑风暴）
-- 写 commit message → `chinese-commit-conventions`（中文 commit 规范）
+- 写 commit message → `commit-conventions`（git commit 规范）
 - 调试问题 → `systematic-debugging`
 - 完成任务后 → `requesting-code-review`（请求代码审查）
 
