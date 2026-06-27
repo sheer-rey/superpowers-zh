@@ -24,6 +24,9 @@ const PKG = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
 const cssVer = createHash('sha256').update(readFileSync(join(TEMPLATE, 'styles.css'))).digest('hex').slice(0, 10);
 const jsVer = createHash('sha256').update(readFileSync(join(TEMPLATE, 'app.js'))).digest('hex').slice(0, 10);
 
+// SEO：站点根 URL（用于 canonical / hreflang / og:url / sitemap）
+const SITE_URL = 'https://sp.aiolaola.com';
+
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 // ---- frontmatter 解析 ----
@@ -105,7 +108,7 @@ const T = {
     htmlLang: 'zh-CN',
     title: 'superpowers-zh · AI 编程超能力中文增强版',
     desc: 'superpowers（233k+ ⭐）完整汉化 + 4 个中国原创 skills，一条 npx 命令为 18 款 AI 编程工具装上系统化工作方法论。',
-    nav: { why: '特性', install: '安装', skills: 'Skills', tools: '支持工具', faq: 'FAQ', github: 'GitHub ↗' },
+    nav: { why: '特性', install: '安装', skills: 'Skills', tools: '支持工具', faq: 'FAQ', learn: '学习 ↗', github: 'GitHub ↗' },
     heroBadge: 'superpowers 233k+ ⭐ · 完整汉化 + 中国原创',
     heroH1: '给你的 AI 编程工具<br>装上<span class="grad">真正会干活</span>的超能力',
     heroLead: '{n} 个经过实战验证的工作方法论 skill —— 从头脑风暴到 TDD，从系统化调试到代码审查。<br>一条命令，自动识别项目里的工具并安装。',
@@ -136,6 +139,7 @@ const T = {
     bookTitle: '装好之后，配上方法论效率翻倍',
     bookDesc: '《AI 编程实战 · 方法论三卷书》—— 10 个 AI 编程工具完整教程 + 真实踩坑。在线书 + PDF，永久免费。',
     bookBtn: '免费阅读 ↗',
+    aiolaolaBtn: '免费学 AI 编程 · aiOlaOla ↗',
     sponsorTitle: '赞助商',
     sponsorDesc: '稳定高速的 API 中继服务，为 Claude Code、Codex 等平台提供 API 中继与 AI 生图服务。',
     sponsorCta: '🙏 想出现在这里？联系 <b>jnMetaCode@qq.com</b>',
@@ -145,7 +149,7 @@ const T = {
     footCols: [
       { h: '产品', links: [['特性', '#why'], ['Skills', '#skills'], ['支持工具', '#tools'], ['FAQ', '#faq']] },
       { h: '资源', links: [['GitHub', 'https://github.com/jnMetaCode/superpowers-zh'], ['npm', 'https://www.npmjs.com/package/superpowers-zh'], ['方法论三卷书', 'https://book.aibuzhiyu.com/']] },
-      { h: '生态', links: [['aiOlaOla · 从零学会 AI 编程', 'https://aiolaola.com/'], ['X / Twitter', 'https://x.com/jnMetaCode'], ['公众号 AI不止语', 'https://aiolaola.com/'], ['姐妹项目', 'https://github.com/jnMetaCode']] },
+      { h: '生态', links: [['aiOlaOla · 从零学会 AI 编程', 'https://aiolaola.com/?utm_source=sp1'], ['X / Twitter', 'https://x.com/jnMetaCode'], ['公众号 AI不止语', 'https://aiolaola.com/'], ['姐妹项目', 'https://github.com/jnMetaCode']] },
       { h: '社区', links: [['提交 Issue', 'https://github.com/jnMetaCode/superpowers-zh/issues'], ['贡献指南', 'https://github.com/jnMetaCode/superpowers-zh/blob/main/CLAUDE.md'], ['联系邮箱', 'mailto:jnMetaCode@qq.com']] },
     ],
     footTag: 'AI 编程超能力 · 中文增强版 · MIT License',
@@ -190,7 +194,7 @@ const T = {
     htmlLang: 'en',
     title: 'superpowers-zh · Battle-tested AI coding skills (CN-enhanced)',
     desc: 'Full Chinese localization of superpowers (233k+ ⭐) plus 4 China-native skills. One npx command installs systematic workflow methodology into 18 AI coding tools.',
-    nav: { why: 'Features', install: 'Install', skills: 'Skills', tools: 'Tools', faq: 'FAQ', github: 'GitHub ↗' },
+    nav: { why: 'Features', install: 'Install', skills: 'Skills', tools: 'Tools', faq: 'FAQ', learn: 'Learn ↗', github: 'GitHub ↗' },
     heroBadge: 'superpowers 233k+ ⭐ · Full CN localization + China-native skills',
     heroH1: 'Give your AI coding tools<br>superpowers that <span class="grad">actually ship</span>',
     heroLead: '{n} battle-tested workflow skills — from brainstorming to TDD, systematic debugging to code review.<br>One command auto-detects your tool and installs.',
@@ -221,6 +225,7 @@ const T = {
     bookTitle: 'Pair it with the methodology for 2× efficiency',
     bookDesc: '"AI Coding in Practice · The Three-Volume Methodology" — full tutorials for 10 AI coding tools plus real-world pitfalls. Online book + PDF, free forever.',
     bookBtn: 'Read free ↗',
+    aiolaolaBtn: 'Learn AI coding free · aiOlaOla ↗',
     sponsorTitle: 'Sponsors',
     sponsorDesc: 'A fast, reliable API relay for Claude Code, Codex and more — API relay and AI image generation.',
     sponsorCta: '🙏 Want to appear here? Contact <b>jnMetaCode@qq.com</b>',
@@ -230,7 +235,7 @@ const T = {
     footCols: [
       { h: 'Product', links: [['Features', '#why'], ['Skills', '#skills'], ['Tools', '#tools'], ['FAQ', '#faq']] },
       { h: 'Resources', links: [['GitHub', 'https://github.com/jnMetaCode/superpowers-zh'], ['npm', 'https://www.npmjs.com/package/superpowers-zh'], ['Methodology book', 'https://book.aibuzhiyu.com/']] },
-      { h: 'Ecosystem', links: [['aiOlaOla', 'https://aiolaola.com/'], ['X / Twitter', 'https://x.com/jnMetaCode'], ['Sister projects', 'https://github.com/jnMetaCode']] },
+      { h: 'Ecosystem', links: [['aiOlaOla', 'https://aiolaola.com/?utm_source=sp1'], ['X / Twitter', 'https://x.com/jnMetaCode'], ['Sister projects', 'https://github.com/jnMetaCode']] },
       { h: 'Community', links: [['Open an Issue', 'https://github.com/jnMetaCode/superpowers-zh/issues'], ['Contributing', 'https://github.com/jnMetaCode/superpowers-zh/blob/main/CLAUDE.md'], ['Contact', 'mailto:jnMetaCode@qq.com']] },
     ],
     footTag: 'AI coding superpowers · Chinese-enhanced · MIT License',
@@ -304,7 +309,7 @@ function loadSkills() {
 
 // ---- 公共布局 ----
 // base: 资源相对前缀（'' / '../' / '../../'）；langHref: 切换语言的目标 URL
-function layout({ lang, base, title, desc, body, langHref, extraHead = '' }) {
+function layout({ lang, base, title, desc, body, langHref, canonical = '/', altZh = '/', altEn = '/en/', extraHead = '' }) {
   const t = T[lang];
   const other = lang === 'zh' ? 'EN' : '中文';
   return `<!DOCTYPE html>
@@ -312,14 +317,24 @@ function layout({ lang, base, title, desc, body, langHref, extraHead = '' }) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="baidu-site-verification" content="codeva-5WLzyP9gcN">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-L02QK4EVDL"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-L02QK4EVDL');</script>
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
+<link rel="canonical" href="${SITE_URL}${canonical}">
+<link rel="alternate" hreflang="zh-CN" href="${SITE_URL}${altZh}">
+<link rel="alternate" hreflang="en" href="${SITE_URL}${altEn}">
+<link rel="alternate" hreflang="x-default" href="${SITE_URL}${altZh}">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:type" content="website">
+<meta property="og:url" content="${SITE_URL}${canonical}">
+<meta property="og:image" content="${SITE_URL}/assets/app-icon.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(desc)}">
 <link rel="icon" href="/assets/app-icon.png">
 <link rel="stylesheet" href="/styles.css?v=${cssVer}">
 <script>(function(){try{var m=localStorage.getItem('sp-theme');if(m==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
@@ -334,7 +349,9 @@ ${extraHead}</head>
     <a href="${base}index.html#why">${t.nav.why}</a>
     <a href="${base}index.html#install">${t.nav.install}</a>
     <a href="${base}index.html#skills">${t.nav.skills}</a>
+    <a href="${base}index.html#tools">${t.nav.tools}</a>
     <a href="${base}index.html#faq">${t.nav.faq}</a>
+    <a href="https://aiolaola.com/?utm_source=sp1" target="_blank" rel="noopener">${t.nav.learn}</a>
     <a href="https://github.com/jnMetaCode/superpowers-zh" target="_blank" rel="noopener">${t.nav.github}</a>
     <a class="lang-switch" href="${langHref}">${other}</a>
     <button class="theme-btn" id="themeBtn" aria-label="theme" title="切换主题">◐</button>
@@ -472,7 +489,8 @@ function renderLanding(skills, lang) {
 
   <section class="book"><div class="book-inner"><div>
     <h2>${t.bookTitle}</h2><p>${t.bookDesc}</p>
-    <a class="btn btn-primary" href="https://book.aibuzhiyu.com/" target="_blank" rel="noopener">${t.bookBtn}</a>
+    <a class="btn btn-primary" href="https://aiolaola.com/?utm_source=sp1" target="_blank" rel="noopener">${t.aiolaolaBtn}</a>
+    <a class="btn btn-ghost" href="https://book.aibuzhiyu.com/" target="_blank" rel="noopener">${t.bookBtn}</a>
   </div></div></section>
 
   <section class="sponsor">
@@ -548,11 +566,13 @@ function build() {
   writeFileSync(join(DIST, 'index.html'), layout({
     lang: 'zh', base: '', title: T.zh.title, desc: T.zh.desc,
     body: renderLanding(skills, 'zh'), langHref: 'en/index.html',
+    canonical: '/', altZh: '/', altEn: '/en/',
   }));
   // 英文站（/en/）
   writeFileSync(join(DIST, 'en', 'index.html'), layout({
     lang: 'en', base: '../', title: T.en.title, desc: T.en.desc,
     body: renderLanding(skills, 'en'), langHref: '../index.html',
+    canonical: '/en/', altZh: '/', altEn: '/en/',
   }));
 
   // 详情(操作文档)页 ×2 语言
@@ -560,12 +580,27 @@ function build() {
     writeFileSync(join(DIST, 'skills', `${s.name}.html`), layout({
       lang: 'zh', base: '../', title: `${s.title} · superpowers-zh`, desc: s.desc,
       body: renderDetail(s, 'zh'), langHref: `../en/skills/${s.name}.html`,
+      canonical: `/skills/${s.name}`, altZh: `/skills/${s.name}`, altEn: `/en/skills/${s.name}`,
     }));
     writeFileSync(join(DIST, 'en', 'skills', `${s.name}.html`), layout({
       lang: 'en', base: '../../', title: `${s.titleEn} · superpowers-zh`, desc: s.descEn || s.desc,
       body: renderDetail(s, 'en'), langHref: `../../skills/${s.name}.html`,
+      canonical: `/en/skills/${s.name}`, altZh: `/skills/${s.name}`, altEn: `/en/skills/${s.name}`,
     }));
   }
+
+  // ---- SEO: robots.txt + sitemap.xml ----
+  writeFileSync(join(DIST, 'robots.txt'),
+    'User-agent: *\nAllow: /\n\nSitemap: ' + SITE_URL + '/sitemap.xml\n');
+
+  const today = new Date().toISOString().slice(0, 10);
+  const urls = ['/', '/en/'];
+  for (const s of skills) { urls.push(`/skills/${s.name}`, `/en/skills/${s.name}`); }
+  const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    urls.map(u => `  <url><loc>${SITE_URL}${u}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>${u === '/' ? '1.0' : '0.7'}</priority></url>`).join('\n') +
+    '\n</urlset>\n';
+  writeFileSync(join(DIST, 'sitemap.xml'), sitemap);
 
   // 收集所有生成页面里的内联 <script> 内容，算 SHA-256 作为 CSP hash 白名单。
   // 本站脚本由本生成器产出（可信），用 hash 即可严格禁用 'unsafe-inline'/'unsafe-eval'
@@ -602,7 +637,11 @@ function build() {
     "form-action 'self'",
   ].join('; ');
 
-  // Cloudflare Pages：全站安全响应头（/*）+ 缓存策略（静态资源长缓存，HTML 不缓存）
+  // Cloudflare Pages：全站安全响应头 + 缓存策略。
+  // 默认 /* 不缓存（must-revalidate）——这样 clean URL 的 HTML（/、/skills/x、
+  // /en/x，均不带 .html）也能即时更新，不会被边缘缓存旧内容。
+  // 带内容 hash 版本号的资源（styles.css?v= / app.js?v=）与 /assets/* 由更具体
+  // 规则覆盖为长缓存 immutable（内容变 → URL 变 → 自动取新）。
   writeFileSync(join(DIST, '_headers'),
     '/*\n' +
     '  Content-Security-Policy: ' + csp + '\n' +
@@ -611,10 +650,10 @@ function build() {
     '  Referrer-Policy: no-referrer\n' +
     '  Cross-Origin-Opener-Policy: same-origin\n' +
     '  Permissions-Policy: geolocation=(), microphone=(), camera=()\n' +
+    '  Cache-Control: no-store\n' +
     '/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n' +
-    '/styles.css\n  Cache-Control: public, max-age=86400\n' +
-    '/app.js\n  Cache-Control: public, max-age=86400\n' +
-    '/*.html\n  Cache-Control: public, max-age=0, must-revalidate\n');
+    '/styles.css\n  Cache-Control: public, max-age=31536000, immutable\n' +
+    '/app.js\n  Cache-Control: public, max-age=31536000, immutable\n');
 
   const pages = 2 + skills.length * 2;
   console.log(`✅ 生成 ${pages} 个页面：中/英首页 + ${skills.length} 个 skill × 2 语言详情页 → ${DIST}`);
