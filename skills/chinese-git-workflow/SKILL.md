@@ -182,72 +182,104 @@ dev/zhangsan/feat-login      # 个人开发分支
 3. 关联任务管理平台的编号（如有）：`feat/TAPD-12345-description`
 4. 长度适中，能看出分支目的即可
 
-## 中文 Commit Message 规范
+## Commit Message 规范
 
-### 约定式提交（Conventional Commits）中文版
+本项目使用 `commit-conventions` skill 定义完整的提交规范。核心要点如下：
 
-```
-<类型>(<范围>): <简要描述>
-                                    ← 空行
-<正文（可选）>
-                                    ← 空行
-<脚注（可选）>
-```
-
-### 类型清单
-
-| 类型 | 说明 | emoji（可选） |
-|------|------|--------------|
-| feat | 新增功能 | ✨ |
-| fix | 修复 Bug | 🐛 |
-| docs | 文档更新 | 📝 |
-| style | 代码格式（不影响逻辑） | 💄 |
-| refactor | 重构（不是新功能也不是修 Bug） | ♻️ |
-| perf | 性能优化 | ⚡ |
-| test | 测试相关 | ✅ |
-| build | 构建系统或外部依赖 | 📦 |
-| ci | CI/CD 配置 | 👷 |
-| chore | 其他杂项 | 🔧 |
-| revert | 回滚 | ⏪ |
-
-### 好的 commit message
+### 提交格式
 
 ```
-feat(购物车): 支持批量删除商品
-
-- 新增全选/反选功能
-- 删除操作增加二次确认弹窗
-- 批量删除接口使用 POST /cart/batch-delete
-
-关联需求：TAPD-12345
+<emoji> <type>[scope]: <description>
 ```
 
+- **emoji**：可选，但建议用于快速识别
+- **type**：必填，小写英文关键词
+- **scope**：可选，英文描述受影响的组件
+- **description**：必填，英文祈使语气，不超过 100 字符
+
+### 提交类型参考
+
+| Emoji | 类型 | 说明 | 示例 |
+| ----- | ---------- | ---------------------------------------- | -------------------------------- |
+| 🎉 | `feat` | 新功能 | Add user one-click login |
+| 🛠️ | `fix` | 修复缺陷 | Fix inventory overselling issue |
+| 📜 | `docs` | 仅文档变更 | Update API documentation |
+| 🪄 | `style` | 不影响代码行为的格式调整 | Fix indentation, add semicolons |
+| 🎊 | `refactor` | 重构代码 | Split oversized service class |
+| ✨ | `perf` | 提升性能的代码改进 | Optimize home page query |
+| 🔎 | `test` | 添加或修复测试 | Add user module unit tests |
+| 🌈 | `chore` | 构建流程、工具或库变更 | Upgrade webpack to v5 |
+| 🔄 | `ci` | 持续集成配置变更 | Update GitHub Actions workflow |
+| ⏪ | `revert` | 回滚提交 | Revert previous feature commit |
+
+### 好的示例
+
 ```
-fix(支付): 修复微信支付在 iOS 16 上无法唤起的问题
-
-原因：微信 SDK 8.0.33 版本在 iOS 16 上 Universal Links 校验逻辑变更，
-导致 openURL 回调失败。
-
-方案：升级 SDK 至 8.0.38，并更新 Associated Domains 配置。
-
-Closes #567
+🎉 feat[auth]: Add role-based access control (RBAC)
+🛠️ fix[payment]: Fix WeChat payment callback signature verification
+✨ perf[list]: Optimize virtual scrolling for large data tables
+🎊 refactor[gateway]: Split monolithic gateway into independent microservices
 ```
 
-### 不好的 commit message
+### 不推荐的示例
 
 ```
-# 太笼统
-update code
-fix bug
-修改了一些东西
-
-# 没有上下文
-fix: 修复问题
-feat: 新增功能
-
-# 中英混杂无规范
-fix：修复了一个bug，因为user login的时候会crash
+# Do not follow these patterns
+fix: Fix a bug
+feat: Update code
+chore: Modify some stuff
 ```
+
+### 正文编写
+
+正文应详细说明变更的动机、实现方式和影响范围：
+
+```
+<Background and reason for change>
+
+Approach:
+- <Key approach point 1>
+- <Key approach point 2>
+
+Affected Components: <List affected modules or services>
+```
+
+### Revert 提交
+
+格式固定为 `revert: <回退的提交标题>`，正文需说明回滚原因，footer 可添加引用：
+
+```
+⏪ revert[scope]: Revert "<回退的提交标题>"
+
+<回滚原因>
+
+Refs: <原始提交的 hash 或 issue>
+```
+
+### 破坏性变更
+
+推荐使用**方法三**：同时使用 `!` 和 `BREAKING CHANGE` footer
+
+```
+🎉 feat[api]!: Restructure user info response
+
+Change the user API response from flat structure to nested structure.
+Frontend teams need to update field access paths accordingly.
+
+BREAKING CHANGE: /api/user/info response structure changed
+- avatar field moved into profile object
+- Removed deprecated nickname field, use displayName instead
+```
+
+### Issue 引用
+
+```
+Closes #128
+Refs #129, #130
+Resolves #131
+```
+
+> **完整规范**：运行 `/commit-conventions` 获取详细说明，包括 commitlint 配置、husky 集成、changelog 自动生成等。
 
 ## CI/CD 平台适配
 
