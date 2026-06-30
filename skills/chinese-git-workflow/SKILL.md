@@ -209,8 +209,8 @@ dev/zhangsan/feat-login      # 个人开发分支
 | ✨ | `perf` | 提升性能的代码改进 | Optimize home page query |
 | 🔎 | `test` | 添加或修复测试 | Add user module unit tests |
 | 🌈 | `chore` | 构建流程、工具或库变更 | Upgrade webpack to v5 |
-| 🔄 | `ci` | 持续集成配置变更 | Update GitHub Actions workflow |
-| ⏪ | `revert` | 回滚提交 | Revert previous feature commit |
+| ♻️ | `ci` | 持续集成配置变更 | Update GitHub Actions workflow |
+| 🔙 | `revert` | 回滚提交 | Revert previous feature commit |
 
 ### 好的示例
 
@@ -249,7 +249,7 @@ Affected Components: <List affected modules or services>
 格式固定为 `revert: <回退的提交标题>`，正文需说明回滚原因，footer 可添加引用：
 
 ```
-⏪ revert[scope]: Revert "<回退的提交标题>"
+🔙 revert[scope]: Revert "<回退的提交标题>"
 
 <回滚原因>
 
