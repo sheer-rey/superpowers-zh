@@ -100,7 +100,9 @@ const SENTINEL_BEGIN = '<!-- superpowers-zh:begin (do not edit between these mar
 const SENTINEL_END = '<!-- superpowers-zh:end -->';
 
 // 核心规则 + 编码原则（所有 bootstrap 生成器共享）
-const CORE_RULES = `1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
+const CORE_RULES = `## 核心规则
+
+1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
 2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
 3. **测试先于实现** — 写代码前先写测试（TDD）
 4. **验证先于完成** — 声称完成前必须运行验证命令`;
@@ -130,8 +132,6 @@ alwaysApply: true
 # Superpowers-ZH 中文增强版
 
 你已加载 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
-
-## 核心规则
 
 ${CORE_RULES}
 
@@ -175,8 +175,6 @@ alwaysApply: true
 
 你已加载 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
 
-## 核心规则
-
 ${CORE_RULES}
 
 ${CODING_PRINCIPLES}
@@ -207,8 +205,6 @@ function generateAntigravityBootstrap(projectDir) {
 
 本项目已安装 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
 
-## 核心规则
-
 ${CORE_RULES}
 
 ${CODING_PRINCIPLES}
@@ -237,8 +233,6 @@ function generateAiderBootstrap(projectDir) {
   const content = `# Superpowers-ZH 工作方法论
 
 本项目使用 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
-
-## 核心规则
 
 ${CORE_RULES}
 
@@ -280,8 +274,6 @@ function generateGeminiBootstrap(projectDir) {
 
 本项目已安装 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
 
-## 核心规则
-
 ${CORE_RULES}
 
 ${CODING_PRINCIPLES}
@@ -320,8 +312,6 @@ function generateHermesBootstrap(projectDir) {
   const content = `# Superpowers-ZH 中文增强版
 
 本项目已安装 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
-
-## 核心规则
 
 ${CORE_RULES}
 
@@ -376,8 +366,6 @@ function generateClaudeCodeBootstrap(projectDir) {
 
 本项目已安装 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
 
-## 核心规则
-
 ${CORE_RULES}
 
 ${CODING_PRINCIPLES}
@@ -417,8 +405,6 @@ function generateClineBootstrap(projectDir) {
   const content = `# Superpowers-ZH 中文增强版
 
 本项目已安装 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
-
-## 核心规则
 
 ${CORE_RULES}
 
