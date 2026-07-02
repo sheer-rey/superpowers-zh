@@ -99,6 +99,19 @@ function scanSkillEntries(skillsDir) {
 const SENTINEL_BEGIN = '<!-- superpowers-zh:begin (do not edit between these markers) -->';
 const SENTINEL_END = '<!-- superpowers-zh:end -->';
 
+// 核心规则 + 编码原则（所有 bootstrap 生成器共享）
+const CORE_RULES = `1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
+2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
+3. **测试先于实现** — 写代码前先写测试（TDD）
+4. **验证先于完成** — 声称完成前必须运行验证命令`;
+
+const CODING_PRINCIPLES = `## 编码原则
+
+1. **不要假设** — 不确定时提问，公开说明取舍，发现更简单方案时指出
+2. **保持简单** — 只写解决问题所需的最少代码，不添加未请求的功能或推测性抽象
+3. **手术式改动** — 只改必须改的地方，不"顺便重构"相邻代码，保留现有风格
+4. **定义成功标准** — 明确可验证的目标再动手，不模糊完成任务`;
+
 function wrapWithSentinel(body) {
   return `${SENTINEL_BEGIN}\n${body.replace(/\n+$/, '')}\n${SENTINEL_END}\n`;
 }
@@ -120,10 +133,9 @@ alwaysApply: true
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CORE_RULES}
+
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -165,10 +177,9 @@ alwaysApply: true
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CORE_RULES}
+
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -198,10 +209,9 @@ function generateAntigravityBootstrap(projectDir) {
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CORE_RULES}
+
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -230,10 +240,9 @@ function generateAiderBootstrap(projectDir) {
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CORE_RULES}
+
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -273,10 +282,9 @@ function generateGeminiBootstrap(projectDir) {
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CORE_RULES}
+
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -315,10 +323,9 @@ function generateHermesBootstrap(projectDir) {
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CORE_RULES}
+
+${CODING_PRINCIPLES}
 
 ## 工具映射
 
@@ -371,10 +378,9 @@ function generateClaudeCodeBootstrap(projectDir) {
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CORE_RULES}
+
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -414,10 +420,9 @@ function generateClineBootstrap(projectDir) {
 
 ## 核心规则
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CORE_RULES}
+
+${CODING_PRINCIPLES}
 
 ## 工具映射
 
