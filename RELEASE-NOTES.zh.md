@@ -6,6 +6,60 @@
 
 ---
 
+## v1.7.0 (2026-07-13)
+
+### 🆕 新增两款国产 IDE 工具支持（工具数 18 → 20）
+
+- **CodeBuddy**（腾讯 AI IDE，关 #18 / #75）：`.codebuddy/skills/` + `CODEBUDDY.md` bootstrap，加载机制类似 Claude Code。仅项目级（用户级加载路径未证实，暂不做全局）。
+- **华为云码道 CodeArts**（关 #20）：`.codeartsdoer/skills/`，**skills-only** 适配（其 bootstrap/指令文件约定未证实，靠 CodeArts 自身 skill 发现；docs 已说明，不自动触发可手动点名 skill）。
+- 两者均**逐一核对配置来源**（owner 核实 / 用户实测），不臆造无效路径。工具计数在 README / 站点 / package / FAQ / audit 全量同步。
+
+### 🌐 官网 + README 多语言（新增繁体）
+
+- **官网**（#100）重构为 `LANGS` 语言列表驱动，新增**繁体中文站**（zh-Hant）：63 页（3 语言 × (首页 + 20 skill 详情)），语言切换器 / hreflang / sitemap 齐全；以后加语言只需加一项 + 一个翻译对象。
+- **README**（#101）加语言切换栏，新增完整 `README.zh-Hant.md`（353 行对齐，台港自然术语）。
+- 繁体均**手写**（台港术语：程式碼 / 專案 / 除錯 / 全域 / 檔案 等），不引入 OpenCC 依赖。日文按定位不纳入本仓库（应作独立 `superpowers-ja`）。
+
+### 🧹 官网下架赞助商展示
+
+- 移除官网与 README 的赞助商板块（含 5Cookie Code 展示卡 / logo / 样式 / 资源），仅保留一行赞助联系方式；官网切自定义域名 `sp.aiolaola.com`。
+
+### 🌍 全局安装（关 #21）
+
+新增 `npx superpowers-zh --global`，一次安装、所有项目共享，解决多项目用户需要逐个项目重复安装的痛点。
+
+- **项目级（默认）不变**：装到 `process.cwd()` 下工具目录（如 `.claude/skills`），仅当前项目生效。
+- **全局（`--global`）**：装到工具的**用户级目录**（如 `~/.claude/skills`），所有项目自动共享，更新只需重装一次。**项目级优先、全局兜底**，二者可共存。
+- 支持全局的工具（**逐一核对各工具 docs 声明的真实加载路径，不臆造**）：**Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode**。其中 Codex 全局装到 `~/.agents/skills`（docs 确认 Codex 启动扫描该目录，而非 `~/.codex/skills`）；Claude Code 全局 bootstrap 写 `~/.claude/CLAUDE.md`。
+- **Gemini CLI / Antigravity 有意不纳入通用 `--global`**：Gemini 全局走扩展目录 `~/.gemini/extensions/*/skills/` + manifest、Antigravity 全局 skills 路径未在 docs 证实，通用复制机制覆盖不了 —— `--global` 会报错并指向各自 `docs/README.*.md`，避免「装了不生效」。
+- 其余工具（Cursor / Kiro / Trae / Aider / DeerFlow / VS Code / Hermes / Claw）规则是项目级或存于应用内设置，`--global` 明确报错并提示改用项目级，绝不写入无效路径。
+- 卸载对称支持：`--global --uninstall` 从用户级目录移除 skills 并按哨兵精确清理全局 bootstrap。
+- home 目录护栏调整：项目级仍拒绝在 `~` 下裸装（污染所有项目），并在提示里引导改用 `--global`；全局模式本就写用户级目录，跳过该护栏。
+
+### 📊 文案刷新
+
+- 上游 star 数 233k+ → 250k+（站点、README、package.json description 同步，实测上游已达 252k+）。
+
+## v1.6.1 (2026-07-06)
+
+对齐上游 **v6.1.0 / v6.1.1** 中与我们架构相关的部分。Gemini CLI 移除是上游这两个版本里改动面最大的一项，但它牵涉我们自己的营销文案（"18 款工具"）和安装器逻辑，评估后判定为独立决策，本版本**不包含**，留待单独讨论。
+
+### 🔧 bootstrap 精简（`using-superpowers/SKILL.md`）
+
+翻译并合并上游"更精简的每会话 bootstrap"重写：用简洁描述替换原有的 dot 流程图、去重"指令优先级"与"技能优先级"重复内容、去掉"技能类型"（刚性/灵活）分类章节。保留了我们 fork 特有的中国特色技能路由与多工具平台适配指引（Copilot CLI / Hermes Agent / Qoder 等，上游对应文档已删但我们仍维护）。
+
+### 🐛 Codex 插件清单修复
+
+- `.codex-plugin/plugin.json` 补 `"hooks": {}`：Codex 在清单缺少 `hooks` 字段时会自动 fallback 扫描 `hooks/hooks.json`（我们仓库里其实是 Claude Code 的 SessionStart hook），导致 Codex 用户安装时被错误注册一个不属于它的 hook 并弹出信任提示。声明空的内联 `hooks: {}` 可以阻止这个 fallback。
+- `category` 由 `"Coding"` 改为 `"Developer Tools"`，对齐上游修正。
+- `references/codex-tools.md` 修正过期的子 agent 结果工具名：`wait` → `wait_agent`（`wait` 现在专指 code-mode 的 `exec/wait`，不是子 agent 结果工具），并补充"implementer/reviewer 完成后应主动 close_agent"的提示。
+
+### 未跟进项（有意为之）
+
+- Codex 官方 marketplace 打包基础设施（`scripts/package-codex-plugin.sh`、`.agents/plugins/marketplace.json`、`tests/codex/`）——我们的分发方式是 `npx superpowers-zh`，不走这条上游官方安装通道。
+- `antigravity-tools.md` / `claude-code-tools.md` 的裁剪——我们本来就没有这两个参考文件，无需处理。
+- `references/pi-tools.md` 的精简（去掉 read/write/edit/bash 等自证性映射行）——验证时发现上游自己这个 v6.1.1 版本的裁剪会让他们自己的 `tests/pi/test-pi-extension.mjs` 断言（要求文件里出现 write/edit/bash 字样）测试失败，是上游未捕获的回归。为避免把这个 bug 一起同步进来，本版本保留了原有更完整的 pi-tools.md 内容。
+
 ## v1.6.0 (2026-06-20)
 
 本版本对齐上游 **v6.0.0** 的实质性 skill / 基础设施变更，并新增两款 harness 支持。

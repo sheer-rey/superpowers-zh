@@ -1,6 +1,6 @@
 {
   "name": "superpowers-zh",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "AI 编程超能力中文增强版：头脑风暴、subagent 驱动开发、规划、TDD、调试、代码审查、收尾工作流，附 4 个中文 skills 沉淀。",
   "author": {
     "name": "jnMetaCode",
@@ -22,12 +22,13 @@
     "中文"
   ],
   "skills": "./skills/",
+  "hooks": {},
   "interface": {
     "displayName": "Superpowers 中文版",
     "shortDescription": "面向编程 agent 的规划、TDD、调试、交付工作流（中文增强版）",
     "longDescription": "用 Superpowers 中文版引导 agent 完成头脑风暴、实现规划、测试驱动开发、系统化调试、并行执行、代码审查与分支收尾。在上游 obra/superpowers 之上叠加 4 个中国原创 skill 与多工具适配。",
     "developerName": "jnMetaCode",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": [
       "Interactive",
       "Read",

@@ -1,10 +1,10 @@
 # superpowers-zh（AI 编程超能力 · 中文增强版）
 
-🌐 **简体中文** | [English (upstream)](https://github.com/obra/superpowers)
+🌐 **简体中文** | [繁體中文](README.zh-Hant.md) | [English (upstream)](https://github.com/obra/superpowers)
 
-> 🦸 **superpowers（159k+ ⭐）完整汉化 + 4 个中国原创 skills** — 让 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Cline / Qoder 等 **19 款 AI 编程工具**真正会干活。从头脑风暴到代码审查，从 TDD 到调试，每个 skill 都是经过实战验证的工作方法论。
+> 🦸 **superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills** — 让 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Qoder / Cline 等 **21 款 AI 编程工具**真正会干活。从头脑风暴到代码审查，从 TDD 到调试，每个 skill 都是经过实战验证的工作方法论。
 
-Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 20 skills across 19 AI coding tools, including full translations and China-specific development skills.
+Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 20 skills across 20 AI coding tools, including full translations and China-specific development skills.
 
 > **Note:** This repository is a fork of [jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh) (🦸 AI 编程超能力 · 中文增强版 — superpowers 完整汉化 + 6 个中国原创 skills，支持 16 款 AI 编程工具). 本分支在此基础上增加了 Cline 工具适配、chinese-commit-conventions 重命名为 commit-conventions 并全英文化、chinese-code-review 代码示例全英文化等改动。
 
@@ -17,17 +17,22 @@ Chinese community edition of [superpowers](https://github.com/obra/superpowers) 
 | **chinese-code-review 英文化** | 所有代码示例、代码注释、git commit message 示例全部改为英文，保留中文方法论叙述 |
 | **依赖文件更新** | package.json 版本号、keywords 更新；scripts/audit.sh 添加 cline 工具 |
 
+> 🆕 **v1.7.0 更新亮点**（[完整 Release Notes →](RELEASE-NOTES.zh.md)）
+> - 🌍 **全局安装** `node ./bin/superpowers-zh.js --global` —— 一次安装、所有项目共享，多项目党告别逐个重装
+> - 🧩 新增 **腾讯 CodeBuddy** 与 **华为云码道 CodeArts** 两款国产 IDE（工具数 18 → 20）
+> - 🌐 官网 [sp.aiolaola.com](https://sp.aiolaola.com) + README 新增**繁体中文**（简 / 繁 / EN 三语）
+
 ### 📊 项目规模
 
 | 📦 翻译 Skills | 🇨🇳 中国特色 Skills | 🤖 支持工具 |
 |:---:|:---:|:---:|
-| **14** | **6** | **Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Codex / Aider / Trae / VS Code (Copilot) / DeerFlow / OpenCode / OpenClaw / Qwen Code / Antigravity / Claw Code / Cline / Qoder** |
+| **14** | **6** | **Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Codex / Aider / Trae / VS Code (Copilot) / DeerFlow / OpenCode / OpenClaw / Qwen Code / Antigravity / Claw Code / Cline / Qoder / CodeBuddy（腾讯）/ CodeArts（华为云码道）** |
 
 ---
 
 ## 这是什么？
 
-[superpowers](https://github.com/obra/superpowers) 是目前最火的 AI 编程 skills 框架（233k+ stars），为 AI 编程工具提供**系统化的工作方法论**。
+[superpowers](https://github.com/obra/superpowers) 是目前最火的 AI 编程 skills 框架（250k+ stars），为 AI 编程工具提供**系统化的工作方法论**。
 
 **superpowers-zh** 在完整翻译的基础上，新增了面向中国开发者的特色 skills。
 
@@ -62,11 +67,11 @@ AI：在开始实现之前，我需要了解几个关键问题：
 
 | 维度 | superpowers（英文上游） | superpowers-zh（中文增强版） |
 |------|----------------------|---------------------------|
-| ⭐ Star 数 | 233k+ | — |
+| ⭐ Star 数 | 250k+ | — |
 | 📦 Skills 总数 | 14 | **20**（14 翻译 + 4 国产原创 + 2 上游历史保留） |
 | 🌐 语言 | 英文 | 中文（技术术语保留英文） |
-| 🤖 **支持工具** | **6 款**：Claude Code / Cursor / Codex / OpenCode / Copilot CLI / Gemini CLI | **19 款**：上述 6 款 + Hermes Agent / Trae / Kiro / Qwen Code（通义灵码）/ OpenClaw / Claw Code / Antigravity / DeerFlow / VS Code / Windsurf / Aider / Cline / Qoder |
-| ⚡ **安装方式** | 按工具分别装（每款一条不同的 plugin marketplace 命令） | **`npx superpowers-zh` 一条命令自动识别项目里的工具并安装**；识别不出可 `--tool <name>` 显式指定 |
+| 🤖 **支持工具** | **6 款**：Claude Code / Cursor / Codex / OpenCode / Copilot CLI / Gemini CLI | **20 款**：上述 6 款 + Hermes Agent / Trae / Kiro / Qwen Code（通义灵码）/ OpenClaw / Claw Code / Antigravity / DeerFlow / VS Code / Windsurf / Aider / Cline / Qoder / CodeBuddy（腾讯） / CodeArts（华为云码道） |
+| ⚡ **安装方式** | 按工具分别装（每款一条不同的 plugin marketplace 命令） | **`node ./bin/superpowers-zh.js` 一条命令自动识别项目里的工具并安装**；识别不出可 `--tool <name>` 显式指定 |
 | 🇨🇳 Git 平台 | GitHub 为主 | GitHub + Gitee + Coding + 极狐 GitLab + **CNB（腾讯云原生构建）** |
 | 🇨🇳 CI/CD 示例 | GitHub Actions | GitHub Actions + Gitee Go + Coding CI + 极狐 CI + `.cnb.yml` |
 | 🇨🇳 代码审查风格 | 西方直接风格 | 适配国内团队沟通文化 |
@@ -79,31 +84,33 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | 💬 社区 | Discord | 微信公众号「AI不止语」+ 微信群 + QQ 群 |
 | 📜 License | MIT | MIT |
 
-**一句话总结：** 英文上游 = 方法论内核；中文增强版 = 方法论内核 **+** 19 款工具一键适配 **+** 国内 Git/CI 生态 **+** 中文化表达习惯。
+**一句话总结：** 英文上游 = 方法论内核；中文增强版 = 方法论内核 **+** 20 款工具一键适配 **+** 国内 Git/CI 生态 **+** 中文化表达习惯。
 
-### 🤖 支持 19 款主流 AI 编程工具
+### 🤖 支持 21 款主流 AI 编程工具
 
-| 工具 | 类型 | 一键安装 | 手动安装 |
+| 工具 | 类型 | 使用 node 安装 | 手动安装 |
 |------|------|:---:|:---:|
-| [Claude Code](https://claude.ai/code) | CLI | `npx superpowers-zh` | `.claude/skills/` |
-| [Copilot CLI](https://githubnext.com/projects/copilot-cli) | CLI | `npx superpowers-zh --tool copilot` | `.claude/skills/` |
-| [Hermes Agent](https://github.com/NousResearch/hermes-agent) | CLI | `npx superpowers-zh --tool hermes` | `.hermes/skills/` |
-| [Cursor](https://cursor.sh) | IDE | `npx superpowers-zh` | `.cursor/skills/` |
-| [Windsurf](https://codeium.com/windsurf) | IDE | `npx superpowers-zh` | `.windsurf/skills/` |
-| [Kiro](https://kiro.dev) | IDE | `npx superpowers-zh` | `.kiro/steering/` |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | CLI | `npx superpowers-zh` | `.gemini/skills/` |
-| [Codex CLI](https://github.com/openai/codex) | CLI | `npx superpowers-zh` | `.codex/skills/` |
-| [Aider](https://aider.chat) | CLI | `npx superpowers-zh` | `.aider/skills/` |
-| [Trae](https://trae.ai) | IDE | `npx superpowers-zh` | `.trae/skills/` + `.trae/rules/` |
-| [VS Code](https://code.visualstudio.com) (Copilot) | IDE 插件 | `npx superpowers-zh` | `.github/superpowers/` |
-| [DeerFlow 2.0](https://github.com/bytedance/deer-flow) | Agent 框架 | `npx superpowers-zh` | `skills/custom/` |
-| [OpenCode](https://opencode.ai) | CLI | `npx superpowers-zh` | `.opencode/skills/` |
-| [OpenClaw](https://github.com/anthropics/openclaw) | CLI | `npx superpowers-zh` | `skills/` |
-| [Qwen Code](https://tongyi.aliyun.com/lingma) (通义灵码) | IDE 插件 | `npx superpowers-zh` | `.qwen/skills/` |
-| [Antigravity](https://github.com/anthropics/antigravity) | CLI | `npx superpowers-zh` | `.agents/skills/` |
-| [Claw Code](https://github.com/ultraworkers/claw-code) | CLI (Rust) | `npx superpowers-zh` | `.claw/skills/` |
-| [Qoder](https://qoder.com) (阿里 AI IDE) | IDE | `npx superpowers-zh` | `.qoder/skills/` + `.qoder/rules/` |
-| [Cline](https://cline.bot) | IDE/CLI | `npx superpowers-zh` | `.cline/skills/` + `.clinerules/` |
+| [Claude Code](https://claude.ai/code) | CLI | `node ./bin/superpowers-zh.js` | `.claude/skills/` |
+| [Copilot CLI](https://githubnext.com/projects/copilot-cli) | CLI | `node ./bin/superpowers-zh.js --tool copilot` | `.claude/skills/` |
+| [Hermes Agent](https://github.com/NousResearch/hermes-agent) | CLI | `node ./bin/superpowers-zh.js --tool hermes` | `.hermes/skills/` |
+| [Cursor](https://cursor.sh) | IDE | `node ./bin/superpowers-zh.js` | `.cursor/skills/` |
+| [Windsurf](https://codeium.com/windsurf) | IDE | `node ./bin/superpowers-zh.js` | `.windsurf/skills/` |
+| [Kiro](https://kiro.dev) | IDE | `node ./bin/superpowers-zh.js` | `.kiro/steering/` |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | CLI | `node ./bin/superpowers-zh.js` | `.gemini/skills/` |
+| [Codex CLI](https://github.com/openai/codex) | CLI | `node ./bin/superpowers-zh.js` | `.codex/skills/` |
+| [Aider](https://aider.chat) | CLI | `node ./bin/superpowers-zh.js` | `.aider/skills/` |
+| [Trae](https://trae.ai) | IDE | `node ./bin/superpowers-zh.js` | `.trae/skills/` + `.trae/rules/` |
+| [VS Code](https://code.visualstudio.com) (Copilot) | IDE 插件 | `node ./bin/superpowers-zh.js` | `.github/superpowers/` |
+| [DeerFlow 2.0](https://github.com/bytedance/deer-flow) | Agent 框架 | `node ./bin/superpowers-zh.js` | `skills/custom/` |
+| [OpenCode](https://opencode.ai) | CLI | `node ./bin/superpowers-zh.js` | `.opencode/skills/` |
+| [OpenClaw](https://github.com/anthropics/openclaw) | CLI | `node ./bin/superpowers-zh.js` | `skills/` |
+| [Qwen Code](https://tongyi.aliyun.com/lingma) (通义灵码) | IDE 插件 | `node ./bin/superpowers-zh.js` | `.qwen/skills/` |
+| [Antigravity](https://github.com/anthropics/antigravity) | CLI | `node ./bin/superpowers-zh.js` | `.agents/skills/` |
+| [Claw Code](https://github.com/ultraworkers/claw-code) | CLI (Rust) | `node ./bin/superpowers-zh.js` | `.claw/skills/` |
+| [Qoder](https://qoder.com) (阿里 AI IDE) | IDE | `node ./bin/superpowers-zh.js` | `.qoder/skills/` + `.qoder/rules/` |
+| [Cline](https://cline.bot) | IDE/CLI | `node ./bin/superpowers-zh.js` | `.cline/skills/` + `.clinerules/` |
+| [CodeBuddy](https://copilot.tencent.com) (腾讯 AI IDE) | IDE | `node ./bin/superpowers-zh.js` | `.codebuddy/skills/` + `CODEBUDDY.md` |
+| [华为云码道 CodeArts](https://www.huaweicloud.com/product/codeartsdoer.html) | IDE | `node ./bin/superpowers-zh.js` | `.codeartsdoer/skills/` |
 
 > 运行 `node ./bin/superpowers-zh.js` 会自动检测你项目中使用的工具，将 20 个 skills 安装到正确位置。
 
@@ -146,6 +153,8 @@ AI：在开始实现之前，我需要了解几个关键问题：
 
 ### 方式一：使用 node 安装（推荐）
 
+**项目级**（默认，装到当前项目）：
+
 ```bash
 # 克隆仓库
 git clone https://github.com/sheer-rey/superpowers-zh.git
@@ -156,7 +165,25 @@ node "$(dirs -l +1)/bin/superpowers-zh.js"
 popd
 ```
 
-> ⚠️ **不要在主目录（`~`）下跑**。v1.2.1 起会拒绝并提示，老版本会把 skills 和 `CLAUDE.md` 等 bootstrap 文件写到你的 home 目录，污染所有项目。如已误装见下文「卸载 / 误装清理」。
+> ⚠️ **项目级安装不要在主目录（`~`）下跑**。v1.2.1 起会拒绝并提示，老版本会把 skills 和 `CLAUDE.md` 等 bootstrap 文件写到你的 home 目录，污染所有项目。如已误装见下文「卸载 / 误装清理」。想让 skills 对所有项目生效，请用下面的**全局安装**，而不是在 `~` 下跑项目级。
+
+**全局安装**（v1.7.0+，装到用户目录，所有项目共享，适合同时维护多个项目）：
+
+```bash
+node ./bin/superpowers-zh.js --global                 # 自动检测已装工具
+node ./bin/superpowers-zh.js --global --tool claude   # 或指定工具
+```
+
+全局安装把 skills 装到工具的**用户级目录**（如 `~/.claude/skills`），一次安装所有项目自动可用，更新时也只需重装一次。**项目级优先、全局兜底**，二者可共存。
+
+支持通用全局安装的工具（均为 docs 已证实的用户级加载路径）：**Claude Code · Codex CLI · Qoder · Windsurf · Qwen Code · OpenClaw · OpenCode**。其中 **Codex CLI** 全局装到 `~/.agents/skills`（Codex 启动扫描目录）。其余工具（Cursor / Kiro / Trae / Aider / DeerFlow / VS Code / Hermes / Claw）规则是项目级或存于应用内设置，`--global` 会提示改用项目级；**Gemini CLI / Antigravity** 有各自专属的全局方式（Gemini 走扩展目录），见对应 `docs/README.*.md`。
+
+| | 项目级（默认） | 全局（`--global`） |
+|---|---|---|
+| 安装位置 | `<项目>/.claude/skills` 等 | `~/.claude/skills` 等用户级目录 |
+| 生效范围 | 仅当前项目 | 所有项目 |
+| 适合 | 单项目、需项目内版本固定 | 多项目、想一次装好到处可用 |
+| 卸载 | `node ./bin/superpowers-zh.js --uninstall` | `node ./bin/superpowers-zh.js --global --uninstall` |
 
 ### 方式二：手动安装（low-fidelity，仅作备选）
 
@@ -166,7 +193,7 @@ popd
 >
 > **下面的 `cp -r skills` 命令只复制 skills 目录**，不会自动配置 hooks、不会生成 bootstrap 引导。结果：skills 物理上存在，但 AI 不会在合适时机自动调用，需要你每次手动喊 "use brainstorming skill" 之类。
 >
-> **强烈推荐用方式一 `npx superpowers-zh`** —— 它会一键处理 skills 复制 + bootstrap 生成 + hooks 配置 + 工具特定适配。仅在 npx 不可用（极端无网络环境）时才退到手动。
+> **强烈推荐用方式一 `node ./bin/superpowers-zh.js`** —— 它会一键处理 skills 复制 + bootstrap 生成 + hooks 配置 + 工具特定适配。仅在 npx 不可用（极端无网络环境）时才退到手动。
 
 ```bash
 # 克隆仓库
@@ -219,7 +246,7 @@ cp -r superpowers-zh/skills /your/project/.cline/skills       # Cline
 | Qoder | `.qoder/skills/*/SKILL.md` + `.qoder/rules/superpowers-zh.md` | 阿里 AI IDE，自动生成 `trigger: always_on` 的 bootstrap rule |
 | Cline | `.clinerules/*.md` + `.cline/skills/*/SKILL.md` | 自动加载 rules 目录下所有 .md 文件，兼容 AGENTS.md |
 
-> **详细安装指南**：[Kiro](docs/README.kiro.md) · [DeerFlow](docs/README.deerflow.md) · [Trae](docs/README.trae.md) · [Antigravity](docs/README.antigravity.md) · [VS Code](docs/README.vscode.md) · [Codex](docs/README.codex.md) · [OpenCode](docs/README.opencode.md) · [OpenClaw](docs/README.openclaw.md) · [Windsurf](docs/README.windsurf.md) · [Gemini CLI](docs/README.gemini-cli.md) · [Aider](docs/README.aider.md) · [Qwen Code](docs/README.qwen.md) · [Hermes Agent](docs/README.hermes.md) · [Qoder](docs/README.qoder.md) · [Kimi Code](docs/README.kimi.md) · [Pi](docs/README.pi.md) · [Cline](docs/README.cline.md)
+> **详细安装指南**：[Kiro](docs/README.kiro.md) · [DeerFlow](docs/README.deerflow.md) · [Trae](docs/README.trae.md) · [Antigravity](docs/README.antigravity.md) · [VS Code](docs/README.vscode.md) · [Codex](docs/README.codex.md) · [OpenCode](docs/README.opencode.md) · [OpenClaw](docs/README.openclaw.md) · [Windsurf](docs/README.windsurf.md) · [Gemini CLI](docs/README.gemini-cli.md) · [Aider](docs/README.aider.md) · [Qwen Code](docs/README.qwen.md) · [Hermes Agent](docs/README.hermes.md) · [Qoder](docs/README.qoder.md) · [CodeBuddy](docs/README.codebuddy.md) · [华为云码道](docs/README.codearts.md) · [Kimi Code](docs/README.kimi.md) · [Pi](docs/README.pi.md) · [Cline](docs/README.cline.md)
 
 ### 卸载 / 误装清理（v1.2.1+）
 
@@ -267,6 +294,6 @@ MIT License — 自由使用，商业或个人均可。
 
 <div align="center">
 
-**🦸 AI 编程超能力：让 Claude Code / Hermes Agent / Cursor / Claw Code / Qoder 等 18 款工具真正会干活**
+**🦸 AI 编程超能力：让 Claude Code / Hermes Agent / Cursor / Claw Code / Qoder 等 20 款工具真正会干活**
 
 </div>

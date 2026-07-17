@@ -100,6 +100,8 @@ const TOOLS = [
   { name: 'Hermes Agent',   type: 'CLI',    cmd: 'npx superpowers-zh --tool hermes',  auto: false },
   { name: 'Claw Code',      type: 'CLI',    cmd: 'npx superpowers-zh --tool claw',    auto: false },
   { name: 'OpenClaw',       type: 'CLI',    cmd: 'npx superpowers-zh',                auto: true },
+  { name: 'CodeBuddy',      type: 'IDE',    cmd: 'npx superpowers-zh',                auto: true },
+  { name: 'CodeArts',       type: 'IDE',    cmd: 'npx superpowers-zh',                auto: true },
 ];
 
 // ---- 双语文案 ----
@@ -107,9 +109,9 @@ const T = {
   zh: {
     htmlLang: 'zh-CN',
     title: 'superpowers-zh · AI 编程超能力中文增强版',
-    desc: 'superpowers（233k+ ⭐）完整汉化 + 4 个中国原创 skills，一条 npx 命令为 18 款 AI 编程工具装上系统化工作方法论。',
+    desc: 'superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills，一条 npx 命令为 20 款 AI 编程工具装上系统化工作方法论。',
     nav: { why: '特性', install: '安装', skills: 'Skills', tools: '支持工具', faq: 'FAQ', learn: '学习 ↗', github: 'GitHub ↗' },
-    heroBadge: 'superpowers 233k+ ⭐ · 完整汉化 + 中国原创',
+    heroBadge: 'superpowers 250k+ ⭐ · 完整汉化 + 中国原创',
     heroH1: '给你的 AI 编程工具<br>装上<span class="grad">真正会干活</span>的超能力',
     heroLead: '{n} 个经过实战验证的工作方法论 skill —— 从头脑风暴到 TDD，从系统化调试到代码审查。<br>一条命令，自动识别项目里的工具并安装。',
     heroBtn1: '查看安装命令', heroBtn2: 'GitHub 源码',
@@ -134,15 +136,12 @@ const T = {
     skDetail: '查看文档 →',
     tagCn: '中国原创',
     ucTitle: '典型使用场景', ucSub: '每个场景背后都是一组协同工作的 skill。',
-    toolsTitle: '一套 skill，18 款工具通用', toolsSub: '换工具不用换习惯，方法论跟着你走。',
+    toolsTitle: '一套 skill，20 款工具通用', toolsSub: '换工具不用换习惯，方法论跟着你走。',
     faqTitle: '常见问题',
     bookTitle: '装好之后，配上方法论效率翻倍',
     bookDesc: '《AI 编程实战 · 方法论三卷书》—— 10 个 AI 编程工具完整教程 + 真实踩坑。在线书 + PDF，永久免费。',
     bookBtn: '免费阅读 ↗',
     aiolaolaBtn: '免费学 AI 编程 · aiOlaOla ↗',
-    sponsorTitle: '赞助商',
-    sponsorDesc: '稳定高速的 API 中继服务，为 Claude Code、Codex 等平台提供 API 中继与 AI 生图服务。',
-    sponsorCta: '🙏 想出现在这里？联系 <b>jnMetaCode@qq.com</b>',
     ctaTitle: '准备好让 AI 真正会干活了吗？',
     ctaDesc: '一条命令，{n} 个实战方法论装进你的工具。免费、开源、零依赖。',
     ctaBtn1: '查看安装命令', ctaBtn2: '⭐ Star on GitHub',
@@ -154,17 +153,17 @@ const T = {
     ],
     footTag: 'AI 编程超能力 · 中文增强版 · MIT License',
     copyright: '© 2026 superpowers-zh · MIT License',
-    followUs: '扫码关注', qrWechat: '公众号 · AI不止语', qrDouyin: '抖音 · @AI不止语（AIBZY）',
+    followUs: '扫码关注', qrWechat: '公众号 · AI不止语', qrDouyin: '抖音 · @AI不止语（AIBZY）', qrX: 'X / Twitter · @jnMetaCode',
     copy: '复制', copied: '已复制 ✓',
     backToSkills: '← 返回全部 Skill',
     detailInstall: '安装此 skill',
     detailSource: '在 GitHub 查看源文件 ↗',
     features: [
       { icon: '🧠', t: '20 个实战方法论', d: '不是 prompt 模板，是经过跨会话对抗式压力测试调优的工作方法论 —— 从头脑风暴到 TDD、调试、代码审查。' },
-      { icon: '🔌', t: '18 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全适配，换工具不用换习惯。' },
+      { icon: '🔌', t: '20 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全适配，换工具不用换习惯。' },
       { icon: '⚡', t: '一条命令安装', d: 'npx superpowers-zh 自动识别项目里用的是哪款工具并安装，零配置，装完重启即生效。' },
       { icon: '🇨🇳', t: '中国原创 Skills', d: '中文代码审查话术、中文提交规范、中文文档排版、国内 Git 平台（Gitee/Coding/极狐）配置 —— 上游没有。' },
-      { icon: '📖', t: '完整汉化上游', d: '同步 obra/superpowers（233k+ ⭐），核心 skill 全部中文母语化，不是机翻，是逐条校准。' },
+      { icon: '📖', t: '完整汉化上游', d: '同步 obra/superpowers（250k+ ⭐），核心 skill 全部中文母语化，不是机翻，是逐条校准。' },
       { icon: '🔓', t: '零依赖 · MIT 开源', d: '纯 Markdown skill，不引入任何外部依赖、不联网、不上传代码，按需触发零运行时开销。' },
     ],
     pipeline: [
@@ -183,19 +182,20 @@ const T = {
     ],
     faq: [
       { q: 'superpowers-zh 是免费的吗？', a: '完全免费。MIT 协议开源，永久免费，不含任何付费墙或订阅。' },
-      { q: '支持哪些 AI 编程工具？', a: '共 18 款：Claude Code、Cursor、Windsurf、Codex CLI、Gemini CLI、Kiro、Trae、Qoder、Aider、OpenCode、Qwen Code、Antigravity、DeerFlow、VS Code(Copilot)、Copilot CLI、Hermes Agent、Claw Code、OpenClaw。' },
-      { q: 'superpowers-zh 有哪些独特价值？', a: '一套完整中文化的系统工作方法论：从头脑风暴、规划、TDD 到调试、代码审查，每个 skill 都是实战验证的工作流；并叠加 4 个面向中国开发者的原创 skill（中文代码审查 / Git 工作流 / 文档规范 / 提交规范），适配 18 款 AI 编程工具。MIT 协议开源，永久免费。' },
+      { q: '支持哪些 AI 编程工具？', a: '共 20 款：Claude Code、Cursor、Windsurf、Codex CLI、Gemini CLI、Kiro、Trae、Qoder、CodeBuddy（腾讯）、CodeArts（华为云码道）、Aider、OpenCode、Qwen Code、Antigravity、DeerFlow、VS Code(Copilot)、Copilot CLI、Hermes Agent、Claw Code、OpenClaw。' },
+      { q: 'superpowers-zh 有哪些独特价值？', a: '一套完整中文化的系统工作方法论：从头脑风暴、规划、TDD 到调试、代码审查，每个 skill 都是实战验证的工作流；并叠加 4 个面向中国开发者的原创 skill（中文代码审查 / Git 工作流 / 文档规范 / 提交规范），适配 20 款 AI 编程工具。MIT 协议开源，永久免费。' },
       { q: '安装后怎么生效？', a: 'npx 会把 skill 文件装到你项目对应工具的目录（如 .claude/skills/），重启 AI 工具后，它会在恰当时机自动触发相应 skill —— 无需你每次手动调用。' },
+      { q: '能一次装好、所有项目都用吗？（全局安装）', a: '能。npx superpowers-zh --global 装到工具的用户级目录（如 ~/.claude/skills），所有项目自动共享，更新时只需重装一次。项目级优先、全局兜底，二者可共存。支持全局的工具（均为各工具文档确认的加载路径）：Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode；其余工具（含 Gemini / Antigravity，有各自专属全局方式）请在项目内安装或参考对应文档。' },
       { q: '会拖慢我的 AI 吗？会上传代码吗？', a: '不会。skill 是按需触发的纯 Markdown，零运行时、不联网、不上传任何代码或数据，全程在本地。' },
-      { q: '怎么更新或卸载？', a: '更新：重新运行 npx superpowers-zh 覆盖即可。卸载：npx superpowers-zh --uninstall 清理已安装的 skill 与 bootstrap 文件。' },
+      { q: '怎么更新或卸载？', a: '更新：重新运行 npx superpowers-zh 覆盖即可。卸载：npx superpowers-zh --uninstall 清理当前项目；全局安装用 npx superpowers-zh --global --uninstall 清理。' },
     ],
   },
   en: {
     htmlLang: 'en',
     title: 'superpowers-zh · Battle-tested AI coding skills (CN-enhanced)',
-    desc: 'Full Chinese localization of superpowers (233k+ ⭐) plus 4 China-native skills. One npx command installs systematic workflow methodology into 18 AI coding tools.',
+    desc: 'Full Chinese localization of superpowers (250k+ ⭐) plus 4 China-native skills. One npx command installs systematic workflow methodology into 20 AI coding tools.',
     nav: { why: 'Features', install: 'Install', skills: 'Skills', tools: 'Tools', faq: 'FAQ', learn: 'Learn ↗', github: 'GitHub ↗' },
-    heroBadge: 'superpowers 233k+ ⭐ · Full CN localization + China-native skills',
+    heroBadge: 'superpowers 250k+ ⭐ · Full CN localization + China-native skills',
     heroH1: 'Give your AI coding tools<br>superpowers that <span class="grad">actually ship</span>',
     heroLead: '{n} battle-tested workflow skills — from brainstorming to TDD, systematic debugging to code review.<br>One command auto-detects your tool and installs.',
     heroBtn1: 'Get the command', heroBtn2: 'GitHub',
@@ -220,15 +220,12 @@ const T = {
     skDetail: 'Read docs →',
     tagCn: 'China-native',
     ucTitle: 'Typical use cases', ucSub: 'Each scenario is backed by a set of cooperating skills.',
-    toolsTitle: 'One skill set, 18 tools', toolsSub: 'Switch tools without switching habits — the methodology follows you.',
+    toolsTitle: 'One skill set, 20 tools', toolsSub: 'Switch tools without switching habits — the methodology follows you.',
     faqTitle: 'FAQ',
     bookTitle: 'Pair it with the methodology for 2× efficiency',
     bookDesc: '"AI Coding in Practice · The Three-Volume Methodology" — full tutorials for 10 AI coding tools plus real-world pitfalls. Online book + PDF, free forever.',
     bookBtn: 'Read free ↗',
     aiolaolaBtn: 'Learn AI coding free · aiOlaOla ↗',
-    sponsorTitle: 'Sponsors',
-    sponsorDesc: 'A fast, reliable API relay for Claude Code, Codex and more — API relay and AI image generation.',
-    sponsorCta: '🙏 Want to appear here? Contact <b>jnMetaCode@qq.com</b>',
     ctaTitle: 'Ready to make your AI actually ship?',
     ctaDesc: 'One command installs {n} battle-tested skills into your tool. Free, open-source, zero-dependency.',
     ctaBtn1: 'Get the command', ctaBtn2: '⭐ Star on GitHub',
@@ -240,17 +237,17 @@ const T = {
     ],
     footTag: 'AI coding superpowers · Chinese-enhanced · MIT License',
     copyright: '© 2026 superpowers-zh · MIT License',
-    followUs: 'Follow us', qrWechat: 'WeChat · AI不止语', qrDouyin: 'Douyin · @AI不止语 (AIBZY)',
+    followUs: 'Follow us', qrWechat: 'WeChat · AI不止语', qrDouyin: 'Douyin · @AI不止语 (AIBZY)', qrX: 'X / Twitter · @jnMetaCode',
     copy: 'Copy', copied: 'Copied ✓',
     backToSkills: '← Back to all skills',
     detailInstall: 'Install this skill set',
     detailSource: 'View source on GitHub ↗',
     features: [
       { icon: '🧠', t: '20 battle-tested methods', d: 'Not prompt templates — workflow methodology hardened by cross-session adversarial testing, from brainstorming to TDD, debugging and review.' },
-      { icon: '🔌', t: 'Works in 18 tools', d: 'One skill set for Claude Code / Cursor / Codex / Gemini CLI / Windsurf and more. Switch tools, keep your habits.' },
+      { icon: '🔌', t: 'Works in 20 tools', d: 'One skill set for Claude Code / Cursor / Codex / Gemini CLI / Windsurf and more. Switch tools, keep your habits.' },
       { icon: '⚡', t: 'One-command install', d: 'npx superpowers-zh auto-detects your tool and installs. Zero config; restart to take effect.' },
       { icon: '🇨🇳', t: 'China-native skills', d: 'Chinese code-review phrasing, commit conventions, doc typography, and domestic Git platforms (Gitee/Coding/JiHu) — not in upstream.' },
-      { icon: '📖', t: 'Fully localized upstream', d: 'Tracks obra/superpowers (233k+ ⭐); every core skill localized into native Chinese — calibrated, not machine-translated.' },
+      { icon: '📖', t: 'Fully localized upstream', d: 'Tracks obra/superpowers (250k+ ⭐); every core skill localized into native Chinese — calibrated, not machine-translated.' },
       { icon: '🔓', t: 'Zero-dep · MIT', d: 'Pure Markdown skills. No external deps, no network, no code upload. Triggered on demand with zero runtime cost.' },
     ],
     pipeline: [
@@ -269,11 +266,96 @@ const T = {
     ],
     faq: [
       { q: 'Is superpowers-zh free?', a: 'Completely free. MIT-licensed open source, forever, with no paywall or subscription.' },
-      { q: 'Which AI coding tools are supported?', a: '18 tools: Claude Code, Cursor, Windsurf, Codex CLI, Gemini CLI, Kiro, Trae, Qoder, Aider, OpenCode, Qwen Code, Antigravity, DeerFlow, VS Code (Copilot), Copilot CLI, Hermes Agent, Claw Code, OpenClaw.' },
-      { q: 'What makes superpowers-zh unique?', a: 'A fully localized, battle-tested methodology framework for Chinese developers: brainstorming, planning, TDD, debugging, and code-review skills, plus 4 China-native skills (code review / Git workflow / docs / commit conventions), adapted for 18 AI coding tools. MIT-licensed and free forever.' },
+      { q: 'Which AI coding tools are supported?', a: '20 tools: Claude Code, Cursor, Windsurf, Codex CLI, Gemini CLI, Kiro, Trae, Qoder, CodeBuddy (Tencent), CodeArts (Huawei), Aider, OpenCode, Qwen Code, Antigravity, DeerFlow, VS Code (Copilot), Copilot CLI, Hermes Agent, Claw Code, OpenClaw.' },
+      { q: 'What makes superpowers-zh unique?', a: 'A fully localized, battle-tested methodology framework for Chinese developers: brainstorming, planning, TDD, debugging, and code-review skills, plus 4 China-native skills (code review / Git workflow / docs / commit conventions), adapted for 20 AI coding tools. MIT-licensed and free forever.' },
       { q: 'How does it take effect after install?', a: 'npx installs skill files into your tool\'s directory (e.g. .claude/skills/). After restarting your AI tool, it auto-triggers the right skill at the right moment — no manual invocation needed.' },
+      { q: 'Can I install once for all projects? (global install)', a: 'Yes. npx superpowers-zh --global installs into the tool\'s user-level directory (e.g. ~/.claude/skills), shared across all projects; you only re-install once to update. Project-level takes precedence, global is the fallback — they coexist. Tools with global support (all verified load paths per each tool\'s docs): Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode; other tools (incl. Gemini / Antigravity, which have their own global methods) should be installed per-project or via their docs.' },
       { q: 'Will it slow my AI down or upload my code?', a: 'No. Skills are on-demand Markdown: zero runtime, no network, no code or data upload — everything stays local.' },
-      { q: 'How do I update or uninstall?', a: 'Update: re-run npx superpowers-zh to overwrite. Uninstall: npx superpowers-zh --uninstall removes installed skills and bootstrap files.' },
+      { q: 'How do I update or uninstall?', a: 'Update: re-run npx superpowers-zh to overwrite. Uninstall: npx superpowers-zh --uninstall for the current project; npx superpowers-zh --global --uninstall for a global install.' },
+    ],
+  },
+  zht: {
+    htmlLang: 'zh-Hant',
+    title: 'superpowers-zh · AI 編程超能力中文增強版',
+    desc: 'superpowers（250k+ ⭐）完整漢化 + 4 個中國原創 skills，一條 npx 命令為 20 款 AI 編程工具裝上系統化工作方法論。',
+    nav: { why: '特性', install: '安裝', skills: 'Skills', tools: '支援工具', faq: 'FAQ', learn: '學習 ↗', github: 'GitHub ↗' },
+    heroBadge: 'superpowers 250k+ ⭐ · 完整漢化 + 中國原創',
+    heroH1: '給你的 AI 編程工具<br>裝上<span class="grad">真正會幹活</span>的超能力',
+    heroLead: '{n} 個經過實戰驗證的工作方法論 skill —— 從頭腦風暴到 TDD，從系統化除錯到程式碼審查。<br>一條命令，自動識別專案裡的工具並安裝。',
+    heroBtn1: '查看安裝命令', heroBtn2: 'GitHub 原始碼',
+    stats: ['Skills', '中國原創', '支援工具', '目前版本'],
+    whyTitle: '為什麼選擇 superpowers-zh？',
+    whySub: '不是又一套提示詞範本 —— 是讓 AI 真正按工程方法幹活的系統化能力。',
+    plTitle: '一條龍工作流，每一步都有 skill 把關',
+    plSub: 'skill 之間彼此銜接，AI 會在合適的節點自動觸發對應方法論。',
+    cmpTitle: '裝上之後，AI 不再「上來就寫」',
+    cmpBad: '❌ 沒裝', cmpGood: '✅ 裝了 superpowers-zh',
+    cmpBadPre: '你：給使用者模組加個批次匯出功能\nAI：好的，我來實作……（直接開寫）\n    export async function exportUsers() { … }\n你：等等，格式不對，沒分頁，\n    大量資料會 OOM……',
+    cmpGoodPre: '你：給使用者模組加個批次匯出功能\nAI：先理清需求 —— 匯出格式？資料量級？\n    要分頁/串流嗎？要權限校驗嗎？\n    （觸發 brainstorming）\n    → 寫計畫 → TDD → 驗證 → 審查',
+    instTitle: '選你的工具，拿到安裝命令',
+    instSub: '大多數工具 <code>npx superpowers-zh</code> 會自動識別專案目錄並安裝；識別不出的用 <code>--tool</code> 指定。',
+    instLabel: '我用的是',
+    instNoteAuto: '在你的專案根目錄執行，<b>自動識別 {name}</b> 並安裝。安裝後重啟工具即可生效。',
+    instNoteManual: '{name} 無法自動識別，需用 <code>--tool</code> 顯式指定。在專案根目錄執行，安裝後重啟工具即可生效。',
+    skTitle: '{n} 個 Skill，覆蓋開發全流程',
+    skSub: '點擊任意卡片查看完整操作文件。',
+    skSearch: '搜尋 skill…（如 除錯 / review / TDD）',
+    skEmpty: '沒有符合的 skill。',
+    skDetail: '查看文件 →',
+    tagCn: '中國原創',
+    ucTitle: '典型使用場景', ucSub: '每個場景背後都是一組協同工作的 skill。',
+    toolsTitle: '一套 skill，20 款工具通用', toolsSub: '換工具不用換習慣，方法論跟著你走。',
+    faqTitle: '常見問題',
+    bookTitle: '裝好之後，配上方法論效率翻倍',
+    bookDesc: '《AI 編程實戰 · 方法論三卷書》—— 10 個 AI 編程工具完整教程 + 真實踩坑。線上書 + PDF，永久免費。',
+    bookBtn: '免費閱讀 ↗',
+    aiolaolaBtn: '免費學 AI 編程 · aiOlaOla ↗',
+    ctaTitle: '準備好讓 AI 真正會幹活了嗎？',
+    ctaDesc: '一條命令，{n} 個實戰方法論裝進你的工具。免費、開源、零依賴。',
+    ctaBtn1: '查看安裝命令', ctaBtn2: '⭐ Star on GitHub',
+    footCols: [
+      { h: '產品', links: [['特性', '#why'], ['Skills', '#skills'], ['支援工具', '#tools'], ['FAQ', '#faq']] },
+      { h: '資源', links: [['GitHub', 'https://github.com/jnMetaCode/superpowers-zh'], ['npm', 'https://www.npmjs.com/package/superpowers-zh'], ['方法論三卷書', 'https://book.aibuzhiyu.com/']] },
+      { h: '生態', links: [['aiOlaOla · 從零學會 AI 編程', 'https://aiolaola.com/?utm_source=sp1'], ['X / Twitter', 'https://x.com/jnMetaCode'], ['公眾號 AI不止語', 'https://aiolaola.com/'], ['姊妹專案', 'https://github.com/jnMetaCode']] },
+      { h: '社群', links: [['提交 Issue', 'https://github.com/jnMetaCode/superpowers-zh/issues'], ['貢獻指南', 'https://github.com/jnMetaCode/superpowers-zh/blob/main/CLAUDE.md'], ['聯絡信箱', 'mailto:jnMetaCode@qq.com']] },
+    ],
+    footTag: 'AI 編程超能力 · 中文增強版 · MIT License',
+    copyright: '© 2026 superpowers-zh · MIT License',
+    followUs: '掃碼關注', qrWechat: '公眾號 · AI不止語', qrDouyin: '抖音 · @AI不止語（AIBZY）', qrX: 'X / Twitter · @jnMetaCode',
+    copy: '複製', copied: '已複製 ✓',
+    backToSkills: '← 返回全部 Skill',
+    detailInstall: '安裝此 skill',
+    detailSource: '在 GitHub 查看原始檔 ↗',
+    features: [
+      { icon: '🧠', t: '20 個實戰方法論', d: '不是 prompt 範本，是經過跨會話對抗式壓力測試調優的工作方法論 —— 從頭腦風暴到 TDD、除錯、程式碼審查。' },
+      { icon: '🔌', t: '20 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全適配，換工具不用換習慣。' },
+      { icon: '⚡', t: '一條命令安裝', d: 'npx superpowers-zh 自動識別專案裡用的是哪款工具並安裝，零設定，裝完重啟即生效。' },
+      { icon: '🇨🇳', t: '中國原創 Skills', d: '中文程式碼審查話術、中文提交規範、中文文件排版、國內 Git 平台（Gitee/Coding/極狐）設定 —— 上游沒有。' },
+      { icon: '📖', t: '完整漢化上游', d: '同步 obra/superpowers（250k+ ⭐），核心 skill 全部中文母語化，不是機翻，是逐條校準。' },
+      { icon: '🔓', t: '零依賴 · MIT 開源', d: '純 Markdown skill，不引入任何外部依賴、不連網、不上傳程式碼，按需觸發零執行時開銷。' },
+    ],
+    pipeline: [
+      { n: '頭腦風暴', d: '動手前先理清意圖與需求' },
+      { n: '寫計畫', d: '把需求拆成可執行步驟' },
+      { n: 'TDD', d: '先寫測試再寫實作' },
+      { n: '系統化除錯', d: '先重現定位再改' },
+      { n: '程式碼審查', d: '合併前嚴謹驗收' },
+      { n: '完成前驗證', d: '用證據證明真的好了' },
+    ],
+    usecases: [
+      { tag: '開發新功能', skills: 'brainstorming → writing-plans → TDD', desc: 'AI 先反問需求、寫出實作計畫，再用測試驅動落地，而不是上來就糊一坨程式碼。' },
+      { tag: '修 Bug', skills: 'systematic-debugging', desc: '強制先重現、定位根因，再提修復方案 —— 杜絕「猜一個改一下」的瞎試迴圈。' },
+      { tag: '提交 / 合併前', skills: 'verification-before-completion → code-review', desc: '必須跑驗證命令、拿證據說話，再走一輪程式碼審查，才允許聲稱「完成」。' },
+      { tag: '國內團隊協作', skills: 'chinese-commit-conventions → chinese-code-review', desc: '中文 commit 規範 + 分級 review 話術，配 Gitee / Coding / 極狐 GitLab 工作流。' },
+    ],
+    faq: [
+      { q: 'superpowers-zh 是免費的嗎？', a: '完全免費。MIT 協議開源，永久免費，不含任何付費牆或訂閱。' },
+      { q: '支援哪些 AI 編程工具？', a: '共 20 款：Claude Code、Cursor、Windsurf、Codex CLI、Gemini CLI、Kiro、Trae、Qoder、CodeBuddy（騰訊）、CodeArts（華為雲碼道）、Aider、OpenCode、Qwen Code、Antigravity、DeerFlow、VS Code(Copilot)、Copilot CLI、Hermes Agent、Claw Code、OpenClaw。' },
+      { q: 'superpowers-zh 有哪些獨特價值？', a: '一套完整中文化的系統工作方法論：從頭腦風暴、規劃、TDD 到除錯、程式碼審查，每個 skill 都是實戰驗證的工作流；並疊加 4 個面向中國開發者的原創 skill（中文程式碼審查 / Git 工作流 / 文件規範 / 提交規範），適配 20 款 AI 編程工具。MIT 協議開源，永久免費。' },
+      { q: '安裝後怎麼生效？', a: 'npx 會把 skill 檔案裝到你專案對應工具的目錄（如 .claude/skills/），重啟 AI 工具後，它會在恰當時機自動觸發相應 skill —— 無需你每次手動呼叫。' },
+      { q: '能一次裝好、所有專案都用嗎？（全域安裝）', a: '能。npx superpowers-zh --global 裝到工具的使用者級目錄（如 ~/.claude/skills），所有專案自動共享，更新時只需重裝一次。專案級優先、全域兜底，二者可共存。支援全域的工具（均為各工具文件確認的載入路徑）：Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode；其餘工具（含 Gemini / Antigravity，有各自專屬全域方式）請在專案內安裝或參考對應文件。' },
+      { q: '會拖慢我的 AI 嗎？會上傳程式碼嗎？', a: '不會。skill 是按需觸發的純 Markdown，零執行時、不連網、不上傳任何程式碼或資料，全程在本機。' },
+      { q: '怎麼更新或解除安裝？', a: '更新：重新執行 npx superpowers-zh 覆蓋即可。解除安裝：npx superpowers-zh --uninstall 清理目前專案；全域安裝用 npx superpowers-zh --global --uninstall 清理。' },
     ],
   },
 };
@@ -307,11 +389,30 @@ function loadSkills() {
   return skills;
 }
 
+// ---- 多语言配置：新增语言只需往这里加一项 + 写一个 T.<code> 翻译对象 ----
+// dir: 该语言站点子目录（根语言为 ''）；hreflang: SEO 语言标记；label: 语言切换器显示名
+const LANGS = [
+  { code: 'zh',  dir: '',          label: '中文', hreflang: 'zh-CN' },
+  { code: 'en',  dir: 'en/',       label: 'EN',   hreflang: 'en' },
+  { code: 'zht', dir: 'zh-Hant/',  label: '繁體', hreflang: 'zh-Hant' },
+];
+const DEFAULT_DIR = LANGS[0].dir; // 根语言（zh）用于 x-default
+
 // ---- 公共布局 ----
-// base: 资源相对前缀（'' / '../' / '../../'）；langHref: 切换语言的目标 URL
-function layout({ lang, base, title, desc, body, langHref, canonical = '/', altZh = '/', altEn = '/en/', extraHead = '' }) {
+// pageClean: 语言无关的 canonical 后缀（首页 ''；skill 页 'skills/<name>'）
+// pageFile:  语言无关的文件后缀，用于语言切换链接（首页 ''；skill 页 'skills/<name>.html'）
+// base: 资源相对前缀（'' / '../' / '../../'），仅用于品牌链接等相对引用
+function layout({ lang, base, title, desc, body, pageClean = '', pageFile = '', extraHead = '' }) {
   const t = T[lang];
-  const other = lang === 'zh' ? 'EN' : '中文';
+  const curDir = LANGS.find(l => l.code === lang).dir;
+  const canonical = `/${curDir}${pageClean}`;
+  const altLinks = LANGS
+    .map(l => `<link rel="alternate" hreflang="${l.hreflang}" href="${SITE_URL}/${l.dir}${pageClean}">`)
+    .join('\n') + `\n<link rel="alternate" hreflang="x-default" href="${SITE_URL}/${DEFAULT_DIR}${pageClean}">`;
+  const langSwitch = LANGS
+    .filter(l => l.code !== lang)
+    .map(l => `<a class="lang-switch" href="/${l.dir}${pageFile}">${l.label}</a>`)
+    .join('');
   return `<!DOCTYPE html>
 <html lang="${t.htmlLang}">
 <head>
@@ -324,9 +425,7 @@ function layout({ lang, base, title, desc, body, langHref, canonical = '/', altZ
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${SITE_URL}${canonical}">
-<link rel="alternate" hreflang="zh-CN" href="${SITE_URL}${altZh}">
-<link rel="alternate" hreflang="en" href="${SITE_URL}${altEn}">
-<link rel="alternate" hreflang="x-default" href="${SITE_URL}${altZh}">
+${altLinks}
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:type" content="website">
@@ -353,7 +452,7 @@ ${extraHead}</head>
     <a href="${base}index.html#faq">${t.nav.faq}</a>
     <a href="https://aiolaola.com/?utm_source=sp1" target="_blank" rel="noopener">${t.nav.learn}</a>
     <a href="https://github.com/jnMetaCode/superpowers-zh" target="_blank" rel="noopener">${t.nav.github}</a>
-    <a class="lang-switch" href="${langHref}">${other}</a>
+    ${langSwitch}
     <button class="theme-btn" id="themeBtn" aria-label="theme" title="切换主题">◐</button>
   </nav>
 </header>
@@ -364,6 +463,7 @@ ${body}
     <div class="qr-row">
       <figure class="qr-card"><img src="/assets/qr-wechat.jpg" alt="${esc(t.qrWechat)}" width="158" loading="lazy"><figcaption>${t.qrWechat}</figcaption></figure>
       <figure class="qr-card"><img src="/assets/qr-douyin.jpg" alt="${esc(t.qrDouyin)}" width="158" loading="lazy"><figcaption>${t.qrDouyin}</figcaption></figure>
+      <figure class="qr-card"><a href="https://x.com/jnMetaCode" target="_blank" rel="noopener"><img src="/assets/qr-x.png" alt="${esc(t.qrX)}" width="158" loading="lazy"></a><figcaption><a href="https://x.com/jnMetaCode" target="_blank" rel="noopener">${t.qrX}</a></figcaption></figure>
     </div>
   </div>
   <div class="foot-inner foot-cols">
@@ -389,8 +489,8 @@ function renderLanding(skills, lang) {
   const fill = (s, map) => s.replace(/\{(\w+)\}/g, (_, k) => map[k]);
 
   const cards = skills.map(s => {
-    const title = lang === 'zh' ? s.title : s.titleEn;
-    const d = lang === 'zh' ? s.desc : (s.descEn || s.desc);
+    const title = lang === 'en' ? s.titleEn : s.title;
+    const d = lang === 'en' ? (s.descEn || s.desc) : s.desc;
     return `
       <a class="card" href="skills/${esc(s.name)}.html" data-group="${s.group}" data-name="${esc(s.name)}" data-title="${esc(title)}">
         <div class="card-head"><h3>${esc(title)}</h3>${s.china ? `<span class="tag tag-cn">${t.tagCn}</span>` : ''}</div>
@@ -423,7 +523,7 @@ function renderLanding(skills, lang) {
     <div class="stats">
       <div><b>${total}</b><span>${t.stats[0]}</span></div>
       <div><b>${cnCount}</b><span>${t.stats[1]}</span></div>
-      <div><b>18</b><span>${t.stats[2]}</span></div>
+      <div><b>20</b><span>${t.stats[2]}</span></div>
       <div><b>v${PKG.version}</b><span>${t.stats[3]}</span></div>
     </div>
   </section>
@@ -493,15 +593,6 @@ function renderLanding(skills, lang) {
     <a class="btn btn-ghost" href="https://book.aibuzhiyu.com/" target="_blank" rel="noopener">${t.bookBtn}</a>
   </div></div></section>
 
-  <section class="sponsor">
-    <h2 class="section-title">${t.sponsorTitle}</h2>
-    <a class="sponsor-card" href="https://www.5cookie.cc/sign-up?aff=Pj7u" target="_blank" rel="noopener">
-      <img src="assets/sponsors/5cookie-code.png" alt="5Cookie Code" width="160">
-      <div><b>5Cookie Code</b><span>${t.sponsorDesc}</span></div>
-    </a>
-    <p class="sponsor-cta">${t.sponsorCta}</p>
-  </section>
-
   <section class="cta"><div class="cta-inner">
     <h2>${t.ctaTitle}</h2><p>${fill(t.ctaDesc, { n: total })}</p>
     <div class="cta-cmd" data-copy="npx superpowers-zh"><code>$ npx superpowers-zh</code><button class="copy-btn">${t.copy}</button></div>
@@ -517,7 +608,7 @@ function renderLanding(skills, lang) {
 // ---- skill 详情(操作文档)页正文 ----
 function renderDetail(skill, lang) {
   const t = T[lang];
-  const title = lang === 'zh' ? skill.title : skill.titleEn;
+  const title = lang === 'en' ? skill.titleEn : skill.title;
   const bodyHtml = renderMarkdown(skill.raw);
   const cnNotice = lang === 'en'
     ? '<div class="doc-notice">📖 This skill\'s content is written in Chinese — superpowers-zh is a Chinese-localized toolkit.</div>'
@@ -549,7 +640,7 @@ function renderDetail(skill, lang) {
 function build() {
   const skills = loadSkills();
   rmSync(DIST, { recursive: true, force: true });
-  mkdirSync(join(DIST, 'assets', 'sponsors'), { recursive: true });
+  mkdirSync(join(DIST, 'assets'), { recursive: true });
   mkdirSync(join(DIST, 'skills'), { recursive: true });
   mkdirSync(join(DIST, 'en', 'skills'), { recursive: true });
 
@@ -558,35 +649,32 @@ function build() {
   copyFileSync(join(TEMPLATE, 'app.js'), join(DIST, 'app.js'));
   copyFileSync(join(ROOT, 'assets', 'app-icon.png'), join(DIST, 'assets', 'app-icon.png'));
   copyFileSync(join(ROOT, 'assets', 'superpowers-small.svg'), join(DIST, 'assets', 'superpowers-small.svg'));
-  copyFileSync(join(ROOT, 'assets', 'sponsors', '5cookie-code.png'), join(DIST, 'assets', 'sponsors', '5cookie-code.png'));
   copyFileSync(join(TEMPLATE, 'assets', 'qr-wechat.jpg'), join(DIST, 'assets', 'qr-wechat.jpg'));
   copyFileSync(join(TEMPLATE, 'assets', 'qr-douyin.jpg'), join(DIST, 'assets', 'qr-douyin.jpg'));
+  copyFileSync(join(TEMPLATE, 'assets', 'qr-x.png'), join(DIST, 'assets', 'qr-x.png'));
 
-  // 中文站（根）
-  writeFileSync(join(DIST, 'index.html'), layout({
-    lang: 'zh', base: '', title: T.zh.title, desc: T.zh.desc,
-    body: renderLanding(skills, 'zh'), langHref: 'en/index.html',
-    canonical: '/', altZh: '/', altEn: '/en/',
-  }));
-  // 英文站（/en/）
-  writeFileSync(join(DIST, 'en', 'index.html'), layout({
-    lang: 'en', base: '../', title: T.en.title, desc: T.en.desc,
-    body: renderLanding(skills, 'en'), langHref: '../index.html',
-    canonical: '/en/', altZh: '/', altEn: '/en/',
-  }));
-
-  // 详情(操作文档)页 ×2 语言
-  for (const s of skills) {
-    writeFileSync(join(DIST, 'skills', `${s.name}.html`), layout({
-      lang: 'zh', base: '../', title: `${s.title} · superpowers-zh`, desc: s.desc,
-      body: renderDetail(s, 'zh'), langHref: `../en/skills/${s.name}.html`,
-      canonical: `/skills/${s.name}`, altZh: `/skills/${s.name}`, altEn: `/en/skills/${s.name}`,
+  // ---- 每种语言生成首页 + 全部 skill 详情页 ----
+  for (const L of LANGS) {
+    const t = T[L.code];
+    const dirParts = L.dir ? [L.dir.replace(/\/$/, '')] : [];
+    const homeBase = L.dir ? '../' : '';
+    mkdirSync(join(DIST, ...dirParts, 'skills'), { recursive: true });
+    // 首页
+    writeFileSync(join(DIST, ...dirParts, 'index.html'), layout({
+      lang: L.code, base: homeBase, title: t.title, desc: t.desc,
+      body: renderLanding(skills, L.code), pageClean: '', pageFile: '',
     }));
-    writeFileSync(join(DIST, 'en', 'skills', `${s.name}.html`), layout({
-      lang: 'en', base: '../../', title: `${s.titleEn} · superpowers-zh`, desc: s.descEn || s.desc,
-      body: renderDetail(s, 'en'), langHref: `../../skills/${s.name}.html`,
-      canonical: `/en/skills/${s.name}`, altZh: `/skills/${s.name}`, altEn: `/en/skills/${s.name}`,
-    }));
+    // skill 详情页
+    for (const s of skills) {
+      const title = L.code === 'en' ? s.titleEn : s.title;
+      const desc = L.code === 'en' ? (s.descEn || s.desc) : s.desc;
+      writeFileSync(join(DIST, ...dirParts, 'skills', `${s.name}.html`), layout({
+        lang: L.code, base: L.dir ? '../../' : '../',
+        title: `${title} · superpowers-zh`, desc,
+        body: renderDetail(s, L.code),
+        pageClean: `skills/${s.name}`, pageFile: `skills/${s.name}.html`,
+      }));
+    }
   }
 
   // ---- SEO: robots.txt + sitemap.xml ----
@@ -594,11 +682,14 @@ function build() {
     'User-agent: *\nAllow: /\n\nSitemap: ' + SITE_URL + '/sitemap.xml\n');
 
   const today = new Date().toISOString().slice(0, 10);
-  const urls = ['/', '/en/'];
-  for (const s of skills) { urls.push(`/skills/${s.name}`, `/en/skills/${s.name}`); }
+  const urls = [];
+  for (const L of LANGS) {
+    urls.push(`/${L.dir}`);
+    for (const s of skills) urls.push(`/${L.dir}skills/${s.name}`);
+  }
   const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    urls.map(u => `  <url><loc>${SITE_URL}${u}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>${u === '/' ? '1.0' : '0.7'}</priority></url>`).join('\n') +
+    urls.map(u => `  <url><loc>${SITE_URL}${u}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>${u === '/' ? '1.0' : (u.endsWith('/') ? '0.8' : '0.7')}</priority></url>`).join('\n') +
     '\n</urlset>\n';
   writeFileSync(join(DIST, 'sitemap.xml'), sitemap);
 
@@ -655,8 +746,8 @@ function build() {
     '/styles.css\n  Cache-Control: public, max-age=31536000, immutable\n' +
     '/app.js\n  Cache-Control: public, max-age=31536000, immutable\n');
 
-  const pages = 2 + skills.length * 2;
-  console.log(`✅ 生成 ${pages} 个页面：中/英首页 + ${skills.length} 个 skill × 2 语言详情页 → ${DIST}`);
+  const pages = LANGS.length * (1 + skills.length);
+  console.log(`✅ 生成 ${pages} 个页面：${LANGS.length} 语言（${LANGS.map(l => l.code).join('/')}）× (首页 + ${skills.length} 个 skill 详情页) → ${DIST}`);
 }
 
 build();

@@ -18,7 +18,7 @@ dist/
   skills/<name>.html      # 中文 skill 详情（操作文档）× 20
   en/skills/<name>.html   # 英文 skill 详情 × 20
   styles.css  app.js      # 深/浅主题 + 交互（原生 JS，零依赖）
-  assets/                 # 图标 + 赞助商 logo
+  assets/                 # 图标 + 公众号/抖音二维码
   _headers                # Cloudflare Pages 缓存策略
 ```
 
@@ -52,7 +52,7 @@ Cloudflare Dashboard → Pages → 连接 GitHub 仓库 `jnMetaCode/superpowers-
 - **Build command**：`node site/build.mjs`
 - **Build output directory**：`site/dist`
 
-之后每次 push 自动重建发布。绑自定义域名（建议 `superpowers.aibuzhiyu.com`）。
+之后每次 push 自动重建发布。绑自定义域名（当前线上：`sp.aiolaola.com`）。
 
 ### 方式 B — 命令行一键发布
 
