@@ -63,6 +63,7 @@ metadata:
 - Copilot CLI：`references/copilot-tools.md`
 - Hermes Agent：`references/hermes-tools.md`
 - Qoder：`references/qoder-tools.md`
+- Cline：`references/cline-tools.md`
 
 Gemini CLI 用户通过 GEMINI.md 自动获得 `references/gemini-tools.md` 的工具映射。
 
