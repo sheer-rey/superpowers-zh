@@ -2,6 +2,7 @@ name: Deploy site to Cloudflare Pages
 
 # 官网自动部署：site/ 或 skills/ 变更时重建并发布。
 # 需在仓库 Settings → Secrets 配置 CLOUDFLARE_API_TOKEN 与 CLOUDFLARE_ACCOUNT_ID。
+# 未配置 secrets 的 fork 仓库会跳过部署，避免 CI 失败。
 on:
   push:
     branches: [main]
@@ -17,6 +18,8 @@ jobs:
     permissions:
       contents: read
       deployments: write
+    # 没有配置 Cloudflare token 时直接跳过，避免 fork 仓库每次 push 都报错失败
+    if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
     steps:
       # Action 全部 SHA 固定（防供应链/标签劫持，因本 job 持有可写的 Cloudflare token）
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
