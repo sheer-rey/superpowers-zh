@@ -112,56 +112,93 @@ function calculateDiscount(level: MemberLevel, amount: number): number {
 // Use lock to ensure thread safe (missing article)
 ```
 
-## Git Commit Message Format
+## 提交信息规范
 
-### Recommended Format
+本项目使用 `commit-conventions` skill 定义完整的提交规范。核心要点如下：
 
-Use emoji-prefixed commit messages with Conventional Commits convention:
+### 提交类型参考
 
-```
-<emoji> <type>[scope]: <description>
+| Emoji | 类型 | 说明 | 示例 |
+| ----- | ---------- | ---------------------------------------- | -------------------------------- |
+| 🎉 | `feat` | 新功能 | Add user one-click login |
+| 🛠️ | `fix` | 修复缺陷 | Fix inventory overselling issue |
+| 📜 | `docs` | 仅文档变更 | Update API documentation |
+| 🪄 | `style` | 不影响代码行为的格式调整 | Fix indentation, add semicolons |
+| 🎊 | `refactor` | 重构代码 | Split oversized service class |
+| ✨ | `perf` | 提升性能的代码改进 | Optimize home page query |
+| 🔎 | `test` | 添加或修复测试 | Add user module unit tests |
+| 🌈 | `chore` | 构建流程、工具或库变更 | Upgrade webpack to v5 |
+| ♻️ | `ci` | 持续集成配置变更 | Update GitHub Actions workflow |
+| 🔙 | `revert` | 回滚提交 | Revert previous feature commit |
 
-<Detailed explanation (optional)>
-
-<Related information (optional)>
-```
-
-### Commit Type Reference
-
-| Emoji | Type | Description | Example |
-|-------|------|-------------|----------|
-| 🎉 | feat | New feature | 🎉 feat[auth]: Add one-click login via carrier |
-| 🛠️ | fix | Bug fix | 🛠️ fix[payment]: Fix WeChat callback duplicate handling |
-| 📜 | docs | Documentation | 📜 docs[api]: Update API documentation |
-| 🪄 | style | Code format | 🪄 style: Standardize indentation to 2 spaces |
-| 🎊 | refactor | Refactoring | 🎊 refactor[order]: Split order service logic |
-| ✨ | perf | Performance | ✨ perf[list]: Optimize virtual scroll rendering |
-| 🔎 | test | Tests | 🔎 test[auth]: Add login module unit tests |
-| 🌈 | chore | Build/tools | 🌈 chore: Upgrade Node.js to v20 |
-
-### Examples
+### 好的示例
 
 ```
-🛠️ fix[payment]: Fix Alipay async callback signature verification
-
-Reason: SDK upgrade changed signature algorithm from RSA to RSA2,
-but callback handler still used old algorithm.
-
-Solution: Support both RSA and RSA2 in callback handler.
-
-Closes #1234
+🎉 feat[auth]: Add role-based access control (RBAC)
+🛠️ fix[payment]: Fix WeChat payment callback signature verification
+✨ perf[list]: Optimize virtual scrolling for large data tables
+🎊 refactor[gateway]: Split monolithic gateway into independent microservices
 ```
 
-```
-🎉 feat[auth]: Add one-click login support for all carriers
+### 不推荐的示例
 
-Implement carrier one-click login SDK integration:
-- Support China Mobile, Unicom, and Telecom networks
-- Automatic fallback to SMS verification if login fails
-- Works on both iOS and Android platforms
-
-Closes #5678
 ```
+# Do not follow these patterns
+fix: Fix a bug
+feat: Update code
+chore: Modify some stuff
+```
+
+### 正文编写
+
+正文应详细说明变更的动机、实现方式和影响范围：
+
+```
+<Background and reason for change>
+
+Approach:
+- <Key approach point 1>
+- <Key approach point 2>
+
+Affected Components: <List affected modules or services>
+```
+
+### Revert 提交
+
+格式固定为 `revert: <回退的提交标题>`，正文需说明回滚原因，footer 可添加引用：
+
+```
+🔙 revert[scope]: Revert "<回退的提交标题>"
+
+<回滚原因>
+
+Refs: <原始提交的 hash 或 issue>
+```
+
+### 破坏性变更
+
+推荐使用**方法三**：同时使用 `!` 和 `BREAKING CHANGE` footer
+
+```
+🎉 feat[api]!: Restructure user info response
+
+Change the user API response from flat structure to nested structure.
+Frontend teams need to update field access paths accordingly.
+
+BREAKING CHANGE: /api/user/info response structure changed
+- avatar field moved into profile object
+- Removed deprecated nickname field, use displayName instead
+```
+
+### Issue 引用
+
+```
+Closes #128
+Refs #129, #130
+Resolves #131
+```
+
+> **完整规范**：运行 `/commit-conventions` 获取详细说明，包括 commitlint 配置、husky 集成、changelog 自动生成等。
 
 ## 常见反模式与对策
 
