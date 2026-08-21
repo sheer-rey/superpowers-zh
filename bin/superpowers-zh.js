@@ -139,7 +139,6 @@ const TARGETS = [
   //     优先级 CLAUDE.md > CLAW.md > AGENTS.md
   // 注意 claw 也扫 .agents/skills —— 装过 Antigravity 的项目它已经能读到，别重复装。
   { name: 'Claw Code',     dir: '.claw/skills',              detect: ['.claw', 'CLAW.md'] },
-  { name: 'Cline',         dir: '.cline/skills',              detect: ['.clinerules', '.cline'] },
   { name: 'Qoder',         dir: '.qoder/skills',             detect: '.qoder',                         global: { dir: '.qoder/skills',          detect: '.qoder' } },
   // CodeBuddy 官方文档（codebuddy.cn/docs/cli/codebuddy-dir）确认全局与项目级同构：
   //   skills  ~/.codebuddy/skills/   与  .codebuddy/skills/
@@ -971,7 +970,6 @@ const TOOL_ALIASES = {
   'claw-code':    'Claw Code',
   'clawcode':     'Claw Code',
   'qoder':        'Qoder',
-  'cline':        'Cline',
   'codebuddy':    'CodeBuddy',
   'codebuddy-code': 'CodeBuddy',
   'codebuddycode': 'CodeBuddy',
@@ -1112,10 +1110,6 @@ function installForTarget(target, baseDir, isGlobal) {
 
   if (target.name === 'Kilo Code') {
     generateKiloCodeBootstrapRule(baseDir);
-  }
-
-  if (target.name === 'Cline') {
-    generateClineBootstrap(PROJECT_DIR);
   }
 }
 
