@@ -4,7 +4,7 @@
 
 ## ⚠️ v1.7.9 及更早版本请重新安装
 
-旧版把 20 个 skill 的**正文**直接装进了 `.kiro/steering/`。而 [Kiro 官方文档](https://kiro.dev/docs/steering/)明确：`.kiro/steering/` 下的文件默认 `inclusion: always`，会被 "loaded into every Kiro interaction automatically"。
+旧版把 21 个 skill 的**正文**直接装进了 `.kiro/steering/`。而 [Kiro 官方文档](https://kiro.dev/docs/steering/)明确：`.kiro/steering/` 下的文件默认 `inclusion: always`，会被 "loaded into every Kiro interaction automatically"。
 
 实测那个布局是 **47 个 md、335 KB，每一轮对话全量进上下文**。不是不能用，是每轮都在烧 token。
 
@@ -18,7 +18,7 @@ npx superpowers-zh@latest --tool kiro
 会看到：
 
 ```
-🧹 Kiro: 清理旧布局 20 个 skill 目录 <- .kiro/steering/
+🧹 Kiro: 清理旧布局 21 个 skill 目录 <- .kiro/steering/
 ✅ Kiro: steering 索引 -> .kiro/steering/superpowers-zh.md
 ```
 
@@ -35,7 +35,7 @@ npx superpowers-zh --tool kiro
 
 | 位置 | 内容 | 是否每轮常驻 |
 |---|---|---|
-| `.kiro/steering/superpowers-zh.md` | 索引：核心规则 + 20 个 skill 的触发条件表（约 4.4 KB） | **是**（`inclusion: always`） |
+| `.kiro/steering/superpowers-zh.md` | 索引：核心规则 + 21 个 skill 的触发条件表（约 4.4 KB） | **是**（`inclusion: always`） |
 | `.kiro/skills/<name>/SKILL.md` | skill 正文 | 否，按需读取 |
 
 ## 工作原理

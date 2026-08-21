@@ -26,7 +26,7 @@ cp -r superpowers-zh/skills/* /your/project/.github/superpowers/
 
 ## ⚠️ v1.7.10 及更早版本请重新安装
 
-旧版把 20 个 skill 拷进 `.github/superpowers/`，然后**什么引导都不写** —— 而 [VS Code 官方文档](https://code.visualstudio.com/docs/copilot/customization/custom-instructions)明确 Copilot 只自动读这几处：
+旧版把 21 个 skill 拷进 `.github/superpowers/`，然后**什么引导都不写** —— 而 [VS Code 官方文档](https://code.visualstudio.com/docs/copilot/customization/custom-instructions)明确 Copilot 只自动读这几处：
 
 - `.github/copilot-instructions.md`、`AGENTS.md`、`CLAUDE.md`（始终生效）
 - `.github/instructions/*.instructions.md`（按 frontmatter 的 `applyTo` 匹配）
@@ -46,7 +46,7 @@ npx superpowers-zh --tool vscode
 
 | 位置 | 内容 | Copilot 是否自动读 |
 |---|---|---|
-| `.github/instructions/superpowers-zh.instructions.md` | 索引：核心规则 + 20 个 skill 的触发条件表 | **是**（`applyTo: "**"`） |
+| `.github/instructions/superpowers-zh.instructions.md` | 索引：核心规则 + 21 个 skill 的触发条件表 | **是**（`applyTo: "**"`） |
 | `.github/superpowers/<name>/SKILL.md` | skill 正文 | 否，由索引引导按需读取 |
 
 **为什么不直接改 `.github/copilot-instructions.md`：** 那是你的文件。我们用自己的 `.instructions.md`，两者互不干扰，卸载时也能精确删掉而不碰你的内容。

@@ -6,6 +6,18 @@
 
 ---
 
+## v1.7.10+fork.2 (2026-08-21)
+
+### ➕ 新增「追问式设计审查」skill（grilling）
+
+新增手动调用 skill `grilling`（追问式设计审查），翻译自 [mattpocock/skills/skills/productivity/grilling](https://github.com/mattpocock/skills/tree/main/skills/productivity/grilling)（MIT 协议），原作者 [Matt Pocock](https://github.com/mattpocock)。
+
+- **调用方式**：在对话中显式输入 `/grilling`
+- **用途**：在动手之前，用无情的追问把计划、决策或想法压瓷实，逐轮暴露隐藏假设和未解风险
+- **不会自动触发**，避免污染现有工作流
+
+---
+
 ## v1.7.10 (2026-08-12)
 
 **Aider 和 Kiro 用户请重新安装。** 本版本源于一次对「我们自己那层工具支持」的系统核查 —— 起因是 v1.7.9 修 Hermes 时发现：我们从支持它起就装错了目录。既然错过一次，就该问一句**还有几个**。

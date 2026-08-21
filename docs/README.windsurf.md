@@ -38,7 +38,7 @@ npx superpowers-zh --global --tool windsurf
 
 用户级在 `~/.codeium/` 下而不是 `~/.windsurf/` 下 —— 这点反直觉，是我们之前搞错的地方。
 
-自动发现，无需配置。Cascade 采用渐进式披露：默认只把 skill 的 name 和 description 交给模型，决定调用时才加载 SKILL.md 全文，所以装 20 个不会造成常驻开销。
+自动发现，无需配置。Cascade 采用渐进式披露：默认只把 skill 的 name 和 description 交给模型，决定调用时才加载 SKILL.md 全文，所以装 21 个不会造成常驻开销。
 
 ### 跨工具发现
 

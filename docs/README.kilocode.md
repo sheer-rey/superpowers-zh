@@ -14,20 +14,20 @@ npx superpowers-zh --tool kilocode
 装完会得到：
 
 ```
-.kilocode/skills/         # 20 个 skill 本体，按需读取
+.kilocode/skills/         # 21 个 skill 本体，按需读取
 .kilocode/rules/
 └── superpowers-zh.md     # 一份小索引，自动生效
 ```
 
 ## 工作原理
 
-Kilo Code 加载的是 **Rules**（规则会并入 system prompt），不是懒加载的 skills。所以和 Cline 同理：**不能把 20 个 SKILL.md 直接塞进 rules 目录**，否则每轮对话都背着巨大的常驻开销。
+Kilo Code 加载的是 **Rules**（规则会并入 system prompt），不是懒加载的 skills。所以和 Cline 同理：**不能把 21 个 SKILL.md 直接塞进 rules 目录**，否则每轮对话都背着巨大的常驻开销。
 
 superpowers-zh 的做法：
 
 | 放哪 | 内容 | 何时进 prompt |
 |------|------|--------------|
-| `.kilocode/rules/superpowers-zh.md` | 核心规则 + 20 个 skill 的索引表 | 常驻（很小） |
+| `.kilocode/rules/superpowers-zh.md` | 核心规则 + 21 个 skill 的索引表 | 常驻（很小） |
 | `.kilocode/skills/<name>/SKILL.md` | skill 完整流程正文 | 仅当任务匹配、Kilo 主动读取时 |
 
 ## 为什么用 `.kilocode/rules/` 而不是新版的 `kilo.jsonc`

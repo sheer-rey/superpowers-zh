@@ -46,7 +46,7 @@ DeerFlow 的 skill 在沙箱容器里执行，两个目录会挂到容器内的 
 
 所以 skill 内部若要引用自己的附属脚本，路径要写容器内的形式，例如 `python /mnt/skills/custom/my-skill/scripts/process.py`。
 
-> superpowers-zh 的 20 个 skill 以 Markdown 指令为主，`brainstorming` 带的 `scripts/` 是给宿主机 harness 用的可视化伴侣服务，在 DeerFlow 的容器沙箱里不适用 —— 这部分能力在 DeerFlow 上不可用，其余 skill 的方法论正常生效。
+> superpowers-zh 的 21 个 skill 以 Markdown 指令为主，`brainstorming` 带的 `scripts/` 是给宿主机 harness 用的可视化伴侣服务，在 DeerFlow 的容器沙箱里不适用 —— 这部分能力在 DeerFlow 上不可用，其余 skill 的方法论正常生效。
 
 ## 手动安装
 

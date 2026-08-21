@@ -18,7 +18,7 @@ npx superpowers-zh --tool codearts
 
 安装内容：
 
-- `.codeartsdoer/skills/` — 20 个 skill（每个含 `SKILL.md` 及其 `scripts/` 等附属文件）
+- `.codeartsdoer/skills/` — 21 个 skill（每个含 `SKILL.md` 及其 `scripts/` 等附属文件）
 
 ## Skill 加载优先级
 
@@ -33,7 +33,7 @@ npx superpowers-zh --tool codearts
 - 如果 CodeArts 会自动扫描并按需触发 `.codeartsdoer/skills/` 下的 skill，则装完重启即可生效。
 - 如果发现**不会自动触发**，可以在对话里**手动点名** skill（例如「用 brainstorming skill 做需求分析」），skill 内容依然可用。
 
-> CodeArts 的 bootstrap / 指令文件约定（类似 `CLAUDE.md` 的自动引导文件）我们尚未验证。如果你是 CodeArts 用户、了解它读取哪个指令文件来自动加载规则，欢迎在 [issue #20](https://github.com/jnMetaCode/superpowers-zh/issues/20) 反馈，我们会补上自动触发的 bootstrap 生成。
+> CodeArts 的 bootstrap / 指令文件约定（类似 `CLAUDE.md` 的自动引导文件）我们尚未验证。如果你是 CodeArts 用户、了解它读取哪个指令文件来自动加载规则，欢迎在 [issue #21](https://github.com/jnMetaCode/superpowers-zh/issues/21) 反馈，我们会补上自动触发的 bootstrap 生成。
 
 ## 卸载
 

@@ -14,7 +14,7 @@ npx superpowers-zh --tool cline
 装完会得到两样东西：
 
 ```
-.cline/skills/            # 20 个 skill 本体，按需读取
+.cline/skills/            # 21 个 skill 本体，按需读取
 .clinerules/
 └── superpowers-zh.md     # 一份小索引，常驻 system prompt
 ```
@@ -23,13 +23,13 @@ npx superpowers-zh --tool cline
 
 Cline 没有「skills」概念，它加载的是 **Rules**：`.clinerules/` 目录下所有 `.md` / `.txt` 会被**合并进每一轮的 system prompt**。
 
-这跟 skills 的懒加载完全不同 —— 所以**绝不能把 20 个 SKILL.md 直接放进 `.clinerules/`**，那会让每轮对话都背着几万字的常驻开销，Cline 官方也提示规则超过约 300 行后遵守度会下降。
+这跟 skills 的懒加载完全不同 —— 所以**绝不能把 21 个 SKILL.md 直接放进 `.clinerules/`**，那会让每轮对话都背着几万字的常驻开销，Cline 官方也提示规则超过约 300 行后遵守度会下降。
 
 superpowers-zh 的做法：
 
 | 放哪 | 内容 | 何时进 prompt |
 |------|------|--------------|
-| `.clinerules/superpowers-zh.md` | 核心规则 + 20 个 skill 的名称/触发条件索引表 | 每轮常驻（很小） |
+| `.clinerules/superpowers-zh.md` | 核心规则 + 21 个 skill 的名称/触发条件索引表 | 每轮常驻（很小） |
 | `.cline/skills/<name>/SKILL.md` | skill 完整流程正文 | 仅当任务匹配、Cline 主动读取时 |
 
 索引 rule 里明确告诉 Cline：匹配到触发条件就去读对应的 `SKILL.md`，**不要**把正文抄进 rules。

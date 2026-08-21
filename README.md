@@ -2,9 +2,9 @@
 
 🌐 **简体中文** | [繁體中文](README.zh-Hant.md) | [English (upstream)](https://github.com/obra/superpowers)
 
-> 🦸 **superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills** — 让 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Qoder 等 **23 款 AI 编程工具**真正会干活。从头脑风暴到代码审查，从 TDD 到调试，每个 skill 都是经过实战验证的工作方法论。
+> 🦸 **superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills + 1 个额外新增 skill** — 让 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Qoder 等 **23 款 AI 编程工具**真正会干活。从头脑风暴到代码审查，从 TDD 到调试，每个 skill 都是经过实战验证的工作方法论。
 
-Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 20 skills across 23 AI coding tools, including full translations and China-specific development skills.
+Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 21 skills across 23 AI coding tools, including full translations and China-specific development skills.
 
 > **Note:** This repository is a fork of [jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh) (🦸 AI 编程超能力 · 中文增强版 — superpowers 完整汉化 + 6 个中国原创 skills，支持 16 款 AI 编程工具). 本分支在此基础上增加了 Cline 工具适配、chinese-commit-conventions 重命名为 commit-conventions 并全英文化、chinese-code-review 代码示例全英文化等改动。
 
@@ -82,6 +82,7 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | 🇨🇳 中文文档规范 | 无 | 中文排版 + 中英混排规则 + 告别机翻味 |
 | ➕ MCP 服务器构建 | 无 | 独立 `mcp-builder` skill |
 | ➕ 工作流执行器 | 无 | 独立 `workflow-runner` skill（多角色 YAML 编排） |
+| ➕ 追问式设计审查 | 无 | 独立 `grilling` skill（翻译自 [mattpocock/skills/skills/productivity/grilling](https://github.com/mattpocock/skills/tree/main/skills/productivity/grilling)） |
 | ➕ 翻译 skill 内的增量 | — | 仅 2 处，均在正文显式标注「本节是 superpowers-zh 的增量内容」：`executing-plans` 的「常见异常处理」、`using-superpowers` 的「中国特色技能路由」。**上游各节均为逐节翻译，不被改动**；audit 会强制未标注的增量报错 |
 | 🔄 版本跟进 | 独立迭代 | **同步上游 + 国产增量叠加** |
 | 🤝 接受新 skill PR | 一般不接受（原文：*"we don't generally accept contributions of new skills"*） | 欢迎 PR（中国开发者痛点优先） |
@@ -118,7 +119,7 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | [Kilo Code](https://kilo.ai) | IDE 插件 | `npx superpowers-zh --tool kilocode` | `.kilocode/skills/` + `.kilocode/rules/` |
 | [Crush](https://github.com/charmbracelet/crush) | CLI | `npx superpowers-zh` | `.crush/skills/` |
 
-> 运行 `node ./bin/superpowers-zh.js` 会自动检测你项目中使用的工具，将 20 个 skills 安装到正确位置。
+> 运行 `node ./bin/superpowers-zh.js` 会自动检测你项目中使用的工具，将 21 个 skills 安装到正确位置。
 
 ### 翻译的 Skills（14 个）
 
@@ -152,6 +153,14 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | **Git提交规范** (commit-conventions) | commit message 规范 | `/commit-conventions`（手动） | 无 |
 | **MCP 服务器构建** (mcp-builder) | 构建生产级 MCP 工具，扩展 AI 能力边界 | 自动 | 无 |
 | **工作流执行器** (workflow-runner) | 在 AI 工具内运行多角色 YAML 工作流 | 自动 | 无 |
+
+### ➕ 额外新增 Skills（1 个）
+
+| Skill | 用途 | 调用方式 | 来源 |
+|-------|------|---------|------|
+| **追问式设计审查** (grilling) | 把计划、决策或想法压瓷实，逐轮追问暴露隐藏假设 | `/grilling`（手动） | 翻译自 [mattpocock/skills/skills/productivity/grilling](https://github.com/mattpocock/skills/tree/main/skills/productivity/grilling) |
+
+> 此 skill 由 [Matt Pocock](https://github.com/mattpocock) 原创，经汉化/适配后引入本仓库。
 
 ---
 
@@ -317,6 +326,9 @@ popd
 
 - 上游中文版：[jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)（MIT 协议）
 - 感谢 [@jnMetaCode](https://github.com/jnMetaCode) 适配了中文增强版
+
+- 追问式设计审查（grilling）技能来源：[mattpocock/skills](https://github.com/mattpocock/skills/tree/main/skills/productivity/grilling)（MIT 协议）
+- 感谢 [Matt Pocock](https://github.com/mattpocock) 原创并开源该 skill
 
 ---
 
