@@ -11,6 +11,9 @@ triage/
 site/dist/
 
 # 安装器生成的 skills 副本（源在 skills/ 目录）
+.cline/
+.clinerules/
+.kilocode/
 .codex/skills/
 .gemini/skills/
 .hermes/skills/

@@ -19,6 +19,16 @@ if [[ ! -f "$CONFIG" ]]; then
   exit 1
 fi
 
+# 每个读写路径都靠 jq。缺了它不会报错退出，而是每个文件打一行
+# "command not found" 后继续跑完，最后以 unbound variable 收场 ——
+# 版本号一个都没写进去，输出里却混着 "Done."。所以在这里挡住。
+if ! command -v jq >/dev/null 2>&1; then
+  echo "error: 需要 jq，但没找到。" >&2
+  echo "  macOS:  brew install jq" >&2
+  echo "  Debian: sudo apt-get install jq" >&2
+  exit 1
+fi
+
 # --- helpers ---
 
 # Read a dotted field path from a JSON file.

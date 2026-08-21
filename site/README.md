@@ -5,7 +5,7 @@
 ## 构建 / 预览
 
 ```bash
-node site/build.mjs          # 生成 site/dist/（42 个页面）
+node site/build.mjs          # 生成 site/dist/（66 个页面）
 npx serve site/dist          # 本地预览（或 python3 -m http.server）
 ```
 
@@ -14,6 +14,7 @@ npx serve site/dist          # 本地预览（或 python3 -m http.server）
 ```
 dist/
   index.html              # 中文首页
+  sponsors.html           # 中文赞助商页（每种语言一份）
   en/index.html           # 英文首页
   skills/<name>.html      # 中文 skill 详情（操作文档）× 20
   en/skills/<name>.html   # 英文 skill 详情 × 20
@@ -37,6 +38,9 @@ dist/
 | Skill 中/英标题、英文简介、分组 | `site/build.mjs` 的 `SKILL_META` |
 | 首页所有文案（中/英） | `site/build.mjs` 的 `T.zh` / `T.en` |
 | 支持工具 / 安装命令 | `site/build.mjs` 的 `TOOLS`（与 `bin/superpowers-zh.js` 的 `TARGETS` 对齐） |
+| 赞助商（logo / banner / 文案 / 链接 / 优惠码） | `site/build.mjs` 的 `SPONSORS`（`logo` 小图标 + `img` 大 banner 都放 `assets/sponsors/`，构建时自动拷进 `dist/assets/sponsors/`）——首页不放赞助内容，全部在 `sponsors.html`。**改完同步改 README.md / README.zh-Hant.md 的赞助商区块** |
+| 赞助商页文案 / 赞助权益 / 赞助 FAQ | `site/build.mjs` 的 `T.<lang>.sp` |
+| 谁上旗舰位 | `SPONSORS` 里该条的 `tier`：`'flagship'` 用大 banner 单独成块（读 `img`），其余是紧凑卡（读 `logo`，简介截 4 行）；没有 flagship 时该区块渲染成「虚位以待」招商卡 |
 | 样式 / 主题 | `site/template/styles.css` |
 | 交互逻辑 | `site/template/app.js` |
 | Markdown 渲染规则 | `site/md.mjs` |

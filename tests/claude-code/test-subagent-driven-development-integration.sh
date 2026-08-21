@@ -196,7 +196,8 @@ echo ""
 
 # Test 2: Subagents were used (Task tool)
 echo "Test 2: Subagents dispatched..."
-task_count=$(grep -c '"name":"Task"' "$SESSION_FILE" || echo "0")
+# 见 test-helpers.sh 注释：grep -c 无匹配时退出码为 1，不能用 || echo
+task_count=$(grep -c '"name":"Task"' "$SESSION_FILE"; true); task_count=${task_count:-0}
 if [ "$task_count" -ge 2 ]; then
     echo "  [PASS] $task_count subagents dispatched"
 else
@@ -207,7 +208,7 @@ echo ""
 
 # Test 3: TodoWrite was used for tracking
 echo "Test 3: Task tracking..."
-todo_count=$(grep -c '"name":"TodoWrite"' "$SESSION_FILE" || echo "0")
+todo_count=$(grep -c '"name":"TodoWrite"' "$SESSION_FILE"; true); todo_count=${todo_count:-0}
 if [ "$todo_count" -ge 1 ]; then
     echo "  [PASS] TodoWrite used $todo_count time(s) for task tracking"
 else

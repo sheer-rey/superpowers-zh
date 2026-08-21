@@ -2,37 +2,48 @@
 
 在 [Hermes Agent](https://github.com/NousResearch/hermes-agent) 中使用 superpowers-zh 的完整指南。
 
-## 自动安装
+## ⚠️ 先看这一条：必须装到全局，否则不生效
+
+[Hermes 官方文档](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills)明确：Hermes **只自动加载 `~/.hermes/skills/`**（原文称其为 "the primary directory and source of truth"），**项目级目录不会被自动发现**。
+
+所以推荐的装法是全局：
+
+```bash
+npx superpowers-zh --global --tool hermes
+```
+
+装到 `~/.hermes/skills/`，装完即生效，用 `skills_list` 就能看到 20 个 skill。
+
+> 📌 v1.7.8 及更早版本只支持项目级安装（装到 `<项目>/.hermes/skills/`）—— 那个目录 Hermes 根本不读，等于装了不生效。这是我们的实现错误，v1.7.9 起修正。见 [#45](https://github.com/jnMetaCode/superpowers-zh/issues/45)。
+
+## 如果你确实要项目级安装
+
+项目级的好处是 skills 可以随仓库一起分发。但**必须显式登记**，否则 Hermes 看不见。
 
 ```bash
 cd /your/project
 npx superpowers-zh --tool hermes
 ```
 
-安装脚本会将 20 个 skills 复制到 `.hermes/skills/` 目录，并自动生成 `HERMES.md` 引导文件（含工具映射表和 skills 列表）。
+安装器会打印出你需要粘贴的配置片段，形如：
 
-如果项目中已存在 `.hermes` 目录或 `HERMES.md` 文件，也会被自动检测到：
-
-```bash
-npx superpowers-zh   # 自动检测
+```yaml
+skills:
+  external_dirs:
+    - /your/project/.hermes/skills
 ```
 
-## 手动安装
+把它加进 `~/.hermes/config.yaml`。路径支持 `~` 展开和 `${VAR}` 环境变量替换；**配置里不存在的路径会被静默跳过**，所以写错了不会报错，只会"没生效"。
 
-```bash
-git clone https://github.com/jnMetaCode/superpowers-zh.git
-cp -r superpowers-zh/skills /your/project/.hermes/skills
-```
+**我们不替你改 `config.yaml`** —— 那是你的配置文件。
 
-## 通过 HERMES.md 引导
+项目级安装还会生成 `HERMES.md` 引导文件（含核心规则和 skills 列表），让 Hermes 在合适时机主动检查 skill。全局安装**不写**这个文件 —— Hermes 的用户级指令文件约定没有公开文档，我们不猜路径、也不往你的主目录里写东西。
 
-Hermes Agent 在会话开始时自动加载项目根目录下的 `HERMES.md`（或 `.hermes.md`）作为上下文。安装器会自动生成此文件，内容包括：
+## 同名冲突
 
-- 工具映射表（Claude Code → Hermes Agent 工具名称）
-- 所有可用 skills 的列表和描述
-- 核心规则和使用说明
+如果同一个 skill 名在 `~/.hermes/skills/` 和某个 `external_dirs` 目录里都存在，**本地（`~/.hermes/skills/`）的版本优先**。
 
-## 通过 config.yaml 配置外部 skills 目录
+## 其他 config.yaml 用法
 
 如果希望全局使用 superpowers-zh skills，可以在 `~/.hermes/config.yaml` 中配置：
 

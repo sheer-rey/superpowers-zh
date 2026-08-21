@@ -1,6 +1,6 @@
 # 华为云码道 CodeArts 使用指南
 
-[华为云码道 CodeArts（CodeArts Doer / Snap）](https://www.huaweicloud.com/product/codeartsdoer.html)是华为云出品的 AI 编程助手，支持 CLI、客户端以及 IntelliJ IDEA / VS Code 插件形态。skills 存放在项目的 `.codeartsdoer/skills/` 目录下。
+[华为云码道 CodeArts（CodeArts Doer / Snap）](https://codearts.huaweicloud.com/)是华为云出品的 AI 编程助手，支持 CLI、客户端以及 IntelliJ IDEA / VS Code 插件形态。skills 存放在项目的 `.codeartsdoer/skills/` 目录下。
 
 ## 一键安装（推荐）
 

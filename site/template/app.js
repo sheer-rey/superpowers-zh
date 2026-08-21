@@ -36,6 +36,21 @@
     }).catch(function () { btn.textContent = '×'; });
   });
 
+  // ---------- 赞助商卡片：简介展开 / 收起 ----------
+  // 简介默认 CSS 截 4 行；只有真的被截断时才把「展开全部」按钮显示出来。
+  Array.prototype.slice.call(document.querySelectorAll('.sponsor-card')).forEach(function (card) {
+    var desc = card.querySelector('.sc-desc');
+    var btn = card.querySelector('.sc-toggle');
+    if (!desc || !btn) return;
+    if (desc.scrollHeight <= desc.clientHeight + 2) return;   // 没截断就不用按钮
+    btn.hidden = false;
+    btn.addEventListener('click', function () {
+      var open = card.classList.toggle('expanded');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? (I18N.collapse || '收起') : (I18N.expand || '展开全部');
+    });
+  });
+
   // ---------- 安装命令生成器 ----------
   var sel = document.getElementById('toolSel');
   var cmdText = document.getElementById('cmdText');

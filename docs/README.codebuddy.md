@@ -1,6 +1,6 @@
 # CodeBuddy 使用指南
 
-[CodeBuddy](https://copilot.tencent.com)（腾讯云 AI 编程助手 / AI IDE）加载 superpowers-zh skills 的方式与 Claude Code 类似：项目根目录的 `CODEBUDDY.md` 作为 bootstrap 引导，skills 放在 `.codebuddy/skills/` 下。
+[CodeBuddy](https://www.codebuddy.cn)（腾讯云 AI 编程助手 / AI IDE）加载 superpowers-zh skills 的方式与 Claude Code 类似：项目根目录的 `CODEBUDDY.md` 作为 bootstrap 引导，skills 放在 `.codebuddy/skills/` 下。
 
 ## 一键安装（推荐）
 
@@ -21,13 +21,26 @@ npx superpowers-zh --tool codebuddy
 - `.codebuddy/skills/` — 20 个 skill（每个含 `SKILL.md`）
 - `CODEBUDDY.md` — bootstrap 引导（已存在则在哨兵注释间追加，不覆盖你的内容）
 
+## 全局安装
+
+```bash
+npx superpowers-zh --global --tool codebuddy
+```
+
+装到 `~/.codebuddy/skills/`，bootstrap 写 `~/.codebuddy/CODEBUDDY.md`，所有项目共享。
+
+> 📌 v1.7.10 及更早写着「用户级路径尚未验证」且没有 `--global`。现已核实：[官方目录结构文档](https://www.codebuddy.cn/docs/cli/codebuddy-dir)确认全局与项目级同构。v1.7.11 起支持。
+
 ## Skill 加载优先级
 
-| 位置 | 说明 |
+| 位置 | 范围 |
 |------|------|
 | `.codebuddy/skills/` | 项目级，仅当前项目 |
+| `~/.codebuddy/skills/` | 用户级，所有项目共享 |
 
-> 目前仅支持项目级安装。CodeBuddy 的用户级（全局）skills 加载路径尚未验证，确认可行后再补 `--global` 支持。
+同名时**项目级 > 用户级 > 插件级**（官方文档口径）。
+
+记忆文件同理：全局在 `~/.codebuddy/CODEBUDDY.md`，项目级放项目根 `CODEBUDDY.md`（官方称项目根与 `.codebuddy/CODEBUDDY.md` 两处等价，我们用项目根）。
 
 ## 使用
 

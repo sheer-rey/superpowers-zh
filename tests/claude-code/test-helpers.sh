@@ -74,7 +74,10 @@ assert_count() {
     local expected="$3"
     local test_name="${4:-test}"
 
-    local actual=$(echo "$output" | grep -c "$pattern" || echo "0")
+    # grep -c 匹配到 0 个时输出 "0" 但退出码为 1；写成 `|| echo "0"` 会拼出
+    # "0\n0"，下面的 -eq 比较直接报错、这条断言从此静默失效。用 `; true` 只吞退出码。
+    local actual=$(echo "$output" | grep -c "$pattern"; true)
+    actual=${actual:-0}
 
     if [ "$actual" -eq "$expected" ]; then
         echo "  [PASS] $test_name (found $actual instances)"

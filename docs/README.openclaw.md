@@ -1,6 +1,6 @@
 # Superpowers 中文版 — OpenClaw 安装指南
 
-在 [OpenClaw](https://github.com/anthropics/openclaw) 中使用 superpowers-zh 的完整指南。
+在 [OpenClaw](https://github.com/openclaw/openclaw) 中使用 superpowers-zh 的完整指南。
 
 ## 快速安装
 

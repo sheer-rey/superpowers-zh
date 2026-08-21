@@ -1,5 +1,28 @@
 # Superpowers 中文版 — Codex CLI 安装指南
 
+## ⚠️ v1.7.10 及更早的项目级安装装错了地方
+
+官方文档（developers.openai.com/codex/skills，现 308 跳 learn.chatgpt.com/docs/build-skills）给出的扫描目录**完整清单**是：
+
+```
+$CWD/.agents/skills
+$CWD/../.agents/skills
+$REPO_ROOT/.agents/skills
+$HOME/.agents/skills
+/etc/codex/skills
+```
+
+**没有 `.codex/skills`。** 而 v1.7.10 及更早的 `npx superpowers-zh --tool codex` 正是装到 `.codex/skills` —— Codex 不扫那里，等于装了完全不生效。全局（`~/.agents/skills`）一直是对的，只有项目级错。
+
+v1.7.11 起项目级改装 `.agents/skills`，重装时会自动清掉旧位置里我们装的那些（你自己放在 `.codex/skills` 下的东西不动）：
+
+```bash
+cd /your/project
+npx superpowers-zh --tool codex
+```
+
+> 顺带说明：`.agents/skills` 与 Antigravity 共用，这是 Agent Skills 开放约定，不是冲突。装过其中一个，另一个也能读到。
+
 在 Codex 中使用 superpowers-zh 的完整指南。
 
 ## 快速安装

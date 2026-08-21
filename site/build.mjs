@@ -106,12 +106,73 @@ const TOOLS = [
 ];
 
 // ---- 双语文案 ----
+// ---- 赞助商（与 README / README.zh-Hant 的赞助商区块同源；改这里也要同步改 README） ----
+// 注意：链接是赞助方的推广链接，外链一律带 rel="sponsored nofollow noopener"。
+const SPONSORS = [
+  {
+    tier: 'standard',
+    img: 'compshare.jpg', w: 800, h: 368, code: '',
+    logo: 'logo-compshare-icon.png',
+    url: 'https://passport.compshare.cn/register?referral_code=ETD3L5JBM13CtKARkMORot&ytag=GPU_YY_YX_git_superpowers-zh',
+    name: { zh: '优云智算', en: 'CompShare by UCloud', zht: '優雲智算' },
+    tagline: {
+      zh: 'UCloud 旗下 AI 云平台 · 国产模型 Agent Plan 套餐低至 49 元/月',
+      en: 'UCloud\u2019s AI cloud · Agent Plans for Chinese models from ¥49/month',
+      zht: 'UCloud 旗下 AI 雲平台 · 國產模型 Agent Plan 套餐低至 49 元/月',
+    },
+    alt: {
+      zh: '优云智算 by UCloud — 热门国产模型按次调用套餐包，低至 49 元/月起',
+      en: 'CompShare by UCloud — pay-per-call plans for popular Chinese models, from ¥49/month',
+      zht: '優雲智算 by UCloud — 熱門國產模型按次調用套餐包，低至 49 元/月起',
+    },
+    desc: {
+      zh: 'UCloud 旗下 AI 云平台，主打包月 / 按次的高性价比国模 Agent Plan 套餐，支持 GLM-5.2，低至 49 元/月起。同时提供官转稳定海外模型，支持接入 Claude Code、Codex 及 API 调用；企业高并发、7×24 技术支持、自助开票。',
+      en: 'UCloud\u2019s AI cloud platform. Cost-effective monthly / pay-per-call Agent Plans for Chinese models (incl. GLM-5.2) from ¥49/month, plus stable access to overseas models. Works with Claude Code, Codex and direct API calls; enterprise concurrency, 24/7 support, self-service invoicing.',
+      zht: 'UCloud 旗下 AI 雲平台，主打包月 / 按次的高性價比國模 Agent Plan 套餐，支援 GLM-5.2，低至 49 元/月起。同時提供官轉穩定海外模型，支援接入 Claude Code、Codex 及 API 呼叫；企業高併發、7×24 技術支援、自助開票。',
+    },
+    perk: {
+      zh: '🎁 通过本页链接注册，可得免费 5 元平台体验金',
+      en: '🎁 Sign up via this link to get ¥5 free platform credit',
+      zht: '🎁 透過本頁連結註冊，可得免費 5 元平台體驗金',
+    },
+    perkShort: { zh: '新用户注册立得 5 元平台体验金', en: '¥5 free platform credit on sign-up', zht: '新使用者註冊立得 5 元平台體驗金' },
+  },
+  {
+    tier: 'standard',
+    img: 'cubence.jpg', w: 800, h: 333, code: 'AGENCY',
+    logo: 'logo-cubence-icon.png',
+    url: 'https://cubence.com/signup?code=SCW29JP9',
+    name: { zh: 'Cubence', en: 'Cubence', zht: 'Cubence' },
+    tagline: {
+      zh: '专业 AI API 网关 · 支持 Claude Code / Codex / Gemini',
+      en: 'AI API gateway · Claude Code / Codex / Gemini',
+      zht: '專業 AI API 閘道 · 支援 Claude Code / Codex / Gemini',
+    },
+    alt: {
+      zh: 'Cubence — 专业 AI API 网关，稳定高效的 API 中转服务，支持 Claude Code、Codex、Gemini 等多种模型',
+      en: 'Cubence — AI API gateway with stable relay service for Claude Code, Codex, Gemini and more',
+      zht: 'Cubence — 專業 AI API 閘道，穩定高效的 API 中轉服務，支援 Claude Code、Codex、Gemini 等多種模型',
+    },
+    desc: {
+      zh: '专业 AI API 网关，致力于提供稳定、高效的 API 中转服务。自 2025 年 9 月运营至今，支持 Claude Code、Codex、Gemini 等多种模型。',
+      en: 'A professional AI API gateway focused on stable, efficient relay service. Running since September 2025, with support for Claude Code, Codex, Gemini and more.',
+      zht: '專業 AI API 閘道，致力於提供穩定、高效的 API 中轉服務。自 2025 年 9 月營運至今，支援 Claude Code、Codex、Gemini 等多種模型。',
+    },
+    perk: {
+      zh: '🎁 本项目用户专属优惠码 AGENCY，通过本页链接注册首次购买 9 折',
+      en: '🎁 Code AGENCY for this project\u2019s users — 10% off your first purchase via this link',
+      zht: '🎁 本專案使用者專屬優惠碼 AGENCY，透過本頁連結註冊首次購買 9 折',
+    },
+    perkShort: { zh: '首次购买 9 折优惠', en: '10% off your first purchase', zht: '首次購買 9 折優惠' },
+  },
+];
+
 const T = {
   zh: {
     htmlLang: 'zh-CN',
     title: 'superpowers-zh · AI 编程超能力中文增强版',
-    desc: 'superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills，一条 npx 命令为 21 款 AI 编程工具装上系统化工作方法论。',
-    nav: { why: '特性', install: '安装', skills: 'Skills', tools: '支持工具', faq: 'FAQ', learn: '学习 ↗', github: 'GitHub ↗' },
+    desc: 'superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills，一条 npx 命令为 23 款 AI 编程工具装上系统化工作方法论。',
+    nav: { why: '特性', install: '安装', skills: 'Skills', tools: '支持工具', faq: 'FAQ', sponsors: '赞助商', learn: '学习 ↗', github: 'GitHub ↗' },
     heroBadge: 'superpowers 250k+ ⭐ · 完整汉化 + 中国原创',
     heroH1: '给你的 AI 编程工具<br>装上<span class="grad">真正会干活</span>的超能力',
     heroLead: '{n} 个经过实战验证的工作方法论 skill —— 从头脑风暴到 TDD，从系统化调试到代码审查。<br>一条命令，自动识别项目里的工具并安装。',
@@ -137,8 +198,55 @@ const T = {
     skDetail: '查看文档 →',
     tagCn: '中国原创',
     ucTitle: '典型使用场景', ucSub: '每个场景背后都是一组协同工作的 skill。',
-    toolsTitle: '一套 skill，21 款工具通用', toolsSub: '换工具不用换习惯，方法论跟着你走。',
+    toolsTitle: '一套 skill，23 款工具通用', toolsSub: '换工具不用换习惯，方法论跟着你走。',
     faqTitle: '常见问题',
+    sponsorCta: '了解详情 ↗',
+    sponsorNote: '以上为赞助商推广链接。',
+    sp: {
+      nav: '赞助商',
+      title: '赞助商 · superpowers-zh',
+      desc: 'superpowers-zh 免费开源、零依赖，由社区赞助商共同支持。本页列出全部赞助商及其为本项目用户提供的专属福利。',
+      badge: '开源 · 社区支持',
+      h1: '感谢每一位支持者',
+      lead: 'superpowers-zh 是一个面向中文开发者的开源项目 —— 永久免费、MIT 协议、零依赖，不设付费墙。它由社区与赞助商共同支撑：本页的赞助位是付费展示位，也正是它们让项目能持续维护下去。我们把每一份支持，都视作让项目走得更远的力量。',
+      becomeBtn: '♡ 成为赞助商',
+      backBtn: '← 返回首页',
+      expand: '展开全部 ∨',
+      collapse: '收起 ∧',
+      emptyTitle: '旗舰位虚位以待',
+      emptyDesc: '本页顶部整块大图展位 + 专属行动按钮，同时在两版 README 顶部优先展示。长期合作可谈，邮件聊聊。',
+      emptyBtn: '申请旗舰位 →',
+      flagTitle: '旗舰赞助商',
+      flagSub: '深度合作伙伴，长期为项目提供关键支持。旗舰位虚位以待，欢迎申请。',
+      moreTitle: '更多赞助商',
+      moreSub: '感谢这些持续支持本项目、并为用户提供专属优惠的赞助商。',
+      visitFlag: '使用专属优惠访问 →',
+      copyHint: '点击优惠码一键复制。',
+      faqTitle: '常见问题',
+      faq: [
+        { q: '如何成为 superpowers-zh 的赞助商？', a: '邮件联系 jnMetaCode@qq.com，说明你的产品、目标人群和想要的展位形式。我们会回复可选方案、素材要求和上线时间。' },
+        { q: '有哪些合作方案？', a: '分旗舰位与常规位两档：旗舰位在本页顶部单独成块展示，常规位在「更多赞助商」卡片区。两档都含 GitHub 简繁双版 README 展位与官网三语站点露出。具体以邮件沟通为准。' },
+        { q: '谈完多久可以上线？', a: '素材齐全后改动会随下一次站点构建发布 —— 本站接的是仓库自动部署，推送即上线，通常当天可见。' },
+        { q: '需要准备哪些素材？', a: '一张横版 banner（参考现有赞助位约 800×368，JPG / PNG）、一句话定位、一段 100 字左右的介绍、落地链接，以及给本项目用户的专属优惠码或福利（可选）。' },
+      ],
+      listTitle: '当前赞助商',
+      listSub: '感谢他们持续支持本项目，并为本项目用户提供专属福利。',
+      perkTitle: '专属福利汇总',
+      perkSub: '通过本页链接注册即可享受下列福利。',
+      thSponsor: '赞助商', thPerk: '专属福利', thCode: '优惠码', thGo: '前往',
+      goto: '前往 ↗', noCode: '—',
+      benefitTitle: '成为赞助商可以获得什么',
+      benefitSub: '面向 AI 编程开发者的精准展位 —— GitHub + 官网双通道曝光。',
+      benefits: [
+        { icon: '📖', t: 'GitHub README 展位', d: '在简体 / 繁体两版 README 顶部展示 banner + 介绍文案，覆盖 GitHub 上的全部访客。' },
+        { icon: '🌐', t: '官网赞助商页展示', d: '官网赞助商页展示，导航栏常驻入口，中文 / EN / 繁體三语站点全部覆盖。' },
+        { icon: '🎯', t: '精准开发者受众', d: '本项目用户是正在用 Claude Code / Cursor / Codex 等 23 款 AI 编程工具的开发者 —— 模型与 API 服务的直接买家。' },
+        { icon: '🎁', t: '专属优惠码展示', d: '你的专属优惠码 / 福利会在赞助商页的「福利汇总」表里单独列出，方便用户直接使用。' },
+      ],
+      ctaTitle: '想出现在这里？',
+      ctaDesc: '欢迎邮件联系，我们会把展位形式、素材要求和上线时间一次说清。',
+      ctaBtn: '✉ jnMetaCode@qq.com',
+    },
     bookTitle: '装好之后，配上方法论效率翻倍',
     bookDesc: '《AI 编程实战 · 方法论三卷书》—— 10 个 AI 编程工具完整教程 + 真实踩坑。在线书 + PDF，永久免费。',
     bookBtn: '免费阅读 ↗',
@@ -147,7 +255,7 @@ const T = {
     ctaDesc: '一条命令，{n} 个实战方法论装进你的工具。免费、开源、零依赖。',
     ctaBtn1: '查看安装命令', ctaBtn2: '⭐ Star on GitHub',
     footCols: [
-      { h: '产品', links: [['特性', '#why'], ['Skills', '#skills'], ['支持工具', '#tools'], ['FAQ', '#faq']] },
+      { h: '产品', links: [['特性', '#why'], ['Skills', '#skills'], ['支持工具', '#tools'], ['FAQ', '#faq'], ['赞助商', 'sponsors.html']] },
       { h: '资源', links: [['GitHub', 'https://github.com/jnMetaCode/superpowers-zh'], ['npm', 'https://www.npmjs.com/package/superpowers-zh'], ['方法论三卷书', 'https://book.aibuzhiyu.com/']] },
       { h: '生态', links: [['aiOlaOla · 从零学会 AI 编程', 'https://aiolaola.com/?utm_source=sp1'], ['X / Twitter', 'https://x.com/jnMetaCode'], ['公众号 AI不止语', 'https://aiolaola.com/'], ['姐妹项目', 'https://github.com/jnMetaCode']] },
       { h: '社区', links: [['提交 Issue', 'https://github.com/jnMetaCode/superpowers-zh/issues'], ['贡献指南', 'https://github.com/jnMetaCode/superpowers-zh/blob/main/CLAUDE.md'], ['联系邮箱', 'mailto:jnMetaCode@qq.com']] },
@@ -161,7 +269,7 @@ const T = {
     detailSource: '在 GitHub 查看源文件 ↗',
     features: [
       { icon: '🧠', t: '20 个实战方法论', d: '不是 prompt 模板，是经过跨会话对抗式压力测试调优的工作方法论 —— 从头脑风暴到 TDD、调试、代码审查。' },
-      { icon: '🔌', t: '21 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全适配，换工具不用换习惯。' },
+      { icon: '🔌', t: '23 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全适配，换工具不用换习惯。' },
       { icon: '⚡', t: '一条命令安装', d: 'npx superpowers-zh 自动识别项目里用的是哪款工具并安装，零配置，装完重启即生效。' },
       { icon: '🇨🇳', t: '中国原创 Skills', d: '中文代码审查话术、中文提交规范、中文文档排版、国内 Git 平台（Gitee/Coding/极狐）配置 —— 上游没有。' },
       { icon: '📖', t: '完整汉化上游', d: '同步 obra/superpowers（250k+ ⭐），核心 skill 全部中文母语化，不是机翻，是逐条校准。' },
@@ -183,8 +291,8 @@ const T = {
     ],
     faq: [
       { q: 'superpowers-zh 是免费的吗？', a: '完全免费。MIT 协议开源，永久免费，不含任何付费墙或订阅。' },
-      { q: '支持哪些 AI 编程工具？', a: '共 21 款：Claude Code、Cursor、Windsurf、Codex CLI、Gemini CLI、Kiro、Trae、Qoder、CodeBuddy（腾讯）、CodeArts（华为云码道）、Cline、Aider、OpenCode、Qwen Code、Antigravity、DeerFlow、VS Code(Copilot)、Copilot CLI、Hermes Agent、Claw Code、OpenClaw。' },
-      { q: 'superpowers-zh 有哪些独特价值？', a: '一套完整中文化的系统工作方法论：从头脑风暴、规划、TDD 到调试、代码审查，每个 skill 都是实战验证的工作流；并叠加 4 个面向中国开发者的原创 skill（中文代码审查 / Git 工作流 / 文档规范 / 提交规范），适配 21 款 AI 编程工具。MIT 协议开源，永久免费。' },
+      { q: '支持哪些 AI 编程工具？', a: '共 23 款：Claude Code、Cursor、Windsurf、Codex CLI、Gemini CLI、Kiro、Trae、Qoder、CodeBuddy（腾讯）、CodeArts（华为云码道）、Aider、OpenCode、Qwen Code、Antigravity、DeerFlow、VS Code(Copilot)、Copilot CLI、Hermes Agent、Claw Code、OpenClaw、Cline、Kilo Code、Crush。' },
+      { q: 'superpowers-zh 有哪些独特价值？', a: '一套完整中文化的系统工作方法论：从头脑风暴、规划、TDD 到调试、代码审查，每个 skill 都是实战验证的工作流；并叠加 4 个面向中国开发者的原创 skill（中文代码审查 / Git 工作流 / 文档规范 / 提交规范），适配 23 款 AI 编程工具。MIT 协议开源，永久免费。' },
       { q: '安装后怎么生效？', a: 'npx 会把 skill 文件装到你项目对应工具的目录（如 .claude/skills/），重启 AI 工具后，它会在恰当时机自动触发相应 skill —— 无需你每次手动调用。' },
       { q: '能一次装好、所有项目都用吗？（全局安装）', a: '能。npx superpowers-zh --global 装到工具的用户级目录（如 ~/.claude/skills），所有项目自动共享，更新时只需重装一次。项目级优先、全局兜底，二者可共存。支持全局的工具（均为各工具文档确认的加载路径）：Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode；其余工具（含 Gemini / Antigravity，有各自专属全局方式）请在项目内安装或参考对应文档。' },
       { q: '会拖慢我的 AI 吗？会上传代码吗？', a: '不会。skill 是按需触发的纯 Markdown，零运行时、不联网、不上传任何代码或数据，全程在本地。' },
@@ -194,8 +302,8 @@ const T = {
   en: {
     htmlLang: 'en',
     title: 'superpowers-zh · Battle-tested AI coding skills (CN-enhanced)',
-    desc: 'Full Chinese localization of superpowers (250k+ ⭐) plus 4 China-native skills. One npx command installs systematic workflow methodology into 21 AI coding tools.',
-    nav: { why: 'Features', install: 'Install', skills: 'Skills', tools: 'Tools', faq: 'FAQ', learn: 'Learn ↗', github: 'GitHub ↗' },
+    desc: 'Full Chinese localization of superpowers (250k+ ⭐) plus 4 China-native skills. One npx command installs systematic workflow methodology into 23 AI coding tools.',
+    nav: { why: 'Features', install: 'Install', skills: 'Skills', tools: 'Tools', faq: 'FAQ', sponsors: 'Sponsors', learn: 'Learn ↗', github: 'GitHub ↗' },
     heroBadge: 'superpowers 250k+ ⭐ · Full CN localization + China-native skills',
     heroH1: 'Give your AI coding tools<br>superpowers that <span class="grad">actually ship</span>',
     heroLead: '{n} battle-tested workflow skills — from brainstorming to TDD, systematic debugging to code review.<br>One command auto-detects your tool and installs.',
@@ -221,8 +329,55 @@ const T = {
     skDetail: 'Read docs →',
     tagCn: 'China-native',
     ucTitle: 'Typical use cases', ucSub: 'Each scenario is backed by a set of cooperating skills.',
-    toolsTitle: 'One skill set, 21 tools', toolsSub: 'Switch tools without switching habits — the methodology follows you.',
+    toolsTitle: 'One skill set, 23 tools', toolsSub: 'Switch tools without switching habits — the methodology follows you.',
     faqTitle: 'FAQ',
+    sponsorCta: 'Learn more ↗',
+    sponsorNote: 'Links above are sponsored links.',
+    sp: {
+      nav: 'Sponsors',
+      title: 'Sponsors · superpowers-zh',
+      desc: 'superpowers-zh is free, open source and dependency-free, supported by community sponsors. This page lists every sponsor and the perks they offer to users of this project.',
+      badge: 'Open source · Community backed',
+      h1: 'Thanks to everyone who backs this project',
+      lead: 'superpowers-zh is an open source project for Chinese-speaking developers — free forever, MIT licensed, dependency-free, no paywall. It is kept going by its community and its sponsors: the slots on this page are paid placements, and they are what makes continued maintenance possible. Every bit of support takes the project further.',
+      becomeBtn: '♡ Become a sponsor',
+      backBtn: '← Back to home',
+      expand: 'Read more ∨',
+      collapse: 'Show less ∧',
+      emptyTitle: 'The flagship slot is open',
+      emptyDesc: 'A full-width banner block at the top of this page with its own call-to-action button, plus priority placement at the top of both READMEs. Long-term partnerships welcome — drop us an email.',
+      emptyBtn: 'Apply for the flagship slot →',
+      flagTitle: 'Flagship sponsor',
+      flagSub: 'A long-term partner backing this project. The flagship slot is open — get in touch.',
+      moreTitle: 'More sponsors',
+      moreSub: 'Thanks to everyone backing this project and offering perks to its users.',
+      visitFlag: 'Claim the offer →',
+      copyHint: 'Click a code to copy it.',
+      faqTitle: 'FAQ',
+      faq: [
+        { q: 'How do I become a sponsor?', a: 'Email jnMetaCode@qq.com with your product, target audience and the placement you have in mind. We will reply with options, asset specs and timing.' },
+        { q: 'What tiers are there?', a: 'Two: flagship, which gets its own block at the top of this page, and standard, which appears in the sponsor card grid. Both include placement in the Simplified and Traditional Chinese READMEs on GitHub and across all three site locales. Exact terms are settled over email.' },
+        { q: 'How soon does it go live?', a: 'Once assets are in, the change ships with the next site build — the site deploys straight from the repo, so it is usually live the same day.' },
+        { q: 'What assets do you need?', a: 'A landscape banner (existing slots are around 800×368, JPG / PNG), a one-line positioning statement, a short paragraph of copy, a landing URL, and optionally a promo code or perk for this project\u2019s users.' },
+      ],
+      listTitle: 'Current sponsors',
+      listSub: 'Thanks for backing this project — and for the perks they offer to its users.',
+      perkTitle: 'All perks at a glance',
+      perkSub: 'Sign up through the links on this page to claim them.',
+      thSponsor: 'Sponsor', thPerk: 'Perk', thCode: 'Code', thGo: 'Go',
+      goto: 'Visit ↗', noCode: '—',
+      benefitTitle: 'What sponsors get',
+      benefitSub: 'A focused placement in front of AI-coding developers — on GitHub and on the site.',
+      benefits: [
+        { icon: '📖', t: 'GitHub README placement', d: 'Banner plus copy at the top of both the Simplified and Traditional Chinese READMEs, seen by every GitHub visitor.' },
+        { icon: '🌐', t: 'Website placement', d: 'Listed on the sponsors page, reachable from the main nav on every page, across all three locales (CN / EN / TW).' },
+        { icon: '🎯', t: 'A developer audience', d: 'Our users are developers running Claude Code, Cursor, Codex and 20 other AI coding tools — direct buyers of model and API services.' },
+        { icon: '🎁', t: 'Your promo code, listed', d: 'Your code or offer gets its own row in the perks table on this page, ready for users to copy.' },
+      ],
+      ctaTitle: 'Want your logo here?',
+      ctaDesc: 'Drop us an email and we will walk you through placements, assets and timing in one go.',
+      ctaBtn: '✉ jnMetaCode@qq.com',
+    },
     bookTitle: 'Pair it with the methodology for 2× efficiency',
     bookDesc: '"AI Coding in Practice · The Three-Volume Methodology" — full tutorials for 10 AI coding tools plus real-world pitfalls. Online book + PDF, free forever.',
     bookBtn: 'Read free ↗',
@@ -231,7 +386,7 @@ const T = {
     ctaDesc: 'One command installs {n} battle-tested skills into your tool. Free, open-source, zero-dependency.',
     ctaBtn1: 'Get the command', ctaBtn2: '⭐ Star on GitHub',
     footCols: [
-      { h: 'Product', links: [['Features', '#why'], ['Skills', '#skills'], ['Tools', '#tools'], ['FAQ', '#faq']] },
+      { h: 'Product', links: [['Features', '#why'], ['Skills', '#skills'], ['Tools', '#tools'], ['FAQ', '#faq'], ['Sponsors', 'sponsors.html']] },
       { h: 'Resources', links: [['GitHub', 'https://github.com/jnMetaCode/superpowers-zh'], ['npm', 'https://www.npmjs.com/package/superpowers-zh'], ['Methodology book', 'https://book.aibuzhiyu.com/']] },
       { h: 'Ecosystem', links: [['aiOlaOla', 'https://aiolaola.com/?utm_source=sp1'], ['X / Twitter', 'https://x.com/jnMetaCode'], ['Sister projects', 'https://github.com/jnMetaCode']] },
       { h: 'Community', links: [['Open an Issue', 'https://github.com/jnMetaCode/superpowers-zh/issues'], ['Contributing', 'https://github.com/jnMetaCode/superpowers-zh/blob/main/CLAUDE.md'], ['Contact', 'mailto:jnMetaCode@qq.com']] },
@@ -245,7 +400,7 @@ const T = {
     detailSource: 'View source on GitHub ↗',
     features: [
       { icon: '🧠', t: '20 battle-tested methods', d: 'Not prompt templates — workflow methodology hardened by cross-session adversarial testing, from brainstorming to TDD, debugging and review.' },
-      { icon: '🔌', t: 'Works in 21 tools', d: 'One skill set for Claude Code / Cursor / Codex / Gemini CLI / Windsurf and more. Switch tools, keep your habits.' },
+      { icon: '🔌', t: 'Works in 23 tools', d: 'One skill set for Claude Code / Cursor / Codex / Gemini CLI / Windsurf and more. Switch tools, keep your habits.' },
       { icon: '⚡', t: 'One-command install', d: 'npx superpowers-zh auto-detects your tool and installs. Zero config; restart to take effect.' },
       { icon: '🇨🇳', t: 'China-native skills', d: 'Chinese code-review phrasing, commit conventions, doc typography, and domestic Git platforms (Gitee/Coding/JiHu) — not in upstream.' },
       { icon: '📖', t: 'Fully localized upstream', d: 'Tracks obra/superpowers (250k+ ⭐); every core skill localized into native Chinese — calibrated, not machine-translated.' },
@@ -267,8 +422,8 @@ const T = {
     ],
     faq: [
       { q: 'Is superpowers-zh free?', a: 'Completely free. MIT-licensed open source, forever, with no paywall or subscription.' },
-      { q: 'Which AI coding tools are supported?', a: '21 tools: Claude Code, Cursor, Windsurf, Codex CLI, Gemini CLI, Kiro, Trae, Qoder, CodeBuddy (Tencent), CodeArts (Huawei), Cline, Aider, OpenCode, Qwen Code, Antigravity, DeerFlow, VS Code (Copilot), Copilot CLI, Hermes Agent, Claw Code, OpenClaw.' },
-      { q: 'What makes superpowers-zh unique?', a: 'A fully localized, battle-tested methodology framework for Chinese developers: brainstorming, planning, TDD, debugging, and code-review skills, plus 4 China-native skills (code review / Git workflow / docs / commit conventions), adapted for 21 AI coding tools. MIT-licensed and free forever.' },
+      { q: 'Which AI coding tools are supported?', a: '23 tools: Claude Code, Cursor, Windsurf, Codex CLI, Gemini CLI, Kiro, Trae, Qoder, CodeBuddy (Tencent), CodeArts (Huawei), Aider, OpenCode, Qwen Code, Antigravity, DeerFlow, VS Code (Copilot), Copilot CLI, Hermes Agent, Claw Code, OpenClaw, Cline, Kilo Code, Crush.' },
+      { q: 'What makes superpowers-zh unique?', a: 'A fully localized, battle-tested methodology framework for Chinese developers: brainstorming, planning, TDD, debugging, and code-review skills, plus 4 China-native skills (code review / Git workflow / docs / commit conventions), adapted for 23 AI coding tools. MIT-licensed and free forever.' },
       { q: 'How does it take effect after install?', a: 'npx installs skill files into your tool\'s directory (e.g. .claude/skills/). After restarting your AI tool, it auto-triggers the right skill at the right moment — no manual invocation needed.' },
       { q: 'Can I install once for all projects? (global install)', a: 'Yes. npx superpowers-zh --global installs into the tool\'s user-level directory (e.g. ~/.claude/skills), shared across all projects; you only re-install once to update. Project-level takes precedence, global is the fallback — they coexist. Tools with global support (all verified load paths per each tool\'s docs): Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode; other tools (incl. Gemini / Antigravity, which have their own global methods) should be installed per-project or via their docs.' },
       { q: 'Will it slow my AI down or upload my code?', a: 'No. Skills are on-demand Markdown: zero runtime, no network, no code or data upload — everything stays local.' },
@@ -278,8 +433,8 @@ const T = {
   zht: {
     htmlLang: 'zh-Hant',
     title: 'superpowers-zh · AI 編程超能力中文增強版',
-    desc: 'superpowers（250k+ ⭐）完整漢化 + 4 個中國原創 skills，一條 npx 命令為 21 款 AI 編程工具裝上系統化工作方法論。',
-    nav: { why: '特性', install: '安裝', skills: 'Skills', tools: '支援工具', faq: 'FAQ', learn: '學習 ↗', github: 'GitHub ↗' },
+    desc: 'superpowers（250k+ ⭐）完整漢化 + 4 個中國原創 skills，一條 npx 命令為 23 款 AI 編程工具裝上系統化工作方法論。',
+    nav: { why: '特性', install: '安裝', skills: 'Skills', tools: '支援工具', faq: 'FAQ', sponsors: '贊助商', learn: '學習 ↗', github: 'GitHub ↗' },
     heroBadge: 'superpowers 250k+ ⭐ · 完整漢化 + 中國原創',
     heroH1: '給你的 AI 編程工具<br>裝上<span class="grad">真正會幹活</span>的超能力',
     heroLead: '{n} 個經過實戰驗證的工作方法論 skill —— 從頭腦風暴到 TDD，從系統化除錯到程式碼審查。<br>一條命令，自動識別專案裡的工具並安裝。',
@@ -305,8 +460,55 @@ const T = {
     skDetail: '查看文件 →',
     tagCn: '中國原創',
     ucTitle: '典型使用場景', ucSub: '每個場景背後都是一組協同工作的 skill。',
-    toolsTitle: '一套 skill，21 款工具通用', toolsSub: '換工具不用換習慣，方法論跟著你走。',
+    toolsTitle: '一套 skill，23 款工具通用', toolsSub: '換工具不用換習慣，方法論跟著你走。',
     faqTitle: '常見問題',
+    sponsorCta: '了解詳情 ↗',
+    sponsorNote: '以上為贊助商推廣連結。',
+    sp: {
+      nav: '贊助商',
+      title: '贊助商 · superpowers-zh',
+      desc: 'superpowers-zh 免費開源、零依賴，由社群贊助商共同支持。本頁列出全部贊助商及其為本專案使用者提供的專屬福利。',
+      badge: '開源 · 社群支持',
+      h1: '感謝每一位支持者',
+      lead: 'superpowers-zh 是一個面向中文開發者的開源專案 —— 永久免費、MIT 協議、零依賴，不設付費牆。它由社群與贊助商共同支撐：本頁的贊助位是付費展示位，也正是它們讓專案能持續維護下去。我們把每一份支持，都視作讓專案走得更遠的力量。',
+      becomeBtn: '♡ 成為贊助商',
+      backBtn: '← 返回首頁',
+      expand: '展開全部 ∨',
+      collapse: '收起 ∧',
+      emptyTitle: '旗艦位虛位以待',
+      emptyDesc: '本頁頂部整塊大圖展位 + 專屬行動按鈕，同時在兩版 README 頂部優先展示。長期合作可談，郵件聊聊。',
+      emptyBtn: '申請旗艦位 →',
+      flagTitle: '旗艦贊助商',
+      flagSub: '深度合作夥伴，長期為專案提供關鍵支持。旗艦位虛位以待，歡迎申請。',
+      moreTitle: '更多贊助商',
+      moreSub: '感謝這些持續支持本專案、並為使用者提供專屬優惠的贊助商。',
+      visitFlag: '使用專屬優惠訪問 →',
+      copyHint: '點選優惠碼一鍵複製。',
+      faqTitle: '常見問題',
+      faq: [
+        { q: '如何成為 superpowers-zh 的贊助商？', a: '郵件聯絡 jnMetaCode@qq.com，說明你的產品、目標人群和想要的展位形式。我們會回覆可選方案、素材要求和上線時間。' },
+        { q: '有哪些合作方案？', a: '分旗艦位與常規位兩檔：旗艦位在本頁頂部單獨成塊展示，常規位在「更多贊助商」卡片區。兩檔都含 GitHub 簡繁雙版 README 展位與官網三語站點露出。具體以郵件溝通為準。' },
+        { q: '談完多久可以上線？', a: '素材齊全後改動會隨下一次站點構建釋出 —— 本站接的是倉庫自動部署，推送即上線，通常當天可見。' },
+        { q: '需要準備哪些素材？', a: '一張橫版 banner（參考現有贊助位約 800×368，JPG / PNG）、一句話定位、一段 100 字左右的介紹、落地連結，以及給本專案使用者的專屬優惠碼或福利（可選）。' },
+      ],
+      listTitle: '目前贊助商',
+      listSub: '感謝他們持續支持本專案，並為本專案使用者提供專屬福利。',
+      perkTitle: '專屬福利彙總',
+      perkSub: '透過本頁連結註冊即可享受下列福利。',
+      thSponsor: '贊助商', thPerk: '專屬福利', thCode: '優惠碼', thGo: '前往',
+      goto: '前往 ↗', noCode: '—',
+      benefitTitle: '成為贊助商可以獲得什麼',
+      benefitSub: '面向 AI 編程開發者的精準展位 —— GitHub + 官網雙通道曝光。',
+      benefits: [
+        { icon: '📖', t: 'GitHub README 展位', d: '在簡體 / 繁體兩版 README 頂部展示 banner + 介紹文案，覆蓋 GitHub 上的全部訪客。' },
+        { icon: '🌐', t: '官網贊助商頁展示', d: '官網贊助商頁展示，導覽列常駐入口，中文 / EN / 繁體三語站點全部覆蓋。' },
+        { icon: '🎯', t: '精準開發者受眾', d: '本專案使用者是正在用 Claude Code / Cursor / Codex 等 23 款 AI 編程工具的開發者 —— 模型與 API 服務的直接買家。' },
+        { icon: '🎁', t: '專屬優惠碼展示', d: '你的專屬優惠碼 / 福利會在贊助商頁的「福利彙總」表裡單獨列出，方便使用者直接使用。' },
+      ],
+      ctaTitle: '想出現在這裡？',
+      ctaDesc: '歡迎郵件聯絡，我們會把展位形式、素材要求和上線時間一次說清。',
+      ctaBtn: '✉ jnMetaCode@qq.com',
+    },
     bookTitle: '裝好之後，配上方法論效率翻倍',
     bookDesc: '《AI 編程實戰 · 方法論三卷書》—— 10 個 AI 編程工具完整教程 + 真實踩坑。線上書 + PDF，永久免費。',
     bookBtn: '免費閱讀 ↗',
@@ -315,7 +517,7 @@ const T = {
     ctaDesc: '一條命令，{n} 個實戰方法論裝進你的工具。免費、開源、零依賴。',
     ctaBtn1: '查看安裝命令', ctaBtn2: '⭐ Star on GitHub',
     footCols: [
-      { h: '產品', links: [['特性', '#why'], ['Skills', '#skills'], ['支援工具', '#tools'], ['FAQ', '#faq']] },
+      { h: '產品', links: [['特性', '#why'], ['Skills', '#skills'], ['支援工具', '#tools'], ['FAQ', '#faq'], ['贊助商', 'sponsors.html']] },
       { h: '資源', links: [['GitHub', 'https://github.com/jnMetaCode/superpowers-zh'], ['npm', 'https://www.npmjs.com/package/superpowers-zh'], ['方法論三卷書', 'https://book.aibuzhiyu.com/']] },
       { h: '生態', links: [['aiOlaOla · 從零學會 AI 編程', 'https://aiolaola.com/?utm_source=sp1'], ['X / Twitter', 'https://x.com/jnMetaCode'], ['公眾號 AI不止語', 'https://aiolaola.com/'], ['姊妹專案', 'https://github.com/jnMetaCode']] },
       { h: '社群', links: [['提交 Issue', 'https://github.com/jnMetaCode/superpowers-zh/issues'], ['貢獻指南', 'https://github.com/jnMetaCode/superpowers-zh/blob/main/CLAUDE.md'], ['聯絡信箱', 'mailto:jnMetaCode@qq.com']] },
@@ -329,7 +531,7 @@ const T = {
     detailSource: '在 GitHub 查看原始檔 ↗',
     features: [
       { icon: '🧠', t: '20 個實戰方法論', d: '不是 prompt 範本，是經過跨會話對抗式壓力測試調優的工作方法論 —— 從頭腦風暴到 TDD、除錯、程式碼審查。' },
-      { icon: '🔌', t: '21 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全適配，換工具不用換習慣。' },
+      { icon: '🔌', t: '23 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全適配，換工具不用換習慣。' },
       { icon: '⚡', t: '一條命令安裝', d: 'npx superpowers-zh 自動識別專案裡用的是哪款工具並安裝，零設定，裝完重啟即生效。' },
       { icon: '🇨🇳', t: '中國原創 Skills', d: '中文程式碼審查話術、中文提交規範、中文文件排版、國內 Git 平台（Gitee/Coding/極狐）設定 —— 上游沒有。' },
       { icon: '📖', t: '完整漢化上游', d: '同步 obra/superpowers（250k+ ⭐），核心 skill 全部中文母語化，不是機翻，是逐條校準。' },
@@ -351,8 +553,8 @@ const T = {
     ],
     faq: [
       { q: 'superpowers-zh 是免費的嗎？', a: '完全免費。MIT 協議開源，永久免費，不含任何付費牆或訂閱。' },
-      { q: '支援哪些 AI 編程工具？', a: '共 21 款：Claude Code、Cursor、Windsurf、Codex CLI、Gemini CLI、Kiro、Trae、Qoder、CodeBuddy（騰訊）、CodeArts（華為雲碼道）、Cline、Aider、OpenCode、Qwen Code、Antigravity、DeerFlow、VS Code(Copilot)、Copilot CLI、Hermes Agent、Claw Code、OpenClaw。' },
-      { q: 'superpowers-zh 有哪些獨特價值？', a: '一套完整中文化的系統工作方法論：從頭腦風暴、規劃、TDD 到除錯、程式碼審查，每個 skill 都是實戰驗證的工作流；並疊加 4 個面向中國開發者的原創 skill（中文程式碼審查 / Git 工作流 / 文件規範 / 提交規範），適配 21 款 AI 編程工具。MIT 協議開源，永久免費。' },
+      { q: '支援哪些 AI 編程工具？', a: '共 23 款：Claude Code、Cursor、Windsurf、Codex CLI、Gemini CLI、Kiro、Trae、Qoder、CodeBuddy（騰訊）、CodeArts（華為雲碼道）、Aider、OpenCode、Qwen Code、Antigravity、DeerFlow、VS Code(Copilot)、Copilot CLI、Hermes Agent、Claw Code、OpenClaw、Cline、Kilo Code、Crush。' },
+      { q: 'superpowers-zh 有哪些獨特價值？', a: '一套完整中文化的系統工作方法論：從頭腦風暴、規劃、TDD 到除錯、程式碼審查，每個 skill 都是實戰驗證的工作流；並疊加 4 個面向中國開發者的原創 skill（中文程式碼審查 / Git 工作流 / 文件規範 / 提交規範），適配 23 款 AI 編程工具。MIT 協議開源，永久免費。' },
       { q: '安裝後怎麼生效？', a: 'npx 會把 skill 檔案裝到你專案對應工具的目錄（如 .claude/skills/），重啟 AI 工具後，它會在恰當時機自動觸發相應 skill —— 無需你每次手動呼叫。' },
       { q: '能一次裝好、所有專案都用嗎？（全域安裝）', a: '能。npx superpowers-zh --global 裝到工具的使用者級目錄（如 ~/.claude/skills），所有專案自動共享，更新時只需重裝一次。專案級優先、全域兜底，二者可共存。支援全域的工具（均為各工具文件確認的載入路徑）：Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode；其餘工具（含 Gemini / Antigravity，有各自專屬全域方式）請在專案內安裝或參考對應文件。' },
       { q: '會拖慢我的 AI 嗎？會上傳程式碼嗎？', a: '不會。skill 是按需觸發的純 Markdown，零執行時、不連網、不上傳任何程式碼或資料，全程在本機。' },
@@ -451,6 +653,7 @@ ${extraHead}</head>
     <a href="${base}index.html#skills">${t.nav.skills}</a>
     <a href="${base}index.html#tools">${t.nav.tools}</a>
     <a href="${base}index.html#faq">${t.nav.faq}</a>
+    <a href="${base}sponsors.html"${pageClean === 'sponsors' ? ' class="active" aria-current="page"' : ''}>${t.nav.sponsors}</a>
     <a href="https://aiolaola.com/?utm_source=sp1" target="_blank" rel="noopener">${t.nav.learn}</a>
     <a href="https://github.com/jnMetaCode/superpowers-zh" target="_blank" rel="noopener">${t.nav.github}</a>
     ${langSwitch}
@@ -472,7 +675,12 @@ ${body}
       <strong>superpowers<b>-zh</b></strong>
       <span>${t.footTag}</span>
     </div>
-    ${t.footCols.map(col => `<div class="foot-col"><h4>${col.h}</h4>${col.links.map(l => `<a href="${l[1]}"${l[1].startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${l[0]}</a>`).join('')}</div>`).join('')}
+    ${t.footCols.map(col => `<div class="foot-col"><h4>${col.h}</h4>${col.links.map(l => {
+      const ext = l[1].startsWith('http');
+      // 站内相对链接（如 sponsors.html）要按当前页面深度补 base；'#' 锚点与外链原样
+      const href = (ext || l[1].startsWith('#') || l[1].startsWith('mailto:')) ? l[1] : base + l[1];
+      return `<a href="${href}"${ext ? ' target="_blank" rel="noopener"' : ''}>${l[0]}</a>`;
+    }).join('')}</div>`).join('')}
   </div>
   <p class="copyright">${t.copyright}</p>
 </footer>
@@ -606,6 +814,128 @@ function renderLanding(skills, lang) {
 <script>window.__TOOLS__=${toolData};window.__I18N__={auto:${JSON.stringify(t.instNoteAuto)},manual:${JSON.stringify(t.instNoteManual)},copy:${JSON.stringify(t.copy)},copied:${JSON.stringify(t.copied)}};</script>`;
 }
 
+// ---- 赞助商独立页 ----
+// 首页不放任何赞助内容，全部收敛到这一页：旗舰位 → 常规位 → 福利汇总 → FAQ → 赞助权益。
+// tier: 'flagship' 的赞助商单独成块；没有 flagship 时该区块整体不渲染。
+function renderSponsors(lang) {
+  const t = T[lang];
+  const sp = t.sp;
+  const flagship = SPONSORS.filter(x => x.tier === 'flagship');
+  const standard = SPONSORS.filter(x => x.tier !== 'flagship');
+
+  const flagCards = flagship.map(s => `
+    <article class="sponsor sponsor-flag">
+      <a class="sponsor-shot" href="${esc(s.url)}" target="_blank" rel="sponsored nofollow noopener">
+        <img src="/assets/sponsors/${s.img}" alt="${esc(s.alt[lang])}" width="${s.w}" height="${s.h}" loading="lazy">
+      </a>
+      <div class="flag-body">
+        <h3>${esc(s.name[lang])}</h3>
+        <p class="flag-tag">${esc(s.tagline[lang])}</p>
+        <p class="flag-desc">${esc(s.desc[lang])}</p>
+        <div class="flag-foot">
+          <span class="sponsor-perk">${esc(s.perk[lang])}</span>
+          <a class="btn btn-primary" href="${esc(s.url)}" target="_blank" rel="sponsored nofollow noopener">${esc(sp.visitFlag)}</a>
+        </div>
+      </div>
+    </article>`).join('');
+
+  const cards = standard.map(s => `
+    <article class="sponsor-card">
+      <a class="sc-head" href="${esc(s.url)}" target="_blank" rel="sponsored nofollow noopener">
+        <span class="sc-logo"><img src="/assets/sponsors/${s.logo}" alt="" width="36" height="36" loading="lazy"></span>
+        <b>${esc(s.name[lang])}</b>
+        <span class="sc-ext" aria-hidden="true">↗</span>
+      </a>
+      <p class="sc-desc">${esc(s.desc[lang])}</p>
+      <button class="sc-toggle" type="button" aria-expanded="false" hidden>${esc(sp.expand)}</button>
+      <p class="sc-perk">${esc(s.perk[lang])}</p>
+      <a class="sc-go" href="${esc(s.url)}" target="_blank" rel="sponsored nofollow noopener">${esc(sp.goto)}</a>
+    </article>`).join('');
+
+  const rows = SPONSORS.map(s => `
+      <tr>
+        <td><b>${esc(s.name[lang])}</b></td>
+        <td>${esc(s.perkShort[lang])}</td>
+        <td>${s.code
+          ? `<span class="code-chip" data-copy="${esc(s.code)}"><code>${esc(s.code)}</code><button class="copy-btn" aria-label="${t.copy}">\u29c9</button></span>`
+          : sp.noCode}</td>
+        <td><a href="${esc(s.url)}" target="_blank" rel="sponsored nofollow noopener">${sp.goto}</a></td>
+      </tr>`).join('');
+
+  const faqs = sp.faq.map(f =>
+    `<details class="faq-item"><summary>${esc(f.q)}</summary><div class="faq-a">${esc(f.a)}</div></details>`).join('');
+
+  const benefits = sp.benefits.map(b =>
+    `<article class="feat"><div class="feat-icon">${b.icon}</div><h3>${esc(b.t)}</h3><p>${esc(b.d)}</p></article>`).join('');
+
+  // 没有 flagship 时不留白，改渲染一张「虚位以待」招商卡
+  const flagSection = `
+  <section class="sp-tier">
+    <h2 class="tier-title">${esc(sp.flagTitle)}</h2>
+    <p class="tier-sub">${esc(sp.flagSub)}</p>
+    ${flagship.length ? flagCards : `
+    <div class="flag-empty">
+      <h3>${esc(sp.emptyTitle)}</h3>
+      <p>${esc(sp.emptyDesc)}</p>
+      <a class="btn btn-primary" href="mailto:jnMetaCode@qq.com">${esc(sp.emptyBtn)}</a>
+    </div>`}
+  </section>
+`;
+
+  const moreSection = standard.length ? `
+  <section class="sp-tier">
+    <h2 class="tier-title">${esc(flagship.length ? sp.moreTitle : sp.listTitle)}</h2>
+    <p class="tier-sub">${esc(flagship.length ? sp.moreSub : sp.listSub)}</p>
+    <div class="sponsor-cards">${cards}</div>
+  </section>
+` : '';
+
+  return `
+<main id="top">
+  <section class="hero sp-hero">
+    <div class="badge">${sp.badge}</div>
+    <h1>${esc(sp.h1)}</h1>
+    <p class="lead">${esc(sp.lead)}</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="mailto:jnMetaCode@qq.com">${esc(sp.becomeBtn)}</a>
+      <a class="btn btn-ghost" href="index.html">${esc(sp.backBtn)}</a>
+    </div>
+  </section>
+${flagSection}${moreSection}
+  <section class="sp-perks">
+    <h2 class="section-title">${esc(sp.perkTitle)}</h2>
+    <p class="section-sub">${esc(sp.perkSub)}${sp.copyHint ? ' ' + esc(sp.copyHint) : ''}</p>
+    <div class="sp-table-wrap">
+      <table class="sp-table">
+        <thead><tr><th>${esc(sp.thSponsor)}</th><th>${esc(sp.thPerk)}</th><th>${esc(sp.thCode)}</th><th>${esc(sp.thGo)}</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <p class="sponsor-note">${t.sponsorNote}</p>
+  </section>
+
+  <section class="faq">
+    <h2 class="section-title">${esc(sp.faqTitle)}</h2>
+    <div class="faq-list">${faqs}</div>
+  </section>
+
+  <section class="why sp-benefits">
+    <h2 class="section-title">${esc(sp.benefitTitle)}</h2>
+    <p class="section-sub">${esc(sp.benefitSub)}</p>
+    <div class="feat-grid">${benefits}</div>
+  </section>
+
+  <section class="cta"><div class="cta-inner">
+    <h2>${esc(sp.ctaTitle)}</h2><p>${esc(sp.ctaDesc)}</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="mailto:jnMetaCode@qq.com">${esc(sp.ctaBtn)}</a>
+      <a class="btn btn-ghost" href="index.html">${esc(sp.backBtn)}</a>
+    </div>
+  </div></section>
+</main>
+<script>window.__I18N__={copy:${JSON.stringify(t.copy)},copied:${JSON.stringify(t.copied)},expand:${JSON.stringify(sp.expand)},collapse:${JSON.stringify(sp.collapse)}};</script>`;
+}
+
 // ---- skill 详情(操作文档)页正文 ----
 function renderDetail(skill, lang) {
   const t = T[lang];
@@ -617,7 +947,7 @@ function renderDetail(skill, lang) {
   const srcUrl = `https://github.com/jnMetaCode/superpowers-zh/blob/main/skills/${skill.name}/SKILL.md`;
   return `
 <main class="doc">
-  <a class="doc-back" href="index.html#skills">${t.backToSkills}</a>
+  <a class="doc-back" href="../index.html#skills">${t.backToSkills}</a>
   <header class="doc-head">
     <div class="doc-titles">
       <h1>${esc(title)}</h1>
@@ -632,7 +962,7 @@ function renderDetail(skill, lang) {
   </header>
   ${cnNotice}
   <article class="doc-body">${bodyHtml}</article>
-  <a class="doc-back" href="index.html#skills">${t.backToSkills}</a>
+  <a class="doc-back" href="../index.html#skills">${t.backToSkills}</a>
 </main>
 <script>window.__I18N__={copy:${JSON.stringify(t.copy)},copied:${JSON.stringify(t.copied)}};</script>`;
 }
@@ -653,30 +983,66 @@ function build() {
   copyFileSync(join(TEMPLATE, 'assets', 'qr-wechat.jpg'), join(DIST, 'assets', 'qr-wechat.jpg'));
   copyFileSync(join(TEMPLATE, 'assets', 'qr-douyin.jpg'), join(DIST, 'assets', 'qr-douyin.jpg'));
   copyFileSync(join(TEMPLATE, 'assets', 'qr-x.png'), join(DIST, 'assets', 'qr-x.png'));
+  mkdirSync(join(DIST, 'assets', 'sponsors'), { recursive: true });
+  for (const s of SPONSORS) {
+    for (const f of [s.img, s.logo].filter(Boolean)) {
+      copyFileSync(join(ROOT, 'assets', 'sponsors', f), join(DIST, 'assets', 'sponsors', f));
+    }
+  }
 
   // ---- 每种语言生成首页 + 全部 skill 详情页 ----
   for (const L of LANGS) {
     const t = T[L.code];
     const dirParts = L.dir ? [L.dir.replace(/\/$/, '')] : [];
-    const homeBase = L.dir ? '../' : '';
+    // base = 相对**当前语言根**的前缀：首页 ''、skill 详情页 '../'。
+    // （早先写成相对站点根，导致 /en/ 与 /zh-Hant/ 页面的导航/品牌链接全部跳回中文首页）
+    const homeBase = '';
     mkdirSync(join(DIST, ...dirParts, 'skills'), { recursive: true });
     // 首页
     writeFileSync(join(DIST, ...dirParts, 'index.html'), layout({
       lang: L.code, base: homeBase, title: t.title, desc: t.desc,
       body: renderLanding(skills, L.code), pageClean: '', pageFile: '',
     }));
+    // 赞助商页（每种语言一份，与首页同级）
+    writeFileSync(join(DIST, ...dirParts, 'sponsors.html'), layout({
+      lang: L.code, base: homeBase, title: t.sp.title, desc: t.sp.desc,
+      body: renderSponsors(L.code), pageClean: 'sponsors', pageFile: 'sponsors.html',
+    }));
     // skill 详情页
     for (const s of skills) {
       const title = L.code === 'en' ? s.titleEn : s.title;
       const desc = L.code === 'en' ? (s.descEn || s.desc) : s.desc;
       writeFileSync(join(DIST, ...dirParts, 'skills', `${s.name}.html`), layout({
-        lang: L.code, base: L.dir ? '../../' : '../',
+        lang: L.code, base: '../',
         title: `${title} · superpowers-zh`, desc,
         body: renderDetail(s, L.code),
         pageClean: `skills/${s.name}`, pageFile: `skills/${s.name}.html`,
       }));
     }
   }
+
+  // ---- 404 页 ----
+  // Cloudflare Pages：根目录存在 404.html 时，任何未匹配到静态文件的路径都会
+  // 返回它并带 **真正的 HTTP 404**（而非默认把首页当 SPA 兜底返回 200——那会让
+  // Google 把无数不存在的 URL 当成首页的重复页/软 404）。noindex 防止 404 页本身被收录。
+  // base 用 '/'：这一个文件会被任意深度的路径命中，导航链接必须是绝对路径。
+  writeFileSync(join(DIST, '404.html'), layout({
+    lang: 'zh', base: '/',
+    title: '页面找不到 (404) · superpowers-zh',
+    desc: '你访问的页面不存在或已被移动。',
+    extraHead: '<meta name="robots" content="noindex">\n',
+    pageClean: '', pageFile: '',
+    body: `<main class="doc" style="max-width:640px;margin:0 auto;padding:80px 20px;text-align:center">
+  <div style="font-size:64px;font-weight:800;letter-spacing:2px;opacity:.85">404</div>
+  <h1 style="margin:12px 0 8px">这个页面找不到了</h1>
+  <p style="opacity:.75;margin:0 0 28px">链接可能已过期或被移动。下面几个入口也许是你要找的：</p>
+  <p style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a class="btn" href="/">返回首页</a>
+    <a class="btn" href="/#skills">浏览全部 Skill</a>
+    <a class="btn" href="/#install">安装命令</a>
+  </p>
+</main>`,
+  }));
 
   // ---- SEO: robots.txt + sitemap.xml ----
   writeFileSync(join(DIST, 'robots.txt'),
@@ -686,6 +1052,7 @@ function build() {
   const urls = [];
   for (const L of LANGS) {
     urls.push(`/${L.dir}`);
+    urls.push(`/${L.dir}sponsors`);
     for (const s of skills) urls.push(`/${L.dir}skills/${s.name}`);
   }
   const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -747,8 +1114,8 @@ function build() {
     '/styles.css\n  Cache-Control: public, max-age=31536000, immutable\n' +
     '/app.js\n  Cache-Control: public, max-age=31536000, immutable\n');
 
-  const pages = LANGS.length * (1 + skills.length);
-  console.log(`✅ 生成 ${pages} 个页面：${LANGS.length} 语言（${LANGS.map(l => l.code).join('/')}）× (首页 + ${skills.length} 个 skill 详情页) → ${DIST}`);
+  const pages = LANGS.length * (2 + skills.length);
+  console.log(`✅ 生成 ${pages} 个页面：${LANGS.length} 语言（${LANGS.map(l => l.code).join('/')}）× (首页 + 赞助商页 + ${skills.length} 个 skill 详情页) → ${DIST}`);
 }
 
 build();

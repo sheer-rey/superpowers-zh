@@ -6,6 +6,467 @@
 
 ---
 
+## v1.7.10 (2026-08-12)
+
+**Aider 和 Kiro 用户请重新安装。** 本版本源于一次对「我们自己那层工具支持」的系统核查 —— 起因是 v1.7.9 修 Hermes 时发现：我们从支持它起就装错了目录。既然错过一次，就该问一句**还有几个**。
+
+答案是：又查出三个，全部是我们自己写的、全部没查过官方文档。
+
+### 🐛 Aider：两个错叠在一起，等于完全不可用
+
+**① 真实的 Aider 项目从来没被自动检测到过。**
+
+检测标记写的是 `.aider`，即要求存在一个 `.aider/` **目录** —— 而 Aider 根本不创建这个目录。它在项目根留下的是 `.aider.` 前缀的产物：`.aider.conf.yml`、`.aider.chat.history.md`、`.aider.tags.cache.v3/`。
+
+实测：造一个含这三样的真实 Aider 项目跑 `npx superpowers-zh`，输出「未检测到任何已知 AI 编程工具」。而文档一直写着「会自动检测 `.aider.conf.yml` 文件」—— **文档描述的是意图，代码做的是另一回事。**
+
+已改为认这四个标记。
+
+**② `CONVENTIONS.md` 不会被 Aider 自动加载。**
+
+代码注释和文档都断言「Aider 原生支持自动加载此文件」。[官方文档](https://aider.chat/docs/usage/conventions.html)说的是反的：必须 `aider --read CONVENTIONS.md`，或在 `.aider.conf.yml` 里写 `read: CONVENTIONS.md`。
+
+最糟的是文档「Skills 未生效」排障的第 3 条写着「Aider 会自动读取 CONVENTIONS.md，无需额外配置」—— **用户卡住时来查文档，看到的正好是让他继续卡住的那句。**
+
+改法照搬 v1.7.9 的 Hermes：装完打印可直接用的两种激活方式，**不替用户改 `.aider.conf.yml`**（那是他们的文件）。
+
+### 🐛 Kiro：错的方向正好相反 —— 每一轮烧 335 KB
+
+[Kiro 官方文档](https://kiro.dev/docs/steering/)明确：`.kiro/steering/` 下的文件**默认就是 `inclusion: always`**，"loaded into every Kiro interaction automatically"。
+
+而我们把 20 个 skill 的正文整个装了进去。实测 **47 个 md、335 KB，每一轮对话全量进上下文**。
+
+讽刺的是这个问题我们早解过 —— 当初给 Cline / Kilo Code 做适配时专门设计了「常驻位置只放索引、正文按需读取」（那次是 182 KB）。只是没意识到 Kiro 的 steering 是同一性质。现在照搬：
+
+| | v1.7.9 | v1.7.10 |
+|---|---|---|
+| steering 常驻 | 47 个 md / 335 KB | **1 个索引 / 4.4 KB** |
+| skill 正文 | `.kiro/steering/<name>/` | `.kiro/skills/<name>/`（按需读取） |
+
+**76 倍。** 升级路径是这次最要紧的一块：老用户通常直接重装而不会先卸载，不清旧布局的话新旧两份并存、335 KB 一点没减 —— 那就等于没修。所以安装时先清 `.kiro/steering/` 下与我们 skill 同名的目录，并打印清理了几个。**你自己写的 steering 文件不会被动**，已实测。
+
+另外文档里写的加载模式 `alwaysApply: true` / `globs: "*.ts"` —— 这两个键 **Kiro 文档里根本不存在**，是 Cursor / Trae 的约定被误写成了 Kiro 的。Kiro 实际用 `inclusion` / `fileMatchPattern`。已按官方文档重写整篇。
+
+### 🐛 Qoder：工具映射表是编的（[#119](https://github.com/jnMetaCode/superpowers-zh/issues/119)）
+
+报告人说 Qoder IDE 里没有 `general-purpose` 子智能体，而我们的 `qoder-tools.md` 白纸黑字写着有。查该文件的引入 commit —— **没有引用任何来源**。
+
+对照 [Qoder 官方子代理文档](https://docs.qoder.com/zh/cli/subagent)，4 行错了 2 行：`Explore → explore-agent`、`Plan → plan-agent` 都是错的，文档里就是**同名**；「Qoder 有内置 `code-reviewer`」也是编的（文档里的 `api-reviewer` 是用户自建示例）。
+
+但最关键的不是这几行 —— **那张表根本没标适用范围**。官方文档只覆盖 Qoder CLI，报告人用的是 Qoder IDE，两个产品面本来就不同，而我们的表让 IDE 用户当成了权威。已补适用范围、来源链接、核对日期，和一节 IDE/CLI 差异说明。
+
+### 🛡️ 把「拿代码测代码」的盲区堵上
+
+Aider 那个 bug 能在 90 项全绿的情况下活下来，是因为测试写的是 `mkdir .aider` 然后断言认出 Aider —— **拿代码测代码，真实标记一个都没测。**
+
+已补：
+
+- Aider 的三个真实标记进检测测试；`case` 分支加 `*.yml`（`.aider.conf.yml` 是文件不是目录，用目录冒充等于测了个假场景）
+- Kiro 两条硬回归守卫：steering 下**只能有 1 个 md**、常驻总字节 **< 20 KB**；外加升级路径断言（旧布局必须清掉、用户文件必须保留）。双向验证过 —— 模拟退回旧布局，两条断言都会失败
+
+`verify-release.sh` 90 → **101 pass**。
+
+### 📋 四个工具，四种失效方式
+
+| 工具 | 错法 | 后果 |
+|---|---|---|
+| Hermes（v1.7.9 已修） | 装到不被读的目录 | 完全不生效 |
+| Aider | 检测标记不存在 + 断言文件会自动加载 | 检测不到 + 装了不生效 |
+| Kiro | 正文放进每轮常驻的目录 | 每轮烧 335 KB |
+| Qoder | 映射表照着别家约定编 | 用户按错的工具名调用 |
+
+**四个都是我们自己那层写的，四个都没查官方文档。** 这已经不是个案。剩余工具的核查还在继续，会在后续版本陆续修。
+
+### ✅ 发版前门禁
+
+- `audit.sh` 166 pass / 0 warn / 0 fail
+- `verify-release.sh` 101 pass / 0 fail
+
+---
+
+## v1.7.9 (2026-08-11)
+
+**如果你在用 Hermes Agent，请重新安装。** 本版本之前我们对 Hermes 的支持是**坏的** —— 不是"不好用"，是装完完全不生效。
+
+### 🐛 Hermes：我们一直装错了目录（[#45](https://github.com/jnMetaCode/superpowers-zh/issues/45)）
+
+报告人说「项目级 `.hermes/skills/` 里的 20 个 skill 全部返回 404，必须手动复制到 `~/.hermes/skills/` 才被识别」。查[官方文档](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills)核实，他是对的：
+
+> Hermes 只自动加载 `~/.hermes/skills/`（原文称其为 "the primary directory and source of truth"），**项目级目录不会被自动发现**；外部目录必须写进 `~/.hermes/config.yaml` 的 `skills.external_dirs`。
+
+而我们从支持 Hermes 起就只装项目级 `.hermes/skills/` —— **那个目录 Hermes 根本不读**。装了 20 个 skill，一个都不生效，比不支持更糟：用户以为装好了。
+
+**改法：**
+
+- **全局成为推荐装法** —— `npx superpowers-zh --global --tool hermes` 装到 `~/.hermes/skills/`，装完即生效，`skills_list` 直接能看到 20 个 skill
+- **项目级保留**（skills 可以随仓库分发），但装完打印**可直接粘贴**的配置片段，带绝对路径：
+
+  ```yaml
+  skills:
+    external_dirs:
+      - /your/project/.hermes/skills
+  ```
+
+  **我们不替你改 `config.yaml`** —— 那是你的文件。文档里特意写明「配置里不存在的路径会被静默跳过」，所以写错不会报错、只会"没生效"，这个坑值得先说。
+
+**过程中拦住了一次自己猜路径：** 第一版全局实现把 `HERMES.md` 引导文件写到了 `$HOME` 根目录。Hermes 的用户级指令文件约定**没有公开文档** —— 那是在猜路径 + 污染用户主目录。已改为全局模式不写 bootstrap，并在文档里说明理由。实测：全局装完 `$HOME` 根目录 0 个新文件、卸载 0 残留。
+
+### 🔧 发版工具：`bump-version.sh` 缺 jq 时会静默改错
+
+本次发版时踩到：机器上没有 `jq`，脚本不报错退出，而是每个文件打一行 `command not found` 后**继续往下跑**，最后以 `unbound variable` 收场 —— 版本号一个都没写进去，但输出里混着 "Done."。已加前置检查：缺 `jq` 直接退出并给出安装命令。
+
+### ℹ️ #45 的后半部分未动（说明理由）
+
+#45 还提到 7 个 skill 文件里有 24 处硬编码的 Claude 工具名（`TodoWrite` / `Read` / `Bash` 等）。**本次不动**，理由：那属于行为塑造内容，且 `references/hermes-tools.md` 已有完整映射表。正确解法是强化「查映射表」的引用，而不是把正文改成某个 harness 专属的工具名 —— 那会伤到其余 22 款工具。
+
+### ✅ 发版前门禁
+
+- `audit.sh` 166 pass / 0 warn / 0 fail
+- `verify-release.sh` 90 pass / 0 fail（`--global` 支持清单 6 → 7 款，新增 hermes）
+
+---
+
+## v1.7.8 (2026-08-08)
+
+本版本源于一次**定位核查**：按「superpowers-zh 只是完整翻译上游 + 增加更多工具支持」这个定位，逐层比对我们与 [obra/superpowers](https://github.com/obra/superpowers) 的差异。结论是**定位基本站得住，但不完全** —— 查出 5 处偏离，全部修掉。
+
+### 🔍 核查方法
+
+1. **文件级**：上游 `skills/` 与我们逐文件比对，分出「仅上游有」「仅我们有」
+2. **内容级**：14 个翻译 skill 各自比对标题数（排除代码围栏）、表格行数、列表项数
+3. **溯源**：每处差异追查来源 —— 是声明过的 fork 增量，还是漏译／漏同步
+
+### 🐛 修掉的 5 处偏离
+
+**① `antigravity-tools.md` 上游有、我们没有**
+
+而 installer 里明明支持 Antigravity —— 该工具用户拿不到任何工具映射。影响是实质的：**Antigravity 没有 todo 工具**（`manage_task` 管的是后台进程），没这份映射，所有说「创建待办」的 skill 在它上面都会走偏。已翻译补入，并按上游同序列入平台适配清单。
+
+**② `finishing-a-development-branch` 漏同步 3 个 commit**
+
+C 块时的 commit 清单不全，漏了 `fbb6dba` / `bcfe798` / `9dff1a9`。其中 `9dff1a9` 是**行为变更**：上游把菜单从 4 个选项减为 3 个，**删掉了「丢弃这份工作」**，丢弃改为只在人类伙伴明确提出时才走的独立小节；基础分支判定也从盲跑 `merge-base` 改为「先确认，合并到错分支代价很高」。已照上游当前状态整体重译（一次拿到全部 4 个 commit），并断言 D 块的 worktree 修复完整保留。
+
+**③ `writing-plans` 漏译整节** —— 上游的 `Task Right-Sizing`（任务边界怎么划）我们完全没有。
+
+**④ `writing-skills` 四个问题** —— 漏译 H2 整节 `Match the Form to the Failure`（含「禁令在塑形类问题上会反噬」的实测结论）、漏译 H3 `Micro-Test Wording Before Full Scenarios`、**两个连续小节都编号为 4**、节名仍是过时的「Claude 搜索优化（CSO）」（上游早已改名 SDO），正文两处引用一并同步。
+
+**⑤ fork 增量插在了上游步骤序列中间**
+
+`executing-plans` 把「处理常见异常」插成步骤 3，于是上游的 `Step 3: Complete Development` 被挤成我们的「步骤 4」；`Remember` 也从上游的 6 条被加到 7 条。**这不是「不影响上游」，是改了上游的结构编号。**
+
+改为**外挂式**：增量移出步骤序列、挂在「何时停下来求助」之后（它本就是那节三种情形的展开），步骤编号恢复 1/2/3，`Remember` 恢复 6 条。
+
+### 🛡️ 让「不影响上游」成为可执行的检查
+
+README 声明会漂移，所以新增 **audit 3c-bis**：
+
+> 翻译 skill 的标题数必须等于「上游标题数 + 本文件里带标注的增量节数」
+
+增量节靠正文里一行标注声明（`本节是 superpowers-zh 的增量内容`），标注与内容同处一文件、不会各自漂移。**未标注就多出章节 = 隐性分叉，直接 FAIL。** 已双向验证：偷偷加一节会被拦下并给出可操作提示，加标注后放行。
+
+目前全仓仅 2 处带标注的增量：`executing-plans` 的「常见异常处理」、`using-superpowers` 的「中国特色技能路由」。
+
+### 🐛 修掉一个让守卫从未生效的 bug
+
+3c-bis 第一次测试**没拦住**。查出原因：`grep -c` 匹配到 0 个时输出 `"0"` 但**退出码为 1**，写成 `$(grep -c ... || echo 0)` 会拼出 `"0\n0"`，后续整数比较直接报错、检查静默失效。改用 `; true` 只吞退出码。
+
+全仓扫同一模式，**测试辅助里也有 3 处**（上游同样有）：`test-helpers.sh` 的 `assert_count`、`test-subagent-driven-development-integration.sh` 的 `task_count` / `todo_count`。后果是这些断言**永远无法正常失败** —— 模式没匹配到时比较报错而非判定失败。三处一并修掉并加注释。（`tests/` 不进 npm 包，仅开发使用。）
+
+修复后 audit 由 154 升到 **166 pass** —— 因为 3c-bis 现在真的对 14 个 skill 都跑了。
+
+### ✅ 核查后的定位现状
+
+**纯增量部分（符合定位）：**
+- 6 个 fork 专属 skill：`chinese-*` ×4 + `mcp-builder` + `workflow-runner`
+- 3 个 fork 专属 references：`copilot` / `hermes` / `qoder`（我们支持、上游不支持或已删的 harness）
+- 2 处带标注的翻译 skill 内增量
+
+**14 个翻译 skill 的上游各节现已全部逐节对应。**
+
+`scripts/audit.sh` **166 pass / 0 warn / 0 fail**、`scripts/verify-release.sh` **90 pass / 0 fail**。
+
+---
+
+## v1.7.7 (2026-08-08)
+
+### 🆕 新增 Crush 适配（工具数 22 → 23，关 #40）
+
+查权威源（[charmbracelet/crush](https://github.com/charmbracelet/crush) repo 文档）确认：Crush 遵循 **Agent Skills 开放标准**，项目级**自动发现**四个目录，无需任何配置：
+
+```
+.crush/skills    .agents/skills    .claude/skills    .cursor/skills
+```
+
+用户级为 `~/.config/crush/skills`，因此**支持 `--global`**。
+
+> ⚠️ **一个重要副作用：** 已经为 Claude Code / Cursor / Codex / Antigravity 装过 superpowers-zh 的用户，**Crush 现在就已经能读到那些 skills** —— 此时**不要**再装 `--tool crush`，否则同一批 skills 会有两份被重复加载。[docs/README.crush.md](https://github.com/jnMetaCode/superpowers-zh/blob/main/docs/README.crush.md) 里给了确认命令。
+
+skills-only 适配，不需要 bootstrap；**不动你的 `crush.json`**（四个自动发现目录已够用）。实测：装 20 skills / 二次装幂等 / 卸载零残留且正确保留用户的 `crush.json`；`--global` 装到 `~/.config/crush/skills` 并可干净卸载。
+
+### 🎯 上个版本新加的计数检查，第一次在真实改动里生效
+
+加 Crush 时漏改了 `site/build.mjs` 的 5 处计数（三语言标语 + FAQ 枚举）。v1.7.3 引入的 audit Category 5 **直接 FAIL 拦下**：
+
+```
+❌ 计数不一致: site/build.mjs「官网简体标语」= 22，应为 23
+❌ 计数不一致: site/build.mjs「官网 FAQ 枚举」= 22，应为 23
+... 共 5 条
+```
+
+已补 site 18 处并重建，三语言首页 23 计数、0 残留、Crush 均已出现。
+
+### 🔧 `verify-release.sh` 有同样的漂移问题，已修
+
+它有自己独立的覆盖清单 —— 加新工具时不进去就**静默不测**。本次 Crush 就是这样：分数仍是 82，因为压根没测它。
+
+- `SPEC` / `DETECT` / `GLOBAL_OK` 三处补 Crush
+- 顺带发现 B 段还漏了 **3 个工具**的检测标记：DeerFlow（`deer_flow`）、VS Code（`.github/copilot-instructions.md`）、Gemini CLI（`GEMINI.md`）—— 后两个是**文件而非目录**，原先的 DETECT 循环一律 `mkdir`，现按扩展名区分创建方式
+- **新增 G 段自检**：`SPEC` 覆盖数必须等于 installer 宣称的工具数；`DETECT` 覆盖的工具名集合必须包含全部 `TARGETS` 名字（用**集合比对**而非数条数 —— 一个工具可以有多个检测标记，数数会误判）
+
+覆盖从 **82 项升到 90 项**。
+
+### ✅ 验证
+
+`scripts/audit.sh` **152 pass / 0 warn / 0 fail**、`scripts/verify-release.sh` **90 pass / 0 fail**。
+
+---
+
+## v1.7.6 (2026-08-08)
+
+**上游 v6.2.0 对齐完成** —— [#19](https://github.com/jnMetaCode/superpowers-zh/issues/19) 的 C 块收尾，`scripts/audit.sh` 的上游结构漂移告警**清零**。
+
+### 🧾 盘点先行：其中 3 项不是风格性改动
+
+C 块表面上是 14 个 `refactor(skills)` commit（"drop social proof"、"drop The Bottom Line"、"fold into rationalization table"），看着像上游在统一自己的文风。开工前做了逐 commit 盘点，判定标准定为**「删掉的文字里有没有别处没写的规则」**——结论纠正了原本的假设：
+
+- **`cfb6281`** 新增了一张 rationalization 表（2 行**全新规则**），替换掉「与工作流的集成」那份清单
+- **`03147d2`** 给 `executing-plans` 加了「先确保隔离工作区」作为**步骤 1**（SDD 那一半已随 A 块完成）
+- **`bc86802`** 把「常见错误」5 个小节 + 「红线」Never/Always 双清单压成 5 行表，**规则一条不少**——这也是此前唯一有客观漂移证据的 skill
+
+### ✂️ 其余各项逐条核实后才删
+
+| skill | 删掉的 | 规则去哪了 |
+|---|---|---|
+| `receiving-code-review` | 「底线」 | 概述已有「核心原则：先验证再实施。先提问再假设」 |
+| `writing-skills` | 「总结」 | 铁律节 + TDD 循环表已完整承载 |
+| `writing-plans` | 「注意事项」 | 精确路径 / `Run:` / 预期输出 三条都**内建在任务结构模板**里——上游是把「告知」改成「示范」 |
+| `brainstorming` | 「核心原则」6 条 | 5 条已在流程详述逐条体现；YAGNI 按上游移到「探索方案」的使用现场 |
+| `systematic-debugging` | 「实际效果」+ 社会证明句 | 核心原则行保留；「相关技能」块折入第四阶段「验证修复」 |
+| `dispatching-parallel-agents` | 「核心优势」「实际效果」 | 验证节保留 |
+| `verification-before-completion` | 「为什么这很重要」「底线」 | 「证据先于宣称」核心原则行保留 |
+| `executing-plans` | 质量宣称、「集成」 | 按上游改写为平铺平台清单 |
+
+### ✅ 验证
+
+**结构**：10 个 skill 的 H2 数与上游逐一对齐（8 个完全相同、2 个差 1）；`executing-plans` / `using-git-worktrees` / `requesting-code-review` 的 `superpowers:` 引用集与上游**完全一致**。
+
+**行为 eval —— 两轮共 11 题全对。** 专门考被删段落里的规则是否仍生效：原生 worktree 工具 vs `git worktree add`（答出「第一大错误」与「幽灵状态」）、跳过 `check-ignore` 的后果、目录名优先级、基线失败能否继续、能否无证据宣称完成、审查建议有疑问时该照做还是反驳、能否先打补丁再查根因、能否自己读 diff 代替派审查者（命中 `cfb6281` 新增表行）、方案里的「以后可能用得上」怎么处理（命中 YAGNI 新落点）。
+
+**回归**：`scripts/audit.sh` **150 pass / 0 warn / 0 fail**、`scripts/verify-release.sh` **82 pass / 0 fail**。
+
+> audit PASS 由 152 降至 150 —— 上游有意删除的两个「集成」节里各有 `superpowers:` 引用，Category 4b 因此少 2 项检查；引用集已核对与上游一致。
+
+---
+
+## v1.7.5 (2026-08-07)
+
+对齐上游 v6.2.0 的 **B 块 + D 块**（[#19](https://github.com/jnMetaCode/superpowers-zh/issues/19)）。
+
+### 🐛 worktree 清理静默空转（真 bug，我们与上游同样存在）
+
+`finishing-a-development-branch` 的步骤 6 在步骤 5 已经 `cd` 到主仓库根之后，才用 `git rev-parse --show-toplevel` 重算 `WORKTREE_PATH` —— 于是拿到主根路径，`.worktrees/` 溯源判断**永远匹配不上**，清理静默空转，随后分支删除还会因为 worktree 仍挂着而失败。上游记录说测试对象不得不偏离 skill 原文才能跑通。
+
+修法：步骤 2 趁还在工作区内就捕获，步骤 6 消费该值并加显式警告说明为何不能重算；去掉步骤 6 冗余的 `MAIN_ROOT` 推导与 `cd`；选项 2 补上菜单已声称的分离 HEAD 推送变体。
+
+**已实际复现验证**（临时仓库 + `.worktrees/feature`）：旧逻辑算得 `main` → 溯源未命中 → 清理空转；新逻辑捕获到 `main/.worktrees/feature` → 命中 → `worktree remove` 与 `branch -D` 均成功。
+
+### 🐛 我们把 Gemini 的子智能体支持写错了
+
+`gemini-tools.md` 原文称 Gemini CLI 没有 Task 等价物、依赖子智能体的 skill「退化为 `executing-plans` 单会话执行」。**这是错的** —— Gemini CLI 通过 `invoke_agent`（`agent_name: "generalist"`，也可用 `@generalist` 聊天语法）支持子智能体，且支持同一响应内多调用并行分派。
+
+这个错误会让 Gemini CLI 用户的 `subagent-driven-development` / `dispatching-parallel-agents` / `requesting-code-review` 全部瘸腿。按上游重写（33 → 62 行），补齐指令文件层级加载、`~/.gemini/skills` 与 `~/.agents/skills` 优先级、模板填写、并行分派，以及此前缺失的 20 个工具名。已全仓扫描确认无别处重复该说法。
+
+### 🔄 `testing-anti-patterns.md` → `writing-good-tests.md`
+
+上游把 299 行的反模式枚举重写为 198 行的**两条原则**：
+
+- **原则 1「点名它要抓的破坏」** —— 写测试体前先答"什么生产改动会让它失败，那是 bug 还是决定"。含镜像断言、变更探测器、测行为不测文本、测你的代码不测框架
+- **原则 2「跑真东西」** —— mock 不配拥有断言、在正确层级 mock、替身要具体、完整镜像真实数据、生产类只承载生产方法
+- 新增**变异检查**：收尾前在脑中变异生产代码，每种现实变异都应至少让一个测试失败
+- 触发条件放宽到「编写或修改**任何**测试时」
+
+TDD SKILL.md 同步：删掉「为什么顺序很重要」整节长散文（论点折进合理化借口表，5 行扩写）、删掉末尾已失效的「测试反模式」一节。
+
+### 🔧 audit 结构漂移度量修正（此前一直在虚报欠账）
+
+`audit.sh` 用 `grep -cE '^#{1,4} '` 数标题，但这会把 ``` 围栏内的 shell 注释（`# 运行测试`）当成 markdown 标题 —— 多几行 bash 注释就能凭空造出「结构漂移」。
+
+用正确口径（awk 逐行跟踪围栏）重算 14 个 skill，3 条告警里 **2 条是假阳性**：
+
+| skill | 旧口径 | 新口径 |
+|---|---|---|
+| `executing-plans` | 9/16 **WARN** | 9/11 pass |
+| `finishing-a-development-branch` | 21/31 **WARN** | 14/17 pass |
+| `using-git-worktrees` | 21/28 WARN | 14/21 **WARN（真漂移）** |
+
+双向验证：给 `brainstorming` 加 5 个真标题会触发告警，加 5 行围栏内 shell 注释不触发。
+
+### ✅ 验证
+
+- 两个新/改文件章节均与上游一一对应；`writing-good-tests.md` 指标精确一致（12 bold 要点 / 11 行表格 / 11 条危险信号 / 14 项代码记号）
+- **行为 eval 8 个判断场景：8/8 全对**。附带一个有价值的对照：agent 拿不到 `writing-good-tests.md`、只能退回 SKILL.md 四条摘要时得分 6/8 —— 错的恰好是只存在于参考文件里的两条规则（部分 mock 静默失败、琐碎转发 getter 不配有测试）。说明参考文件承载着摘要覆盖不到的承重规则。
+- `scripts/audit.sh` **152 pass / 1 warn / 0 fail**（原 150/3）、`scripts/verify-release.sh` **82 pass / 0 fail**
+
+---
+
+## v1.7.4 (2026-08-07)
+
+### 🔄 SDD 同步上游 v6.2.0：plan 作用域工作区 + 基于唤回的修复循环（#19 A 块）
+
+对齐上游 `subagent-driven-development` 的 6 个 commit。这是 [#19](https://github.com/jnMetaCode/superpowers-zh/issues/19) 拆分后的 A 块 —— 注意 v1.7.1 刚对齐过 SDD，本次是那之后的**新增量**。
+
+**为什么脚本与文档必须整块一起改：** 我们的 SKILL.md 里写的是旧签名 `review-package BASE HEAD`。脚本换成 plan 作用域签名后若不同步改文档，agent 会照旧签名调用直接吃 usage 错误 —— 比不同步更糟。
+
+**plan 作用域工作区（结构性修复）**
+
+原先所有计划共用 `.superpowers/sdd/` 一个目录，一份过期账本被误读成当前进度会让控制者**跳过整段任务序列**（上游称之为观察到的最昂贵失败）。现在每个计划一个 `.superpowers/sdd/<计划文件名>/`，从结构上消除误读。账本新增身份行 `# SDD ledger — plan: <路径>`。
+
+- `sdd-workspace` / `review-package` 在我们这边与上游 v6.1.1 字节一致（从未汉化），直接取上游版
+- `task-brief` 只手工应用上游那两处改动，**保留 fork 适配**（awk 同时匹配 `Task N` 与 `任务 N`，因为本仓库 writing-plans 产出中文标题）
+
+**SKILL.md 全面重写（平铺 14 节 → 生命周期结构）**
+
+- **修复循环**：一轮 = 一次修复分派 + 一次定向复审，每任务上限五轮。第 1-3 轮**唤回原实现者**（context 完整），第 4-5 轮换全新实现者 + 高一档模型
+- **熔断**：第 5 轮仍有未解决发现则停止分派，逐条裁定 —— 搁置（附裁定）或在承重项上 BLOCKED。只在上限处裁定，提早裁定等于换名字的预先定性
+- Minor 发现与「计划要求的」发现两条路在循环外
+- 新增「常见的合理化借口」表取代原「红线」清单
+- 新增 `re-review-prompt.md`（106 行全文翻译）
+
+### 🧹 清除 v1.7.1 遗留的生成产物
+
+三个 SDD 文件末尾都残留着 `</content>` —— v1.7.1 那次重写（PR #108, `d7885ca`）留下的，上游没有。这些文件会整体进 agent 的 prompt，属于污染。已全部清除并全仓扫描确认无同类残留。
+
+### ✅ 验证（含行为 eval）
+
+**结构性核对**
+- 章节结构与上游 14 节一一对应；`superpowers:` 引用集与上游完全一致
+- 26 项关键技术记号（脚本签名、账本行格式、四种状态、`ADDRESSED`/`NOT ADDRESSED`、数值门槛）逐一确认存在，无漏译
+- 两个 dot 图节点/边数与上游精确一致（6/6 与 23/28），且**无幽灵节点、无孤立节点** —— 手工翻译 dot 标签最易在边里写错，会静默产生幽灵节点
+
+**脚本实测**（临时 git 仓库）
+- 两个计划各得独立目录；往 A 计划写 ledger 后 B 计划目录仍为空（关键回归）
+- `.gitignore` 落在 `.superpowers/sdd/` 层且 `git status` 干净
+- 中文「任务 2」与英文「Task 3」经新路径均抽取成功
+- `review-package` 旧签名正确报 usage 错误
+
+**行为 eval —— 新机制 7 个场景全对**
+
+考察译文是否真的传达了新规则（第 2 轮该唤回还是换新、第 4 轮模型档位、第 5 轮能否再开一轮、承重发现该搁置还是停下、Minor 走哪条路、遇到别的计划的账本怎么办、控制者能否自己修）：**7/7 正确**，连「运行环境无法唤回时才改派全新实现者」这个细节都答出。
+
+**集成 eval —— 真实 agent 的准备阶段**
+
+用 `tests/subagent-driven-dev/go-fractals` 脚手架跑真实执行的准备阶段，验证 agent 是否按**新签名**调脚本（旧习惯可能让它省掉 `PLAN_FILE`）：
+
+- ✔ 实际调用 `sdd-workspace plan.md`，带上了 PLAN_FILE 参数
+- ✔ 同时检查了 plan 作用域账本**和**旧扁平路径的游离账本
+- ✔ 账本第一行为正确的身份行
+- ✔ 工作区落在 `.superpowers/sdd/plan/`，未在旧扁平路径写账本
+- ✔ 起飞前冲突扫描产出 5 条**打包成一次**的提问（而非逐条打断）
+- ✔ 建了 10 条待办，并按指令在分派实现者前停下
+
+**回归**：`scripts/audit.sh` 150 pass / 0 fail、`scripts/verify-release.sh` 82 pass / 0 fail。SDD 已从 audit 的上游漂移警告里消失（结构层级现已对齐）。
+
+> audit PASS 由 153 降至 150，是上游有意删除 Integration 一节（原列 `executing-plans` / `test-driven-development` / `writing-plans` 三个引用）导致 Category 4b 少 3 项引用检查，非静默跳过。
+
+---
+
+## v1.7.3 (2026-08-07)
+
+### 🐛 同步上游两处纯代码修复（对齐 v6.1.1 → v6.2.0 时挑出）
+
+两个文件在我们这边都与上游 v6.1.1 **字节一致**（从未汉化改动），因此可直接取上游版 —— 无需翻译、无需 eval。
+
+- **`hooks/hooks.json` 加 `"shell": "bash"`**（上游 `5151e7a`）：SessionStart hook 在 Windows 上原先不经 Git Bash 分发。我们的 hooks.json 与上游除这一行外完全相同。这条直接改善 Windows 用户的 bootstrap 可靠性 —— **bootstrap 不加载，skill 就是死重**。
+- **`skills/systematic-debugging/find-polluter.sh`**（上游 `6015d37`、`c8921b5`）：修三个真 bug，已逐个实测新旧版对比：
+  - pattern 带 `./` 前缀时匹配不到（`find .` 输出 `./` 前缀路径）：旧 1 个 → 新 2 个
+  - `-path` 的 `**/` 无法匹配零层目录，`src/**/*.test.ts` 漏掉 `src/top.test.ts`：旧 1 个 → 新 2 个
+  - 完全无匹配时计数为 1 而非 0（`echo` 空串仍算一行）：旧 1 → 新 0
+
+### 🧪 新增工具计数一致性检查（audit Category 5，+24 项）
+
+加一款工具要同步简繁 README（各 6 处）、`package.json`、`CLAUDE.md`、`site/build.mjs`（三语言 15 处）、3 份 plugin manifest —— v1.7.2 全靠人工 grep 才没漏。现在从 installer 的 `TARGETS` 推导期望值并逐处断言，另加两条结构性检查：README 工具表行数必须等于宣称数、Category 2 实际测试的工具数必须等于宣称数（**宣称了就必须测**）。
+
+已验证会拦：把标题改成 23 款、删掉一行工具表，两种漂移都被抓到。
+
+口径写进注释：`TARGETS` 是「安装目标」共 21 个；Copilot CLI 与 CC 共用 `.claude/skills`（别名映射过去）不占独立条目，但文案里作为独立产品单独计数，所以「文案数 = TARGETS 数 + 1 = 22」。
+
+### 🐛 修 bash 3.2 下 CJK 报错信息乱码
+
+macOS 自带 bash 3.2.57 解析标识符时不识别多字节字符，`$file「` 会把「的首字节 `0xE3` 吞进变量名，导致变量展开为空且字符被截断。报错信息变成「计数不一致: ����= ��应为 22」—— **只在检查失败时才暴露，写检查的人看不到**。
+
+复现：`bash -c 'f=README.md; echo "文件: $f「标签」结束"'` → `文件: ��标签」结束`
+
+修法是给紧跟 CJK 标点的变量加花括号。全仓扫描 `$var` 紧跟非 ASCII 字节的模式，命中 3 处（audit.sh 2 处、verify-release.sh 1 处 —— 后者因为检测项一直全通过，从没暴露过）。
+
+### 🧹 其他
+
+- `.gitignore` 补上 `.cline/`、`.clinerules/`、`.kilocode/` —— 与 `.trae/`、`.qoder/` 一致，避免在本仓库内自测安装器留下未跟踪文件。
+- 官网 `site/build.mjs` 工具计数 20 → 22，三语言 FAQ 枚举补入 Cline、Kilo Code（v1.7.2 发了但站点没跟）。
+
+### ✅ 验证
+
+- `scripts/audit.sh`：**153 pass / 0 fail**（3 项 warn 为上游漂移，见 #19）
+- `scripts/verify-release.sh`：**82 pass / 0 fail**
+- SessionStart hook 冒烟：退出码 0，输出正确的 SessionStart JSON
+- npm 包端到端：pack → 从 tarball 安装 → 真实跑安装器 → 卸载零残留
+
+> ⚠️ audit 的上游漂移 warn 从 2 条变 3 条（新增 `using-git-worktrees`），且 `executing-plans` / `finishing-a-development-branch` 的上游 H 值有变化 —— 这是本次 `git fetch upstream` 把对比基准从旧快照更新到 **v6.2.0** 导致的，不是代码改动引起。
+
+---
+
+## v1.7.2 (2026-08-07)
+
+### 🆕 新增 Cline 与 Kilo Code 适配（工具数 20 → 22，关 #112、#88）
+
+两款都是 VS Code 扩展，加载的是 **rules 而非懒加载的 skills** —— rules 会并入**每一轮** system prompt。照搬「把 20 个 SKILL.md 复制进规则目录」会让每轮对话背着 **182 KB** 常驻开销（Cline 官方也提示规则超约 300 行后遵守度下降）。
+
+改用仓库既有的 **Trae 模式**：规则目录只放一份索引（核心规则 + 20 个 skill 的名称/触发条件表，实测 **4.5 KB**，比全量塞入小 40 倍），skills 本体放各自 `skills/` 目录由 agent 按需读取。
+
+- **Cline**：skills → `.cline/skills/`，索引 → `.clinerules/superpowers-zh.md`。不写 YAML frontmatter —— Cline 目前只支持 `paths` 一个条件字段，无 frontmatter 即始终生效。索引保持在 `.clinerules/` 根层单文件（子目录是否递归扫描官方未说明）。
+- **Kilo Code**：skills → `.kilocode/skills/`，索引 → `.kilocode/rules/superpowers-zh.md`。**有意不走 v7 推荐的 `.kilo/rules/` + `kilo.jsonc`** —— 后者需把路径登记进用户的 `kilo.jsonc`（带注释的 JSONC，安装器安全合并容易改坏用户配置）。官方明确 `.kilocode/rules/` 向后兼容且零配置生效，故选它；docs 里写明了想迁到 v7 该改哪一行，以及万一没生效如何反馈。
+- 两者均**无 `--global`**：Cline 全局 rules 路径随 OS 变（`~/Documents/Cline/Rules`，Linux/WSL 还有 `~/Cline/Rules` 回退），Kilo 全局同样要走 `kilo.jsonc` 登记 —— 不是通用复制机制能可靠命中的，`--global` 明确拒绝并指向 docs，绝不写无效路径。
+- 路径依据：[docs.cline.bot](https://docs.cline.bot/customization/cline-rules)、[kilo.ai](https://kilo.ai/docs/customize/custom-rules)。
+
+### 🔧 检测落空时给出针对性建议（关 #48）
+
+装了 opencode / codex 但项目里没留下标记目录时，原先只报「未检测到任何已知 AI 编程工具」，用户无从判断下一步。
+
+- 新增 PATH 探测：检测落空时扫 PATH 找已安装的 CLI，直接打印可复制的 `--tool` 命令。
+- **只提示、不自动安装** —— 自动装错工具正是 #33 修掉的问题：PATH 上装了不代表这个项目要用它。
+- `isOnPath()` 只查文件是否存在，**不 spawn 进程**（不在用户机器上执行探测命令）；Windows 下遍历 `PATHEXT`。
+- `--global` 模式只建议支持全局的工具，不推荐装不了的。
+- 健壮性已测：`PATH` 为空 / 含空段 / 未定义三种退化情形均优雅退出 1，无未捕获异常。
+
+### 📄 文档
+
+- **补充 plugin marketplace 安装方式（关 #39）**：`.claude-plugin/marketplace.json` 从 v1.7.x 起就存在且可用，但 README 从未写过怎么用。已实测 `plugin validate` / `marketplace add jnMetaCode/superpowers-zh`（GitHub 直连克隆）/ `plugin install` 全链路通过，安装缓存内含全部 20 个 SKILL.md。简繁 README 新增「方式二」，原手动安装与配置文件引用顺延为方式三 / 四。
+- **修正 Copilot CLI 在 Windows 的工具面（关 #93）**：`copilot-tools.md` 原先只记 `bash` + `async:true` 一套，但 Windows 实测（Copilot CLI 1.0.69-1）注册的是 `powershell` + `detach`，没有 `bash`/`async` 家族。现拆成两张表并注明「两套不会同时出现」，补充两个坑：`.sh` 需显式走 Git Bash；`stop_powershell` 停不掉 `detach:true` 的进程，需按真实 Windows PID（非 MSYS PID）`Stop-Process`。
+- 新增 `docs/README.cline.md`、`docs/README.kilocode.md`。
+- 修正 installer 报错文案里失效的章节锚点（改为指向父级 `#快速开始`，不再依赖会变的章节编号）。
+- 计数 20 → 22 同步：简繁 README、`package.json`、`CLAUDE.md`、3 份 plugin manifest。
+
+### ✅ 验证
+
+- `scripts/audit.sh`：**130 pass / 0 fail**（2 项 warn 为既有上游漂移，见 #19）
+- 发版前深度验证（比 audit 严，断言实际落盘而非只看退出码）：**82 项全通过**
+  - 22 款工具：装 → 断言 20 个 skill 落盘 → 二次装幂等 → 卸载后零残留；无 `skills/skills` 嵌套
+  - 19 个检测标记逐一验证只触发预期工具，既有 20 款检测结果与改动前一致
+  - `--global`：7 款成功、14 款明确拒绝且退出码 1；拒绝信息引用的 8 份 docs 均存在
+  - bootstrap 索引断言：表行数 = 20、无空 description、Cline 无 frontmatter、路径指向正确
+- **npm 包端到端**：`npm pack` → 从 tarball 装 → 用打包后的二进制真实跑 Cline 自动检测 → 20 skills + 索引生成 → 卸载零残留
+
+---
+
 ## v1.7.0 (2026-07-13)
 
 ### 🆕 新增两款国产 IDE 工具支持（工具数 18 → 20）
