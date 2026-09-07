@@ -241,7 +241,8 @@ const CODING_PRINCIPLES = `## 编码原则
 1. **不要假设** — 不确定时提问，公开说明取舍，发现更简单方案时指出
 2. **保持简单** — 只写解决问题所需的最少代码，不添加未请求的功能或推测性抽象
 3. **手术式改动** — 只改必须改的地方，不"顺便重构"相邻代码，保留现有风格
-4. **定义成功标准** — 明确可验证的目标再动手，不模糊完成任务`;
+4. **定义成功标准** — 明确可验证的目标再动手，不模糊完成任务
+5. **注释语言** — 编写代码/脚本/配置类文件时，注释一律使用英文`;
 
 function wrapWithSentinel(body) {
   return `${SENTINEL_BEGIN}\n${body.replace(/\n+$/, '')}\n${SENTINEL_END}\n`;
@@ -300,12 +301,9 @@ function generateClineBootstrapRule(projectDir) {
 
 你已加载 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
 
-## 核心规则
+${CORE_RULES}
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -362,12 +360,9 @@ inclusion: always
 
 你已加载 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
 
-## 核心规则
+${CORE_RULES}
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -406,12 +401,9 @@ function generateKiloCodeBootstrapRule(projectDir) {
 
 你已加载 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
 
-## 核心规则
+${CORE_RULES}
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -622,12 +614,9 @@ function generateQwenBootstrap(baseDir, isGlobal) {
 
 ${scope}（${skillEntries.length} 个 skills）。
 
-## 核心规则
+${CORE_RULES}
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -678,12 +667,9 @@ description: superpowers-zh 技能框架的索引与触发规则
 
 本项目已安装 superpowers-zh 技能框架（${skillEntries.length} 个 skills）。
 
-## 核心规则
+${CORE_RULES}
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -717,12 +703,9 @@ function generateClawBootstrap(projectDir) {
 
 ${scope}（${skillEntries.length} 个 skills）。
 
-## 核心规则
+${CORE_RULES}
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -850,12 +833,9 @@ function generateClaudeCodeBootstrap(baseDir, isGlobal) {
 
 ${scope}（${skillEntries.length} 个 skills）。
 
-## 核心规则
+${CORE_RULES}
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
@@ -908,12 +888,9 @@ function generateDeepSeekHarnessBootstrap(baseDir, isGlobal) {
 
 ${scope}（${skillEntries.length} 个 skills）。
 
-## 核心规则
+${CORE_RULES}
 
-1. **收到任务时，先检查是否有匹配的 skill** — 哪怕只有 1% 的可能性也要检查
-2. **设计先于编码** — 收到功能需求时，先用 brainstorming skill 做需求分析
-3. **测试先于实现** — 写代码前先写测试（TDD）
-4. **验证先于完成** — 声称完成前必须运行验证命令
+${CODING_PRINCIPLES}
 
 ## 可用 Skills
 
