@@ -66,7 +66,8 @@
     if (!t) return;
     cmdText.textContent = t.cmd;
     cmdBox.setAttribute('data-copy', t.cmd);
-    var tpl = t.auto ? I18N.auto : I18N.manual;
+    // mode: auto（自动识别）/ manual（必须 --tool）/ global（只有 --global 才生效）
+    var tpl = I18N[t.mode] || I18N.manual;
     if (note && tpl) note.innerHTML = tpl.replace('{name}', escapeHtml(t.name));
   }
   if (sel && note) {

@@ -1,0 +1,15 @@
+{
+  "$comment": [
+    "记录本 fork 上一次完成上游同步时对齐到的 upstream commit。",
+    "为什么需要它：audit 对已翻译文件只比「标题数」，正文改多少行都看不见 ——",
+    "上游 v6.3.0 给 subagent-driven-development 加了 113 行，我们这边一声不吭。",
+    "有了基线，audit 才能算出「自上次同步以来上游改了哪些文件、各多少行」。",
+    "同步完成后更新 commit / version / date 三个字段。"
+  ],
+  "upstream": "https://github.com/obra/superpowers",
+  "commit": "3dcbd5c4b48e02263fbf4a3c01e3fe4f81d584d9",
+  "version": "v6.2.0",
+  "date": "2026-08-12",
+  "evidence": "RELEASE-NOTES.zh.md v1.7.9 记「上游 v6.2.0 对齐完成」（issue #19 的 A/B/C/D 四块）；把 upstream/main 指回该 commit 后 audit 170 pass / 0 warn / 0 fail。",
+  "trackedPaths": ["skills", "hooks"]
+}

@@ -23,6 +23,10 @@ jobs:
     steps:
       # Action 全部 SHA 固定（防供应链/标签劫持，因本 job 持有可写的 Cloudflare token）
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          # sitemap 的 lastmod 按「每页对应源文件的最后提交日期」生成，需要完整历史。
+          # 默认的浅克隆只有一个提交，按路径查会全部返回同一天，等于退回旧行为。
+          fetch-depth: 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 20

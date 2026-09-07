@@ -186,7 +186,6 @@ section { max-width: var(--maxw); margin: 0 auto; padding: 80px 24px; }
   background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
   color: var(--text); font-size: 15px;
 }
-#search:focus { outline: none; border-color: var(--accent); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .chip {
   padding: 7px 15px; border-radius: 100px; font-size: 13px; cursor: pointer;
@@ -357,6 +356,56 @@ footer { border-top: 1px solid var(--border-soft); margin-top: 40px; padding: 40
 .flag-body h3 { font-size: 19px; font-weight: 700; }
 .flag-tag { font-size: 13.5px; color: var(--accent-2); font-weight: 600; margin: 6px 0 12px; }
 .flag-desc { font-size: 14px; color: var(--text-dim); line-height: 1.75; }
+/* 跳到主要内容：键盘用户不必每页 Tab 过整个导航。平时移出视口，获得焦点时落回来 */
+.skip-link { position: absolute; left: 12px; top: -60px; z-index: 999;
+  padding: 10px 16px; border-radius: 0 0 10px 10px;
+  background: var(--accent); color: #0b0d14; font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: top .16s; }
+.skip-link:focus { top: 0; }
+
+/* 焦点可见：#search 原来写了 outline:none，键盘用户看不到焦点落在哪（WCAG 2.4.7）。
+   改成只在键盘导航时（:focus-visible）画环，鼠标点击不出现，兼顾观感与可达性。 */
+:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; border-radius: 4px; }
+#search:focus { outline: none; border-color: var(--accent); }
+#search:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+
+/* 尊重「减少动效」偏好：站上有 18 处 transition 与 14 处 transform，
+   前庭障碍用户需要能关掉。 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* hero 下方的版本提示条：本版最重要的一句话（谁该重装）此前官网完全没有 */
+.release-note { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  max-width: 720px; margin: 20px auto 0; padding: 9px 16px; border-radius: 999px;
+  background: var(--card); border: 1px solid var(--border-soft);
+  color: var(--text-dim); font-size: 13.5px; line-height: 1.6; text-decoration: none;
+  transition: border-color .18s, color .18s; }
+.release-note:hover { border-color: var(--accent-2); color: var(--text); }
+.rn-ver { flex: 0 0 auto; padding: 2px 9px; border-radius: 999px; font-weight: 700; font-size: 12.5px;
+  background: var(--accent-2); color: #0b0d14; }
+.rn-text { flex: 1 1 auto; min-width: 0; text-align: left; }
+.rn-go { flex: 0 0 auto; }
+@media (max-width: 620px) { .release-note { border-radius: 14px; text-align: left; } }
+
+/* 工具墙：有专属安装文档的 pill 可点，右上角一个 ↗ */
+.tool-pill.has-doc { text-decoration: none; cursor: pointer; transition: border-color .18s, transform .18s; }
+.tool-pill.has-doc:hover { border-color: var(--accent-2); transform: translateY(-1px); }
+.tool-doc { margin-left: 6px; font-size: 11px; color: var(--text-faint); }
+.tool-pill.has-doc:hover .tool-doc { color: var(--accent-2); }
+
+/* 旗舰卡的要点分段：图标定宽一列，标题与说明同一行起排 */
+.flag-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.flag-points li { display: flex; gap: 10px; align-items: flex-start; }
+.flag-points .fp-icon { flex: 0 0 auto; font-size: 15px; line-height: 1.6; }
+.flag-points li > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.flag-points b { font-size: 14px; font-weight: 650; color: var(--text); }
+.flag-points span:not(.fp-icon) { font-size: 13.5px; color: var(--text-dim); line-height: 1.7; }
 .flag-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
 .flag-foot .sponsor-perk { margin: 0; flex: 1 1 320px; }
 .flag-foot .btn { flex: 0 0 auto; padding: 10px 20px; font-size: 14px; }

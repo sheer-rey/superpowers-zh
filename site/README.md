@@ -37,10 +37,10 @@ dist/
 | Skill 正文 / 文档内容 | **源头** `skills/<name>/SKILL.md`（改完重新 `node site/build.mjs`） |
 | Skill 中/英标题、英文简介、分组 | `site/build.mjs` 的 `SKILL_META` |
 | 首页所有文案（中/英） | `site/build.mjs` 的 `T.zh` / `T.en` |
-| 支持工具 / 安装命令 | `site/build.mjs` 的 `TOOLS`（与 `bin/superpowers-zh.js` 的 `TARGETS` 对齐） |
+| 支持工具 / 安装命令 | `site/build.mjs` 的 `TOOLS`（与 `bin/superpowers-zh.js` 的 `TARGETS` 对齐；每条的 `mode` = `auto` 自动识别 / `manual` 必须 `--tool` / `global` 只有 `--global` 才生效）。条目数由 `scripts/audit.sh` 卡死 = TARGETS 条目数 + 1（Copilot CLI 单独计数） |
 | 赞助商（logo / banner / 文案 / 链接 / 优惠码） | `site/build.mjs` 的 `SPONSORS`（`logo` 小图标 + `img` 大 banner 都放 `assets/sponsors/`，构建时自动拷进 `dist/assets/sponsors/`）——首页不放赞助内容，全部在 `sponsors.html`。**改完同步改 README.md / README.zh-Hant.md 的赞助商区块** |
 | 赞助商页文案 / 赞助权益 / 赞助 FAQ | `site/build.mjs` 的 `T.<lang>.sp` |
-| 谁上旗舰位 | `SPONSORS` 里该条的 `tier`：`'flagship'` 用大 banner 单独成块（读 `img`），其余是紧凑卡（读 `logo`，简介截 4 行）；没有 flagship 时该区块渲染成「虚位以待」招商卡 |
+| 谁上旗舰位 | `SPONSORS` 里该条的 `tier`：`'flagship'` 用大 banner 单独成块（读 `img` + `w` / `h`，**不读 `logo`**），其余是紧凑卡（读 `logo`，简介截 4 行）；没有 flagship 时该区块渲染成「虚位以待」招商卡。改 tier 时字段要跟着换 —— 构建期 `assertSponsors()` 会校验字段齐全、素材文件存在、三语文案不缺，缺了直接构建失败 |
 | 样式 / 主题 | `site/template/styles.css` |
 | 交互逻辑 | `site/template/app.js` |
 | Markdown 渲染规则 | `site/md.mjs` |

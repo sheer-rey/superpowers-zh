@@ -114,11 +114,27 @@ if [ "$QUICK" != "1" ]; then
 hdr "Category 2: Installer 功能测试（23 款工具）"
 #==============================================================================
 
-declare -a TOOLS=(claude cursor codex kiro deerflow trae antigravity vscode openclaw windsurf gemini aider opencode qwen hermes claw copilot qoder codebuddy codearts cline kilocode crush)
+declare -a TOOLS=(claude cursor codex kiro deerflow trae antigravity vscode openclaw windsurf gemini aider opencode qwen hermes claw copilot qoder codebuddy codearts cline kilocode crush zcode dsh)
+
+# 只有用户级路径有官方出处的工具（项目级路径官方未公开，我们不猜）——
+# 对它们，项目级安装**必须被明确拒绝**，而不是装到一个猜出来的目录里。
+declare -a GLOBAL_ONLY=(zcode)
 
 for tool in "${TOOLS[@]}"; do
   TMP=$(mktemp -d)
   pushd "$TMP" >/dev/null
+
+  # 全局-only 工具：断言「拒绝 + 退出码非 0 + 项目里零写入」，然后跳过后续项目级断言
+  case " ${GLOBAL_ONLY[*]} " in
+    *" $tool "*)
+      out=$(node "$INSTALLER" --tool "$tool" 2>&1); rc=$?
+      wrote=$(find . -type f | wc -l | tr -d ' ')
+      if [ "$rc" != "0" ] && echo "$out" | grep -q "不支持项目级安装" && [ "$wrote" = "0" ]; then ok; else
+        bad "Installer: $tool 是全局-only，项目级应明确拒绝（退出码非 0、零写入），实际 rc=$rc 写入 $wrote 个文件"
+      fi
+      popd >/dev/null; rm -rf "$TMP"; continue
+      ;;
+  esac
 
   if ! node "$INSTALLER" --tool "$tool" >/dev/null 2>&1; then
     bad "Installer: $tool 安装失败"
@@ -217,9 +233,57 @@ else
       ok
     elif [ "$delta" -gt "$declared" ]; then
       bad "未声明的 fork 增量: ${s} 比上游多 ${delta} 节，但只声明了 ${declared} 节 —— 给增量节加上「${FORK_MARK}」标记，或回归上游"
+    else
+      # delta < declared = 上游加了章节而我们没跟。
+      # 这一支原来既不 ok 也不 bad —— 什么都不计。于是上游一发新版，PASS 总数就
+      # 悄悄少一条，而「少的是哪一节」没有任何人看得见（v6.3.0 给 brainstorming
+      # 加了 2 节，就是这么溜过去的）。3c 的漂移检查容忍 ≤3 节，正好把这种小幅
+      # 落后一起放过 —— 两道网都漏。现在明确报出来。
+      warn "落后上游: ${s} 比上游少 $((declared - delta)) 节（上游 H=${up}, 我们 H=${our}, 已声明 fork 增量 ${declared} 节）—— 上游新增内容待同步"
     fi
-    # delta < declared 由 3c 的漂移检查覆盖，此处不重复报
   done
+
+  # 3f. skill 正文里不得出现上游的 `superpowers:` 技能前缀
+  #
+  # 本插件在 .claude-plugin/plugin.json 里叫 superpowers-zh，Claude Code 按
+  # 「<插件名>:<技能名>」注册插件技能 —— 照抄上游的 `superpowers:xxx` 会得到
+  # 「Unknown skill」（#124，插件市场用户实测）。而 npx 装进 .claude/skills/ 时是
+  # 项目级技能、按**裸名**调用（安装器生成的 bootstrap 列的就是裸名）。
+  # 结论：正文一律用裸技能名，两种分发模式都能解析。
+  #
+  # 这条门禁不能省：上游正文里全是 `superpowers:`，每次同步都会把它带回来。
+  stale_prefix=$(grep -rno "superpowers:[a-z][a-z-]*" "$ROOT/skills" 2>/dev/null | grep -v "superpowers-zh:" | wc -l | tr -d ' ')
+  if [ "${stale_prefix:-0}" = "0" ]; then ok; else
+    bad "skill 正文里有 ${stale_prefix} 处上游前缀 superpowers: —— 插件模式下会 Unknown skill（#124）。改成裸技能名：grep -rn 'superpowers:[a-z]' skills/"
+  fi
+
+
+  # 3e. 正文级上游漂移：自上次同步基线以来，上游动了哪些我们镜像的文件
+  #
+  # 3c/3c-bis 只比标题数 —— 上游把一节正文重写 50 行、标题数不变，我们这边完全
+  # 看不见。v6.3.0 给 subagent-driven-development 加了 113 行就是这么溜过去的。
+  # .upstream-sync.json 记着上次同步对齐到的 commit，据此把「欠同步的量」算成数字。
+  # 报 warn 不报 fail：同步是有计划的内容工作，不该卡住每一次构建。
+  SYNC_FILE="$ROOT/.upstream-sync.json"
+  if [ -f "$SYNC_FILE" ] && command -v node >/dev/null 2>&1; then
+    base=$(node -p "require('$SYNC_FILE').commit" 2>/dev/null)
+    basever=$(node -p "require('$SYNC_FILE').version" 2>/dev/null)
+    if [ -n "$base" ] && git cat-file -e "$base^{commit}" 2>/dev/null; then
+      drift=$(git diff --numstat "$base" upstream/main -- skills hooks 2>/dev/null \
+              | awk '{a+=$1; d+=$2; n++} END {printf "%d %d %d", n+0, a+0, d+0}')
+      set -- $drift; nfiles=$1; nadd=$2; ndel=$3
+      if [ "${nfiles:-0}" = "0" ]; then
+        ok   # 与上游完全同步
+      else
+        warn "欠同步: 自 ${basever} 基线以来上游改了 ${nfiles} 个镜像文件（+${nadd} / -${ndel} 行）—— 明细: git diff --stat ${base} upstream/main -- skills hooks"
+      fi
+    else
+      warn "无法解析 .upstream-sync.json 的基线 commit（${base:-空}）—— 同步漂移检查已跳过"
+    fi
+  else
+    warn ".upstream-sync.json 缺失 —— 无法计算与上游的正文级漂移"
+  fi
+
 
   # 3d. requesting-code-review/code-reviewer.md 结构（v5.1.0 self-contained）
   up=$(git show upstream/main:skills/requesting-code-review/code-reviewer.md 2>/dev/null | count_headings || echo 0)
@@ -247,19 +311,30 @@ while IFS= read -r link; do
   fi
 done < <(grep -oE '\(docs/README\.[a-z-]+\.md\)' README.md)
 
-# 4b. Skill 间引用（superpowers:xxx）
+# 4b. Skill 间引用完整性
+#
+# 原来靠 `superpowers:xxx` 前缀发现引用。#124 之后正文改用**裸技能名**（插件名是
+# superpowers-zh，照抄上游前缀会 Unknown skill），前缀一去这个检查就一条也匹配不到 ——
+# 25 条断言静默消失、PASS 从 170 掉到 145 而 FAIL 仍是 0。
+#
+# 重写时还踩了第二个坑：第一版拿「现有技能名清单」当匹配模式，于是只可能匹配到
+# 存在的技能、再断言它存在 —— 同义反复，永远不会失败。现在改成先按**语法位置**
+# 抽出被引用的名字（「使用 X 技能」/「必需子技能：使用 X」），再验证 X 是否存在，
+# 这样引用一个不存在的技能才会被抓到。
+#
+# 含冒号的跳过：那是别的插件的技能（如 elements-of-style:xxx），不归我们校验。
 while IFS= read -r line; do
   skill_file=$(echo "$line" | cut -d: -f1)
-  refs=$(echo "$line" | grep -oE '\bsuperpowers:[a-z-]+\b' | sort -u)
-  for ref in $refs; do
-    name=${ref#superpowers:}
+  refs=$(echo "$line" \
+    | grep -oE '使用 `?[a-z][a-z0-9-]*`? 技能|必需子技能：\*\* 使用 `?[a-z][a-z0-9-]*`?|必需子技能：使用 `?[a-z][a-z0-9-]*`?' \
+    | sed -E 's/.*使用 //; s/ 技能$//' | tr -d '`' | grep -v ':' | sort -u)
+  for name in $refs; do
     if [ -d "skills/$name" ]; then ok; else
       src=$(basename $(dirname "$skill_file"))
       bad "Skill 引用断: $src 引用了不存在的 skills/$name"
     fi
   done
-done < <(grep -rln 'superpowers:' skills/*/SKILL.md 2>/dev/null | \
-         xargs -I{} grep -H 'superpowers:' {} 2>/dev/null)
+done < <(grep -rHn -E '使用 `?[a-z][a-z0-9-]*`? 技能|必需子技能：' skills/*/SKILL.md 2>/dev/null)
 
 # 4c. 装完后 .claude/skills/using-superpowers/SKILL.md 路径必须存在（hook 依赖）
 TMP=$(mktemp -d)
@@ -342,6 +417,30 @@ check_count site/build.mjs '^      \{ q: .Which AI coding tools are supported.*[
 rows=$(awk '/^### 🤖 支持 [0-9]+ 款主流/,/^> 运行 `npx/' README.md | grep -cE '^\| \[')
 if [ "$rows" = "$EXPECTED_TOOLS" ]; then ok; else
   bad "README 工具表有 $rows 行，应为 $EXPECTED_TOOLS 行（漏加/多加了表格行）"
+fi
+
+# ── 结构性检查：官网工具墙 / 安装命令下拉的条目数 ──
+# 计数文案对了不代表列表对了：v1.7.10 时三处文案都写着 23，而 site/build.mjs 的
+# TOOLS 只有 20 条 —— 首页统计块显示「20 支持工具」、下拉里根本找不到
+# Cline / Kilo Code / Crush。这条专门卡列表本身。
+site_tools=$(sed -n '/^const TOOLS = \[/,/^\];/p' site/build.mjs | grep -cE "^  \{ name: '")
+if [ "$site_tools" = "$EXPECTED_TOOLS" ]; then ok; else
+  bad "官网 TOOLS 有 ${site_tools} 条，应为 ${EXPECTED_TOOLS} 条（site/build.mjs 漏加工具）"
+fi
+
+# ── 一致性检查：官网 FAQ 的「支持全局」清单必须与 installer 的 global 目标一致 ──
+# 同理：CodeArts / Crush / Hermes / CodeBuddy 陆续拿到 --global，官网 FAQ 一直停在 7 款。
+global_targets=$(sed -n '/^const TARGETS = \[/,/^\];/p' "$INSTALLER" | grep -E "^  \{ name: '" | grep 'global:' | sed -E "s/^  \{ name: '([^']+)'.*/\1/")
+global_n=$(echo "$global_targets" | grep -c .)
+faq_line=$(grep -n '支持全局的工具' site/build.mjs | head -1 | cut -d: -f2-)
+missing=""
+while IFS= read -r g; do
+  case "$faq_line" in *"$g"*) ;; *) missing="$missing $g";; esac
+done <<< "$global_targets"
+if [ -n "$missing" ]; then
+  bad "官网 FAQ 全局清单漏了：${missing}（installer 共 ${global_n} 款支持 --global）"
+else
+  ok
 fi
 
 # ── 自检：Category 2 测的工具数应等于宣称数（宣称了就必须测） ──
