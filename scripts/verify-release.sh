@@ -38,6 +38,7 @@ declare -a SPEC=(
   "codebuddy:.codebuddy/skills"    "codearts:.codeartsdoer/skills"
   "cline:.cline/skills"            "kilocode:.kilocode/skills"
   "crush:.crush/skills"          "dsh:.dsh/skills"
+  "reasonix:.reasonix/skills"
 )
 
 echo "═══ 期望每款装入 $EXPECT_SKILLS 个 skill ═══"
@@ -89,7 +90,7 @@ declare -a DETECT=(
   ".opencode:OpenCode"       ".qwen:Qwen Code"       ".hermes:Hermes Agent"
   ".claw:Claw Code"          ".qoder:Qoder"          ".codebuddy:CodeBuddy"
   ".codeartsdoer:CodeArts"   ".clinerules:Cline"     ".kilocode:Kilo Code"
-  ".kilo:Kilo Code"          ".crush:Crush"   ".dsh:DeepSeek Harness"
+  ".kilo:Kilo Code"          ".crush:Crush"   ".dsh:DeepSeek Harness"   ".reasonix:Reasonix"
   # DeerFlow 2.0 顶层没有 deer_flow 目录（backend/frontend/skills/…），只测它等于
   # 拿代码测代码。skills/public 是 skills 机制本身、随仓库版本控制，才是真实标记。
   "skills/public:DeerFlow"   "deer_flow:DeerFlow"
@@ -116,7 +117,7 @@ done
 
 echo ""
 echo "─── C. --global：11 款应成功（落盘位置 / 卸载零残留 / 不误删用户文件），其余应明确拒绝 ───"
-declare -a GLOBAL_OK=(claude codex openclaw windsurf opencode qwen qoder crush hermes codebuddy codearts zcode dsh)
+declare -a GLOBAL_OK=(claude codex openclaw windsurf opencode qwen qoder crush hermes codebuddy codearts zcode dsh reasonix)
 declare -a GLOBAL_NO=(cursor kiro trae aider deerflow vscode claw gemini antigravity cline kilocode)
 # 全局落盘位置断言。原来这里只看退出码 —— 而 Windsurf 的 --global 曾装到
 # ~/.windsurf/skills，官方实际读 ~/.codeium/windsurf/skills，退出码照样是 0。
@@ -129,6 +130,7 @@ declare -a GLOBAL_DIR=(
   "codearts:.codeartsdoer/skills"
   "zcode:.zcode/skills"
   "dsh:.dsh/skills"
+  "reasonix:.reasonix/skills"
 )
 # 卸载有两个反方向的坑，两个都得测，而且此前**只测了 qwen 一款**：
 #   ① 卸不干净 —— 残留留在用户主目录里，看不见、跨项目污染
@@ -281,6 +283,11 @@ if curl -sS -o /dev/null --max-time 5 https://github.com 2>/dev/null; then
   # 第一遍并行快扫。注意这一遍**会误报** —— 实测 docs.codeium.com 在 8s 上限下
   # 偶发超时，而它其实活着。一个会误报的门禁比没有门禁更糟：人会学会忽略它。
   # 所以第一遍只产出「嫌疑名单」，不下结论。
+  # 带浏览器 User-Agent 探测。docs.trae.cn 对默认 curl UA 一律返回 400、带 UA 返回 200，
+  # 页面确实存在（issue #35 引用的 TRAE CN 技能文档就在上面）。这不是放宽判活口径 ——
+  # 400 仍然算死链，只是不再因为「对方不接待 curl」而误判。真正的 404/410 照样失败。
+  UA_STR="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+  export UA_STR
   # 扫描范围含 site/build.mjs：官网的外链此前完全没人验活，而其中三条是**付费展位**的
   # 推广链接（旗舰 + 两个常规位）—— 赞助链接挂掉是要赔的，比文档死链更该守。
   # 正则含 ?=& ：推广链接的 aff / referral 参数在 query 里，截断了就等于没验真正那条。
@@ -289,10 +296,13 @@ if curl -sS -o /dev/null --max-time 5 https://github.com 2>/dev/null; then
   #   npmjs / shields / user-images / opensource / makeapullrequest —— 已知对爬虫不友好或纯徽章
   #   googletagmanager / google-analytics —— 它们在 build.mjs 里是 **CSP 白名单条目**不是链接；
   #     裸域 googletagmanager.com 本身返回 404，纳入就是凭空造一条误报
+  #   cloudflareinsights —— 同理，是 Cloudflare Web Analytics 的 CSP 白名单条目：
+  #     static.cloudflareinsights.com 裸域无首页（522），cloudflareinsights.com/cdn-cgi/rum
+  #     只收 POST（GET 返回 404）。两者都不是「链接」，验活对它们没有意义。
   grep -rhoE "https://[a-zA-Z0-9./_?=&-]+" "$REPO"/docs/*.md "$REPO"/README.md "$REPO"/README.zh-Hant.md "$REPO"/site/build.mjs 2>/dev/null \
-    | grep -viE "jnmetacode|aiolaola|user-images|shields\.io|opensource\.org|makeapullrequest|npmjs\.com|claude\.ai/code|googletagmanager|google-analytics" \
+    | grep -viE "jnmetacode|aiolaola|user-images|shields\.io|opensource\.org|makeapullrequest|npmjs\.com|claude\.ai/code|googletagmanager|google-analytics|cloudflareinsights" \
     | sed 's/[.,)]*$//' | sort -u \
-    | xargs -P 10 -I{} sh -c 'c=$(curl -sS -o /dev/null -w "%{http_code}" -L --max-time 8 "$1" 2>/dev/null); case "$c" in 2*|3*|401|403|405|429) ;; *) echo "$1" ;; esac' _ {} \
+    | xargs -P 10 -I{} sh -c 'c=$(curl -sS -o /dev/null -w "%{http_code}" -L --max-time 8 -A "$UA_STR" "$1" 2>/dev/null); case "$c" in 2*|3*|401|403|405|429) ;; *) echo "$1" ;; esac' _ {} \
     > "$LINKTMP" 2>/dev/null
   # 第二遍：只对嫌疑名单串行复核，放宽超时并让 curl 自己重试。两遍都判死才算死。
   suspects=$(wc -l < "$LINKTMP" | tr -d ' ')
@@ -300,7 +310,7 @@ if curl -sS -o /dev/null --max-time 5 https://github.com 2>/dev/null; then
   if [ "$suspects" != "0" ]; then
     while read -r u; do
       [ -z "$u" ] && continue
-      c=$(curl -sS -o /dev/null -w "%{http_code}" -L --max-time 25 --retry 2 --retry-delay 1 "$u" 2>/dev/null)
+      c=$(curl -sS -o /dev/null -w "%{http_code}" -L --max-time 25 --retry 2 --retry-delay 1 -A "$UA_STR" "$u" 2>/dev/null)
       # 判活口径 = 「服务器答复了」，而不是「答复是 200」：
       #   401 要登录、403 拒爬虫、405 不认 HEAD/GET 的方式、429 限流
       #   —— 这四种都证明 URL 存在，只是不欢迎自动化访问。
@@ -323,49 +333,122 @@ fi
 
 echo ""
 echo "─── I. Windows 平台专属全局路径（在 macOS 上以 platform=win32 跑真实代码）───"
-# Crush 的 README 写明 Windows 走 %LOCALAPPDATA%\\crush\\skills，而我们两个平台
-# 曾经都装 ~/.config/crush/skills —— docs 早就写对了，代码没跟上。这类「只在某个
-# 平台不生效」的 bug 在 macOS 上跑再多次也测不出来，只能把 platform 打成 win32
-# 去跑**真实 installer**（不是它的副本）。
+# 配了 dirWin 的工具，其 Windows 全局路径与 Unix 不同构：
+#   Crush    ~/.config/crush/skills  ->  %LOCALAPPDATA%\crush\skills
+#   Reasonix ~/.reasonix/skills      ->  %APPDATA%\reasonix\skills
+# 两处都是官方文档写明的。这类「只在某个平台不生效」的 bug 在 macOS 上跑再多次也
+# 测不出来，只能把 platform 打成 win32 去跑**真实 installer**（不是它的副本）。
+# 清单从 installer 现场解析，不手写 —— 以后再加这类工具会自动纳入。
 WINSTUB=$(mktemp -d)/as-win.mjs
 mkdir -p "$(dirname "$WINSTUB")"
 cat > "$WINSTUB" <<'STUB'
 Object.defineProperty(process, 'platform', { value: 'win32' });
 await import(process.env.INS_PATH);
 STUB
-H=$(mktemp -d)
-INS_PATH="$INS" HOME="$H" node "$WINSTUB" --global --tool crush >/dev/null 2>&1
-n_win=$(ls -d "$H/AppData/Local/crush/skills"/*/ 2>/dev/null | wc -l | tr -d ' ')
-n_unix=$(ls -d "$H/.config/crush/skills"/*/ 2>/dev/null | wc -l | tr -d ' ')
-if [ "$n_win" = "$EXPECT_SKILLS" ]; then ok; else
-  bad "win32 下 crush --global 应装到 AppData/Local/crush/skills，实际那里有 ${n_win} 个"
+# 自检：谁需要 dirWin 是**声明式**的，不能只靠「从 installer 里解析到什么就测什么」——
+# 那样一旦有人删掉某个 dirWin，该工具直接不进循环，PASS 少两条而 FAIL 仍是 0（实测过）。
+# 声明清单与 installer 实际解析结果必须完全相等：删了会失败，新增了不登记也会失败。
+declare -a WIN_SPECIFIC=(Crush Reasonix)
+parsed=$(sed -n '/^const TARGETS = \[/,/^\];/p' "$INS" | grep "dirWin:" | sed -E "s/.*name: '([^']+)'.*/\1/" | sort | tr '\n' ' ')
+declared=$(printf '%s\n' "${WIN_SPECIFIC[@]}" | sort | tr '\n' ' ')
+if [ "$parsed" = "$declared" ]; then ok; else
+  bad "dirWin 工具集漂移：installer 里是「${parsed}」，verify-release 声明的是「${declared}」—— 删了 dirWin 或新增未登记"
 fi
-if [ "$n_unix" = "0" ]; then ok; else
-  bad "win32 下 crush --global 不应再装到 ~/.config/crush/skills，实际有 ${n_unix} 个"
+
+sed -n '/^const TARGETS = \[/,/^\];/p' "$INS" | grep "dirWin:" | while read -r line; do
+  tool=$(echo "$line" | sed -E "s/.*name: '([^']+)'.*/\1/" | tr 'A-Z' 'a-z' | sed 's/ .*//')
+  wdir=$(echo "$line" | sed -E "s/.*dirWin: '([^']+)'.*/\1/")
+  udir=$(echo "$line" | sed -E "s/.*global: \{ dir: '([^']+)'.*/\1/")
+  H=$(mktemp -d)
+  INS_PATH="$INS" HOME="$H" node "$WINSTUB" --global --tool "$tool" >/dev/null 2>&1
+  n_win=$(ls -d "$H/$wdir"/*/ 2>/dev/null | wc -l | tr -d ' ')
+  n_unix=$(ls -d "$H/$udir"/*/ 2>/dev/null | wc -l | tr -d ' ')
+  if [ "$n_win" = "$EXPECT_SKILLS" ] && [ "$n_unix" = "0" ]; then echo "WINOK"; else
+    echo "WINBAD win32 下 ${tool} --global 应装到 ${wdir}（实际 ${n_win} 个）且不留在 ${udir}（实际 ${n_unix} 个）"
+  fi
+  INS_PATH="$INS" HOME="$H" node "$WINSTUB" --global --uninstall >/dev/null 2>&1
+  left=$(find "$H" -type f 2>/dev/null | wc -l | tr -d ' ')
+  if [ "$left" = "0" ]; then echo "WINOK"; else echo "WINBAD win32 下 ${tool} 全局卸载残留 ${left} 个文件"; fi
+  rm -rf "$H"
+done > "$WINSTUB.out"
+while IFS= read -r line; do
+  case "$line" in WINOK) ok ;; WINBAD*) bad "${line#WINBAD }" ;; esac
+done < "$WINSTUB.out"
+rm -rf "$(dirname "$WINSTUB")"
+
+echo ""
+echo "─── L. Hermes 项目级引导必须写 AGENTS.md（不是 HERMES.md）───"
+# Hermes 官方文档（use-soul-with-hermes）：「project workflow instructions …
+# Those belong in AGENTS.md」，且 HERMES.md 在其整份文档里出现 0 次。
+# v1.7.12 及更早写的是 HERMES.md —— 这是 Hermes 的第二次「装了不生效」（#45 是第一次）。
+T=$(mktemp -d); mkdir -p "$T/.hermes"
+(cd "$T" && node "$INS" >/dev/null 2>&1)
+if [ -f "$T/AGENTS.md" ] && grep -q "superpowers-zh" "$T/AGENTS.md"; then ok; else
+  bad "Hermes 项目级引导应写入 AGENTS.md 并含 superpowers-zh 段落"
 fi
-# 卸载也必须走同一条平台分支，否则装得对、卸不掉
-INS_PATH="$INS" HOME="$H" node "$WINSTUB" --global --uninstall >/dev/null 2>&1
-left=$(find "$H" -type f 2>/dev/null | wc -l | tr -d ' ')
-if [ "$left" = "0" ]; then ok; else bad "win32 下 crush 全局卸载残留 ${left} 个文件"; fi
-rm -rf "$H" "$(dirname "$WINSTUB")"
+if [ ! -f "$T/HERMES.md" ]; then ok; else bad "Hermes 不应再写 HERMES.md（官方文档里查无此文件）"; fi
+(cd "$T" && node "$INS" --uninstall >/dev/null 2>&1)
+left=$(find "$T" -type f 2>/dev/null | wc -l | tr -d ' ')
+[ "$left" = "0" ] && ok || bad "Hermes 卸载后残留 ${left} 个文件"
+rm -rf "$T"
+
+echo ""
+echo "─── K. 系统目录护栏（#125）───"
+# 报告人在管理员 PowerShell 里跑 npx —— 那个终端的默认 cwd 就是 C:\Windows\System32，
+# 于是 20 个 skill 目录被写进了 Windows 系统目录。Unix 侧同理（/etc、/usr…）。
+# 断言：拒绝 + 退出码非 0 + 目标目录零写入。
+for d in /etc /usr/local; do
+  [ -d "$d" ] || continue
+  before=$(find "$d" -maxdepth 1 -name ".claude" 2>/dev/null | wc -l | tr -d ' ')
+  out=$(cd "$d" && node "$INS" --tool claude 2>&1); rc=$?
+  after=$(find "$d" -maxdepth 1 -name ".claude" 2>/dev/null | wc -l | tr -d ' ')
+  if [ "$rc" != "0" ] && echo "$out" | grep -q "当前目录是系统目录" && [ "$before" = "$after" ]; then ok; else
+    bad "系统目录护栏失效: 在 ${d} 下 rc=${rc}（应非 0），.claude 数 ${before} -> ${after}"
+  fi
+done
+# Windows 场景：platform 打桩 + 伪造 SystemRoot，跑真实 installer
+SYSSTUB=$(mktemp -d)
+cat > "$SYSSTUB/as-win-sys.mjs" <<'STUB'
+Object.defineProperty(process, 'platform', { value: 'win32' });
+process.env.SystemRoot = process.env.FAKE_SYSROOT;
+await import(process.env.INS_PATH);
+STUB
+mkdir -p "$SYSSTUB/Windows/System32" "$SYSSTUB/proj/.trae" "$SYSSTUB/home"
+out=$(cd "$SYSSTUB/Windows/System32" && INS_PATH="$INS" FAKE_SYSROOT="$SYSSTUB/Windows" HOME="$SYSSTUB/home"       node "$SYSSTUB/as-win-sys.mjs" --tool trae 2>&1); rc=$?
+wrote=$(find "$SYSSTUB/Windows/System32" -type f 2>/dev/null | wc -l | tr -d ' ')
+if [ "$rc" != "0" ] && echo "$out" | grep -q "当前目录是系统目录" && [ "$wrote" = "0" ]; then ok; else
+  bad "win32 下 System32 未被拦: rc=${rc}、写入 ${wrote} 个文件"
+fi
+# 反面：同样打桩下，普通项目目录必须照常安装（护栏不能误伤）
+n=$(cd "$SYSSTUB/proj" && INS_PATH="$INS" FAKE_SYSROOT="$SYSSTUB/Windows" HOME="$SYSSTUB/home"     node "$SYSSTUB/as-win-sys.mjs" 2>&1 | grep -c "✅")
+[ "$n" -ge 1 ] && ok || bad "系统目录护栏误伤了普通项目目录（win32 打桩下 0 条成功输出）"
+rm -rf "$SYSSTUB"
 
 echo ""
 echo "─── J. 全局-only 工具：项目级必须明确拒绝（不能猜个路径装进去）───"
 # ZCode 的项目级磁盘路径官方从未公开（导入是应用内 UI 动作）。猜一个装进去就是
 # 「装了不生效」—— 本仓在 Codex / Windsurf / VS Code 上已经栽过三次。
 # 断言三件事：退出码非 0、提示里说明原因、项目目录里零写入。
-for tool in $(sed -n '/^const TARGETS = \[/,/^\];/p' "$INS" \
-              | grep -E "^  \{ name: '[^']+', +dir: null" \
-              | sed -nE "s/^  \{ name: '([^']+)'.*/\1/p" | tr 'A-Z' 'a-z'); do
+# 注意：工具名可能含空格（如「TRAE CN」），必须逐行读，不能靠 $( ) 的词分割 ——
+# 否则 "TRAE CN" 会被拆成 trae + cn 两个不存在的目标，门禁自己制造假失败。
+# 名字 -> --tool 别名：去空格 + 转小写（TRAE CN -> traecn，ZCode -> zcode）。
+GONLY=$(mktemp)
+sed -n '/^const TARGETS = \[/,/^\];/p' "$INS" \
+  | grep -E "^  \{ name: '[^']+', +dir: null" \
+  | sed -nE "s/^  \{ name: '([^']+)'.*/\1/p" > "$GONLY"
+while IFS= read -r toolname; do
+  [ -n "$toolname" ] || continue
+  tool=$(echo "$toolname" | tr -d ' ' | tr 'A-Z' 'a-z')
   T=$(mktemp -d); pushd "$T" >/dev/null
   out=$(node "$INS" --tool "$tool" 2>&1); rc=$?
   wrote=$(find . -type f | wc -l | tr -d ' ')
   popd >/dev/null
   if [ "$rc" != "0" ] && echo "$out" | grep -q "不支持项目级安装" && [ "$wrote" = "0" ]; then ok; else
-    bad "${tool}: 全局-only 工具的项目级安装应明确拒绝（rc!=0、零写入），实际 rc=${rc}、写入 ${wrote} 个文件"
+    bad "${toolname}: 全局-only 工具的项目级安装应明确拒绝（rc!=0、零写入），实际 rc=${rc}、写入 ${wrote} 个文件"
   fi
   rm -rf "$T"
-done
+done < "$GONLY"
+rm -f "$GONLY"
 
 echo ""
 echo "─── G. 自检：本脚本的覆盖清单不得落后于 installer ───"

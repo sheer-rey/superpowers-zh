@@ -191,6 +191,7 @@ const TOOLS = [
   // ZCode（智谱）只有用户级路径有官方出处（zcode.z.ai/docs/skill），项目级不猜 —— 见 installer 注释
   { name: 'ZCode',          type: 'IDE',    cmd: 'npx superpowers-zh --global --tool zcode',    mode: 'global', doc: 'zcode' },
   { name: 'DeepSeek Harness', type: 'CLI', cmd: 'npx superpowers-zh',                          mode: 'auto', doc: 'deepseek-harness' },
+  { name: 'Reasonix',       type: 'CLI',    cmd: 'npx superpowers-zh',                          mode: 'auto', doc: 'reasonix' },
 ];
 
 // ---- 双语文案 ----
@@ -390,7 +391,7 @@ const T = {
   zh: {
     htmlLang: 'zh-CN',
     title: 'superpowers-zh · AI 编程超能力中文增强版',
-    desc: 'superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills，一条 npx 命令为 25 款 AI 编程工具装上系统化工作方法论。',
+    desc: 'superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills，一条 npx 命令为 26 款 AI 编程工具装上系统化工作方法论。',
     nav: { why: '特性', install: '安装', skills: 'Skills', tools: '支持工具', faq: 'FAQ', sponsors: '赞助商', learn: '学习 ↗', github: 'GitHub ↗' },
     heroBadge: 'superpowers 250k+ ⭐ · 完整汉化 + 中国原创',
     heroH1: '给你的 AI 编程工具<br>装上<span class="grad">真正会干活</span>的超能力',
@@ -398,7 +399,7 @@ const T = {
     heroBtn1: '查看安装命令', heroBtn2: 'GitHub 源码',
     stats: ['Skills', '中国原创', '支持工具', '当前版本'],
     skipToMain: '跳到主要内容',
-    ogAlt: 'superpowers-zh —— AI 编程超能力中文增强版，一条 npx 命令为 25 款 AI 编程工具装上系统化工作方法论',
+    ogAlt: 'superpowers-zh —— AI 编程超能力中文增强版，一条 npx 命令为 26 款 AI 编程工具装上系统化工作方法论',
     ogLocale: 'zh_CN',
     releaseNote: '{tools} 的用户请更新 —— 此前版本里技能之间互相调用会失败。查看完整更新说明',
     toolDocHint: '{name} 的专属安装指南',
@@ -423,7 +424,7 @@ const T = {
     skDetail: '查看文档 →',
     tagCn: '中国原创',
     ucTitle: '典型使用场景', ucSub: '每个场景背后都是一组协同工作的 skill。',
-    toolsTitle: '一套 skill，25 款工具通用', toolsSub: '换工具不用换习惯，方法论跟着你走。',
+    toolsTitle: '一套 skill，26 款工具通用', toolsSub: '换工具不用换习惯，方法论跟着你走。',
     faqTitle: '常见问题',
     sponsorCta: '了解详情 ↗',
     sponsorNote: '以上为赞助商推广链接。',
@@ -465,7 +466,7 @@ const T = {
       benefits: [
         { icon: '📖', t: 'GitHub README 展位', d: '在简体 / 繁体两版 README 顶部展示 banner + 介绍文案，覆盖 GitHub 上的全部访客。' },
         { icon: '🌐', t: '官网赞助商页展示', d: '官网赞助商页展示，导航栏常驻入口，中文 / EN / 繁體三语站点全部覆盖。' },
-        { icon: '🎯', t: '精准开发者受众', d: '本项目用户是正在用 Claude Code / Cursor / Codex 等 25 款 AI 编程工具的开发者 —— 模型与 API 服务的直接买家。' },
+        { icon: '🎯', t: '精准开发者受众', d: '本项目用户是正在用 Claude Code / Cursor / Codex 等 26 款 AI 编程工具的开发者 —— 模型与 API 服务的直接买家。' },
         { icon: '🎁', t: '专属优惠码展示', d: '你的专属优惠码 / 福利会在赞助商页的「福利汇总」表里单独列出，方便用户直接使用。' },
       ],
       ctaTitle: '想出现在这里？',
@@ -494,7 +495,7 @@ const T = {
     detailSource: '在 GitHub 查看源文件 ↗',
     features: [
       { icon: '🧠', t: '20 个实战方法论', d: '不是 prompt 模板，是经过跨会话对抗式压力测试调优的工作方法论 —— 从头脑风暴到 TDD、调试、代码审查。' },
-      { icon: '🔌', t: '25 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全适配，换工具不用换习惯。' },
+      { icon: '🔌', t: '26 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全适配，换工具不用换习惯。' },
       { icon: '⚡', t: '一条命令安装', d: 'npx superpowers-zh 自动识别项目里用的是哪款工具并安装，零配置，装完重启即生效。' },
       { icon: '🇨🇳', t: '中国原创 Skills', d: '中文代码审查话术、中文提交规范、中文文档排版、国内 Git 平台（Gitee/Coding/极狐）配置 —— 上游没有。' },
       { icon: '📖', t: '完整汉化上游', d: '同步 obra/superpowers（250k+ ⭐），核心 skill 全部中文母语化，不是机翻，是逐条校准。' },
@@ -516,10 +517,10 @@ const T = {
     ],
     faq: [
       { q: 'superpowers-zh 是免费的吗？', a: '完全免费。MIT 协议开源，永久免费，不含任何付费墙或订阅。' },
-      { q: '支持哪些 AI 编程工具？', a: '共 25 款：Claude Code、Cursor、Windsurf、Codex CLI、Gemini CLI、Kiro、Trae、Qoder、CodeBuddy（腾讯）、CodeArts（华为云码道）、Aider、OpenCode、Qwen Code、Antigravity、DeerFlow、VS Code(Copilot)、Copilot CLI、Hermes Agent、Claw Code、OpenClaw、Cline、Kilo Code、Crush、ZCode（智谱）、DeepSeek Harness。' },
-      { q: 'superpowers-zh 有哪些独特价值？', a: '一套完整中文化的系统工作方法论：从头脑风暴、规划、TDD 到调试、代码审查，每个 skill 都是实战验证的工作流；并叠加 4 个面向中国开发者的原创 skill（中文代码审查 / Git 工作流 / 文档规范 / 提交规范），适配 25 款 AI 编程工具。MIT 协议开源，永久免费。' },
+      { q: '支持哪些 AI 编程工具？', a: '共 26 款：Claude Code、Cursor、Windsurf、Codex CLI、Gemini CLI、Kiro、Trae、Qoder、CodeBuddy（腾讯）、CodeArts（华为云码道）、Aider、OpenCode、Qwen Code、Antigravity、DeerFlow、VS Code(Copilot)、Copilot CLI、Hermes Agent、Claw Code、OpenClaw、Cline、Kilo Code、Crush、ZCode（智谱）、DeepSeek Harness、Reasonix。' },
+      { q: 'superpowers-zh 有哪些独特价值？', a: '一套完整中文化的系统工作方法论：从头脑风暴、规划、TDD 到调试、代码审查，每个 skill 都是实战验证的工作流；并叠加 4 个面向中国开发者的原创 skill（中文代码审查 / Git 工作流 / 文档规范 / 提交规范），适配 26 款 AI 编程工具。MIT 协议开源，永久免费。' },
       { q: '安装后怎么生效？', a: 'npx 会把 skill 文件装到你项目对应工具的目录（如 .claude/skills/），重启 AI 工具后，它会在恰当时机自动触发相应 skill —— 无需你每次手动调用。' },
-      { q: '能一次装好、所有项目都用吗？（全局安装）', a: '能。npx superpowers-zh --global 装到工具的用户级目录（如 ~/.claude/skills），所有项目自动共享，更新时只需重装一次。项目级优先、全局兜底，二者可共存。支持全局的工具（13 款，均为各工具文档确认的加载路径）：Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode / Hermes Agent / CodeBuddy / CodeArts / Crush / ZCode / DeepSeek Harness；其余工具（含 Gemini / Antigravity，有各自专属全局方式）请在项目内安装或参考对应文档。' },
+      { q: '能一次装好、所有项目都用吗？（全局安装）', a: '能。npx superpowers-zh --global 装到工具的用户级目录（如 ~/.claude/skills），所有项目自动共享，更新时只需重装一次。项目级优先、全局兜底，二者可共存。支持全局的工具（15 款，均为各工具文档确认的加载路径）：Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode / Hermes Agent / CodeBuddy / CodeArts / Crush / ZCode / DeepSeek Harness / Reasonix / TRAE CN；其余工具（含 Gemini / Antigravity，有各自专属全局方式）请在项目内安装或参考对应文档。' },
       { q: '会拖慢我的 AI 吗？会上传代码吗？', a: '不会。skill 是按需触发的纯 Markdown，零运行时、不联网、不上传任何代码或数据，全程在本地。' },
       { q: '怎么更新或卸载？', a: '更新：重新运行 npx superpowers-zh 覆盖即可。卸载：npx superpowers-zh --uninstall 清理当前项目；全局安装用 npx superpowers-zh --global --uninstall 清理。' },
     ],
@@ -527,7 +528,7 @@ const T = {
   en: {
     htmlLang: 'en',
     title: 'superpowers-zh · Battle-tested AI coding skills (CN-enhanced)',
-    desc: 'Full Chinese localization of superpowers (250k+ ⭐) plus 4 China-native skills. One npx command installs systematic workflow methodology into 25 AI coding tools.',
+    desc: 'Full Chinese localization of superpowers (250k+ ⭐) plus 4 China-native skills. One npx command installs systematic workflow methodology into 26 AI coding tools.',
     nav: { why: 'Features', install: 'Install', skills: 'Skills', tools: 'Tools', faq: 'FAQ', sponsors: 'Sponsors', learn: 'Learn ↗', github: 'GitHub ↗' },
     heroBadge: 'superpowers 250k+ ⭐ · Full CN localization + China-native skills',
     heroH1: 'Give your AI coding tools<br>superpowers that <span class="grad">actually ship</span>',
@@ -535,7 +536,7 @@ const T = {
     heroBtn1: 'Get the command', heroBtn2: 'GitHub',
     stats: ['Skills', 'China-native', 'Tools', 'Version'],
     skipToMain: 'Skip to main content',
-    ogAlt: 'superpowers-zh — battle-tested AI coding skills, Chinese-enhanced; one npx command for 25 AI coding tools',
+    ogAlt: 'superpowers-zh — battle-tested AI coding skills, Chinese-enhanced; one npx command for 26 AI coding tools',
     ogLocale: 'en_US',
     releaseNote: 'Using {tools}? Update — in earlier versions skills could not invoke one another. Read the full release notes',
     toolDocHint: 'Install guide for {name}',
@@ -560,7 +561,7 @@ const T = {
     skDetail: 'Read docs →',
     tagCn: 'China-native',
     ucTitle: 'Typical use cases', ucSub: 'Each scenario is backed by a set of cooperating skills.',
-    toolsTitle: 'One skill set, 25 tools', toolsSub: 'Switch tools without switching habits — the methodology follows you.',
+    toolsTitle: 'One skill set, 26 tools', toolsSub: 'Switch tools without switching habits — the methodology follows you.',
     faqTitle: 'FAQ',
     sponsorCta: 'Learn more ↗',
     sponsorNote: 'Links above are sponsored links.',
@@ -602,7 +603,7 @@ const T = {
       benefits: [
         { icon: '📖', t: 'GitHub README placement', d: 'Banner plus copy at the top of both the Simplified and Traditional Chinese READMEs, seen by every GitHub visitor.' },
         { icon: '🌐', t: 'Website placement', d: 'Listed on the sponsors page, reachable from the main nav on every page, across all three locales (CN / EN / TW).' },
-        { icon: '🎯', t: 'A developer audience', d: 'Our users are developers running Claude Code, Cursor, Codex and 22 other AI coding tools — direct buyers of model and API services.' },
+        { icon: '🎯', t: 'A developer audience', d: 'Our users are developers running Claude Code, Cursor, Codex and 23 other AI coding tools — direct buyers of model and API services.' },
         { icon: '🎁', t: 'Your promo code, listed', d: 'Your code or offer gets its own row in the perks table on this page, ready for users to copy.' },
       ],
       ctaTitle: 'Want your logo here?',
@@ -631,7 +632,7 @@ const T = {
     detailSource: 'View source on GitHub ↗',
     features: [
       { icon: '🧠', t: '20 battle-tested methods', d: 'Not prompt templates — workflow methodology hardened by cross-session adversarial testing, from brainstorming to TDD, debugging and review.' },
-      { icon: '🔌', t: 'Works in 25 tools', d: 'One skill set for Claude Code / Cursor / Codex / Gemini CLI / Windsurf and more. Switch tools, keep your habits.' },
+      { icon: '🔌', t: 'Works in 26 tools', d: 'One skill set for Claude Code / Cursor / Codex / Gemini CLI / Windsurf and more. Switch tools, keep your habits.' },
       { icon: '⚡', t: 'One-command install', d: 'npx superpowers-zh auto-detects your tool and installs. Zero config; restart to take effect.' },
       { icon: '🇨🇳', t: 'China-native skills', d: 'Chinese code-review phrasing, commit conventions, doc typography, and domestic Git platforms (Gitee/Coding/JiHu) — not in upstream.' },
       { icon: '📖', t: 'Fully localized upstream', d: 'Tracks obra/superpowers (250k+ ⭐); every core skill localized into native Chinese — calibrated, not machine-translated.' },
@@ -653,10 +654,10 @@ const T = {
     ],
     faq: [
       { q: 'Is superpowers-zh free?', a: 'Completely free. MIT-licensed open source, forever, with no paywall or subscription.' },
-      { q: 'Which AI coding tools are supported?', a: '25 tools: Claude Code, Cursor, Windsurf, Codex CLI, Gemini CLI, Kiro, Trae, Qoder, CodeBuddy (Tencent), CodeArts (Huawei), Aider, OpenCode, Qwen Code, Antigravity, DeerFlow, VS Code (Copilot), Copilot CLI, Hermes Agent, Claw Code, OpenClaw, Cline, Kilo Code, Crush, ZCode (Zhipu), DeepSeek Harness.' },
-      { q: 'What makes superpowers-zh unique?', a: 'A fully localized, battle-tested methodology framework for Chinese developers: brainstorming, planning, TDD, debugging, and code-review skills, plus 4 China-native skills (code review / Git workflow / docs / commit conventions), adapted for 25 AI coding tools. MIT-licensed and free forever.' },
+      { q: 'Which AI coding tools are supported?', a: '26 tools: Claude Code, Cursor, Windsurf, Codex CLI, Gemini CLI, Kiro, Trae, Qoder, CodeBuddy (Tencent), CodeArts (Huawei), Aider, OpenCode, Qwen Code, Antigravity, DeerFlow, VS Code (Copilot), Copilot CLI, Hermes Agent, Claw Code, OpenClaw, Cline, Kilo Code, Crush, ZCode (Zhipu), DeepSeek Harness, Reasonix.' },
+      { q: 'What makes superpowers-zh unique?', a: 'A fully localized, battle-tested methodology framework for Chinese developers: brainstorming, planning, TDD, debugging, and code-review skills, plus 4 China-native skills (code review / Git workflow / docs / commit conventions), adapted for 26 AI coding tools. MIT-licensed and free forever.' },
       { q: 'How does it take effect after install?', a: 'npx installs skill files into your tool\'s directory (e.g. .claude/skills/). After restarting your AI tool, it auto-triggers the right skill at the right moment — no manual invocation needed.' },
-      { q: 'Can I install once for all projects? (global install)', a: 'Yes. npx superpowers-zh --global installs into the tool\'s user-level directory (e.g. ~/.claude/skills), shared across all projects; you only re-install once to update. Project-level takes precedence, global is the fallback — they coexist. Tools with global support (13 in total, all verified load paths per each tool\'s docs): Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode / Hermes Agent / CodeBuddy / CodeArts / Crush / ZCode / DeepSeek Harness; other tools (incl. Gemini / Antigravity, which have their own global methods) should be installed per-project or via their docs.' },
+      { q: 'Can I install once for all projects? (global install)', a: 'Yes. npx superpowers-zh --global installs into the tool\'s user-level directory (e.g. ~/.claude/skills), shared across all projects; you only re-install once to update. Project-level takes precedence, global is the fallback — they coexist. Tools with global support (15 in total, all verified load paths per each tool\'s docs): Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode / Hermes Agent / CodeBuddy / CodeArts / Crush / ZCode / DeepSeek Harness / Reasonix / TRAE CN; other tools (incl. Gemini / Antigravity, which have their own global methods) should be installed per-project or via their docs.' },
       { q: 'Will it slow my AI down or upload my code?', a: 'No. Skills are on-demand Markdown: zero runtime, no network, no code or data upload — everything stays local.' },
       { q: 'How do I update or uninstall?', a: 'Update: re-run npx superpowers-zh to overwrite. Uninstall: npx superpowers-zh --uninstall for the current project; npx superpowers-zh --global --uninstall for a global install.' },
     ],
@@ -664,7 +665,7 @@ const T = {
   zht: {
     htmlLang: 'zh-Hant',
     title: 'superpowers-zh · AI 編程超能力中文增強版',
-    desc: 'superpowers（250k+ ⭐）完整漢化 + 4 個中國原創 skills，一條 npx 命令為 25 款 AI 編程工具裝上系統化工作方法論。',
+    desc: 'superpowers（250k+ ⭐）完整漢化 + 4 個中國原創 skills，一條 npx 命令為 26 款 AI 編程工具裝上系統化工作方法論。',
     nav: { why: '特性', install: '安裝', skills: 'Skills', tools: '支援工具', faq: 'FAQ', sponsors: '贊助商', learn: '學習 ↗', github: 'GitHub ↗' },
     heroBadge: 'superpowers 250k+ ⭐ · 完整漢化 + 中國原創',
     heroH1: '給你的 AI 編程工具<br>裝上<span class="grad">真正會幹活</span>的超能力',
@@ -672,7 +673,7 @@ const T = {
     heroBtn1: '查看安裝命令', heroBtn2: 'GitHub 原始碼',
     stats: ['Skills', '中國原創', '支援工具', '目前版本'],
     skipToMain: '跳到主要內容',
-    ogAlt: 'superpowers-zh —— AI 編程超能力中文增強版，一條 npx 命令為 25 款 AI 編程工具裝上系統化工作方法論',
+    ogAlt: 'superpowers-zh —— AI 編程超能力中文增強版，一條 npx 命令為 26 款 AI 編程工具裝上系統化工作方法論',
     ogLocale: 'zh_TW',
     releaseNote: '{tools} 的使用者請更新 —— 此前版本裡技能之間互相呼叫會失敗。檢視完整更新說明',
     toolDocHint: '{name} 的專屬安裝指南',
@@ -697,7 +698,7 @@ const T = {
     skDetail: '查看文件 →',
     tagCn: '中國原創',
     ucTitle: '典型使用場景', ucSub: '每個場景背後都是一組協同工作的 skill。',
-    toolsTitle: '一套 skill，25 款工具通用', toolsSub: '換工具不用換習慣，方法論跟著你走。',
+    toolsTitle: '一套 skill，26 款工具通用', toolsSub: '換工具不用換習慣，方法論跟著你走。',
     faqTitle: '常見問題',
     sponsorCta: '了解詳情 ↗',
     sponsorNote: '以上為贊助商推廣連結。',
@@ -739,7 +740,7 @@ const T = {
       benefits: [
         { icon: '📖', t: 'GitHub README 展位', d: '在簡體 / 繁體兩版 README 頂部展示 banner + 介紹文案，覆蓋 GitHub 上的全部訪客。' },
         { icon: '🌐', t: '官網贊助商頁展示', d: '官網贊助商頁展示，導覽列常駐入口，中文 / EN / 繁體三語站點全部覆蓋。' },
-        { icon: '🎯', t: '精準開發者受眾', d: '本專案使用者是正在用 Claude Code / Cursor / Codex 等 25 款 AI 編程工具的開發者 —— 模型與 API 服務的直接買家。' },
+        { icon: '🎯', t: '精準開發者受眾', d: '本專案使用者是正在用 Claude Code / Cursor / Codex 等 26 款 AI 編程工具的開發者 —— 模型與 API 服務的直接買家。' },
         { icon: '🎁', t: '專屬優惠碼展示', d: '你的專屬優惠碼 / 福利會在贊助商頁的「福利彙總」表裡單獨列出，方便使用者直接使用。' },
       ],
       ctaTitle: '想出現在這裡？',
@@ -768,7 +769,7 @@ const T = {
     detailSource: '在 GitHub 查看原始檔 ↗',
     features: [
       { icon: '🧠', t: '20 個實戰方法論', d: '不是 prompt 範本，是經過跨會話對抗式壓力測試調優的工作方法論 —— 從頭腦風暴到 TDD、除錯、程式碼審查。' },
-      { icon: '🔌', t: '25 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全適配，換工具不用換習慣。' },
+      { icon: '🔌', t: '26 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全適配，換工具不用換習慣。' },
       { icon: '⚡', t: '一條命令安裝', d: 'npx superpowers-zh 自動識別專案裡用的是哪款工具並安裝，零設定，裝完重啟即生效。' },
       { icon: '🇨🇳', t: '中國原創 Skills', d: '中文程式碼審查話術、中文提交規範、中文文件排版、國內 Git 平台（Gitee/Coding/極狐）設定 —— 上游沒有。' },
       { icon: '📖', t: '完整漢化上游', d: '同步 obra/superpowers（250k+ ⭐），核心 skill 全部中文母語化，不是機翻，是逐條校準。' },
@@ -790,10 +791,10 @@ const T = {
     ],
     faq: [
       { q: 'superpowers-zh 是免費的嗎？', a: '完全免費。MIT 協議開源，永久免費，不含任何付費牆或訂閱。' },
-      { q: '支援哪些 AI 編程工具？', a: '共 25 款：Claude Code、Cursor、Windsurf、Codex CLI、Gemini CLI、Kiro、Trae、Qoder、CodeBuddy（騰訊）、CodeArts（華為雲碼道）、Aider、OpenCode、Qwen Code、Antigravity、DeerFlow、VS Code(Copilot)、Copilot CLI、Hermes Agent、Claw Code、OpenClaw、Cline、Kilo Code、Crush、ZCode（智谱）、DeepSeek Harness。' },
-      { q: 'superpowers-zh 有哪些獨特價值？', a: '一套完整中文化的系統工作方法論：從頭腦風暴、規劃、TDD 到除錯、程式碼審查，每個 skill 都是實戰驗證的工作流；並疊加 4 個面向中國開發者的原創 skill（中文程式碼審查 / Git 工作流 / 文件規範 / 提交規範），適配 25 款 AI 編程工具。MIT 協議開源，永久免費。' },
+      { q: '支援哪些 AI 編程工具？', a: '共 26 款：Claude Code、Cursor、Windsurf、Codex CLI、Gemini CLI、Kiro、Trae、Qoder、CodeBuddy（騰訊）、CodeArts（華為雲碼道）、Aider、OpenCode、Qwen Code、Antigravity、DeerFlow、VS Code(Copilot)、Copilot CLI、Hermes Agent、Claw Code、OpenClaw、Cline、Kilo Code、Crush、ZCode（智谱）、DeepSeek Harness、Reasonix。' },
+      { q: 'superpowers-zh 有哪些獨特價值？', a: '一套完整中文化的系統工作方法論：從頭腦風暴、規劃、TDD 到除錯、程式碼審查，每個 skill 都是實戰驗證的工作流；並疊加 4 個面向中國開發者的原創 skill（中文程式碼審查 / Git 工作流 / 文件規範 / 提交規範），適配 26 款 AI 編程工具。MIT 協議開源，永久免費。' },
       { q: '安裝後怎麼生效？', a: 'npx 會把 skill 檔案裝到你專案對應工具的目錄（如 .claude/skills/），重啟 AI 工具後，它會在恰當時機自動觸發相應 skill —— 無需你每次手動呼叫。' },
-      { q: '能一次裝好、所有專案都用嗎？（全域安裝）', a: '能。npx superpowers-zh --global 裝到工具的使用者級目錄（如 ~/.claude/skills），所有專案自動共享，更新時只需重裝一次。專案級優先、全域兜底，二者可共存。支援全域的工具（13 款，均為各工具文件確認的載入路徑）：Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode / Hermes Agent / CodeBuddy / CodeArts / Crush / ZCode / DeepSeek Harness；其餘工具（含 Gemini / Antigravity，有各自專屬全域方式）請在專案內安裝或參考對應文件。' },
+      { q: '能一次裝好、所有專案都用嗎？（全域安裝）', a: '能。npx superpowers-zh --global 裝到工具的使用者級目錄（如 ~/.claude/skills），所有專案自動共享，更新時只需重裝一次。專案級優先、全域兜底，二者可共存。支援全域的工具（15 款，均為各工具文件確認的載入路徑）：Claude Code / Codex CLI / Qoder / Windsurf / Qwen Code / OpenClaw / OpenCode / Hermes Agent / CodeBuddy / CodeArts / Crush / ZCode / DeepSeek Harness / Reasonix / TRAE CN；其餘工具（含 Gemini / Antigravity，有各自專屬全域方式）請在專案內安裝或參考對應文件。' },
       { q: '會拖慢我的 AI 嗎？會上傳程式碼嗎？', a: '不會。skill 是按需觸發的純 Markdown，零執行時、不連網、不上傳任何程式碼或資料，全程在本機。' },
       { q: '怎麼更新或解除安裝？', a: '更新：重新執行 npx superpowers-zh 覆蓋即可。解除安裝：npx superpowers-zh --uninstall 清理目前專案；全域安裝用 npx superpowers-zh --global --uninstall 清理。' },
     ],
@@ -1387,6 +1388,58 @@ function build() {
   writeFileSync(join(DIST, 'robots.txt'),
     'User-agent: *\nAllow: /\n\nSitemap: ' + SITE_URL + '/sitemap.xml\n');
 
+  // ---- AEO: llms.txt + llms-full.txt ----
+  // 为什么做这个：本站的读者一大半不是人，是 AI 助手 —— 有人在 Claude / ChatGPT 里
+  // 问「superpowers-zh 是什么、怎么装」，助手就来抓。它现在得爬 66 个页面才能拼出
+  // 全貌，多数情况下只抓首页就走，于是回答里缺一半信息。
+  // llms.txt（llmstxt.org 约定）给它一份「一次读完就懂」的索引；llms-full.txt 直接
+  // 把 20 个 SKILL.md 正文拼全，让它不用逐页爬。
+  // Cloudflare 的「面向代理的 Markdown」是同一件事的付费版（Pro 套餐），这里自己做。
+  // 注意：robots.txt 必须放行这两个文件 —— 上面那份是 Allow: / ，已覆盖。
+  const skillLine = s => `- [${s.title}](${SITE_URL}/skills/${s.name}): ${s.desc.replace(/\s+/g, ' ').slice(0, 180)}`;
+  const byGroup = g => skills.filter(s => s.group === g);
+  const llms = [
+    '# superpowers-zh',
+    '',
+    '> Anthropic superpowers 的中文增强 fork：20 个塑造 AI 编程助手行为的 skill（15 个译自上游 + 5 个本 fork 新增，其中 4 个为中国特色），一条 npx 命令适配 26 款 IDE / CLI。',
+    '',
+    '安装（自动检测当前项目使用的工具）：',
+    '',
+    '```bash',
+    'npx superpowers-zh              # 项目级',
+    'npx superpowers-zh --global     # 全局，所有项目共享',
+    '```',
+    '',
+    'skill 不是文档，是**行为塑造代码**：装好后由工具的 bootstrap 自动触发，',
+    '例如用户说「做个 react todo list」时会先触发 brainstorming，而不是直接写代码。',
+    '',
+    '仓库：https://github.com/jnMetaCode/superpowers-zh',
+    'npm：https://www.npmjs.com/package/superpowers-zh',
+    '全文（所有 skill 正文）：' + SITE_URL + '/llms-full.txt',
+    '',
+    '从这里开始：[使用 Superpowers · 引导](' + SITE_URL + '/skills/using-superpowers) —— 它说明其余 19 个 skill 各自何时触发。',
+    '',
+  ];
+  for (const g of GROUPS) {
+    const list = byGroup(g.id);
+    if (!list.length) continue;
+    llms.push('## ' + g.zh, '');
+    for (const sk of list) llms.push(skillLine(sk));
+    llms.push('');
+  }
+  llms.push('## 其他', '', `- [赞助商](${SITE_URL}/sponsors): 支持本项目的公司与优惠`, `- [English](${SITE_URL}/en/): English version`, '');
+  writeFileSync(join(DIST, 'llms.txt'), llms.join('\n'));
+
+  // llms-full.txt：索引 + 全部 SKILL.md 正文。去掉 frontmatter（对读者无意义），
+  // 每篇前加一个 H1 分隔，便于模型定位。
+  const full = [llms.join('\n'), '', '---', '', '# 全部 skill 正文', ''];
+  for (const sk of skills) {
+    full.push('', '---', '', `# ${sk.title}（${sk.name}）`, '',
+      `来源：${SITE_URL}/skills/${sk.name}`, '',
+      sk.raw.replace(/^---\n[\s\S]*?\n---\n?/, '').trim(), '');
+  }
+  writeFileSync(join(DIST, 'llms-full.txt'), full.join('\n'));
+
   const today = new Date().toISOString().slice(0, 10);
   // 每条 URL 记下它「内容来自哪些源文件」，据此取 lastmod：
   //   skill 详情页 -> 该 skill 目录；首页 / 赞助页 -> 生成器与模板（文案都写在里面）
@@ -1441,15 +1494,24 @@ function build() {
   // 严格 CSP：脚本仅允许 'self' + 本站内联脚本的 hash（含 GA 内联配置块，自动收集）；
   // 样式仅 'self'；禁用插件/内联事件；锁死 base-uri 与 frame 祖先。
   // Google Analytics (gtag) 需放行 googletagmanager（加载器）与 analytics（上报）域名。
+  // Cloudflare Web Analytics 的 beacon 是 **Cloudflare 在边缘注入的**，不是我们写进
+  // 页面的 —— 所以它照样受本站 CSP 约束。此前 script-src 没放行它，浏览器直接拒绝
+  // 执行，统计一条数据都收不到：面板开着，实际全黑。
+  //   加载器 https://static.cloudflareinsights.com/beacon.min.js
+  //   上报   https://cloudflareinsights.com/cdn-cgi/rum （POST / sendBeacon）
+  // 为什么要救它而不是关掉它：本站主力受众在国内，而 GA 的 google-analytics.com
+  // 在国内不可达 —— 只留 GA 等于对主要用户群没有任何数据。两个都留，互为兜底。
+  const CF_SCRIPT = 'https://static.cloudflareinsights.com';
+  const CF_CONNECT = 'https://cloudflareinsights.com';
   const GA_SCRIPT = 'https://www.googletagmanager.com';
   const GA_CONNECT = 'https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com';
   const csp = [
     "default-src 'self'",
-    "script-src 'self' " + GA_SCRIPT + ' ' + [...scriptHashes].join(' '),
+    "script-src 'self' " + GA_SCRIPT + ' ' + CF_SCRIPT + ' ' + [...scriptHashes].join(' '),
     "style-src 'self'",
     "img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com",
     "font-src 'self'",
-    "connect-src 'self' " + GA_CONNECT,
+    "connect-src 'self' " + GA_CONNECT + ' ' + CF_CONNECT,
     "object-src 'none'",
     "base-uri 'self'",
     "frame-ancestors 'none'",

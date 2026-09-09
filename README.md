@@ -2,7 +2,7 @@
 
 🌐 **简体中文** | [繁體中文](README.zh-Hant.md) | [English (upstream)](https://github.com/obra/superpowers)
 
-> 🦸 **superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills + 1 个额外新增 skill** — 让 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Qoder 等 **25 款 AI 编程工具**真正会干活。从头脑风暴到代码审查，从 TDD 到调试，每个 skill 都是经过实战验证的工作方法论。
+> 🦸 **superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills + 1 个额外新增 skill** — 让 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Qoder 等 **26 款 AI 编程工具**真正会干活。从头脑风暴到代码审查，从 TDD 到调试，每个 skill 都是经过实战验证的工作方法论。
 
 Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 21 skills across 23 AI coding tools, including full translations and China-specific development skills.
 
@@ -64,7 +64,7 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | ⭐ Star 数 | 250k+ | — |
 | 📦 Skills 总数 | 14 | **20**（14 翻译 + 4 国产原创 + 2 上游历史保留） |
 | 🌐 语言 | 英文 | 中文（技术术语保留英文） |
-| 🤖 **支持工具** | **6 款**：Claude Code / Cursor / Codex / OpenCode / Copilot CLI / Gemini CLI | **25 款**：上述 6 款 + Hermes Agent / Trae / Kiro / Qwen Code / OpenClaw / Claw Code / Antigravity / DeerFlow / VS Code / Windsurf / Aider / Qoder / CodeBuddy（腾讯） / CodeArts（华为云码道） / Cline / Kilo Code / Crush / ZCode（智谱）/ DeepSeek Harness |
+| 🤖 **支持工具** | **6 款**：Claude Code / Cursor / Codex / OpenCode / Copilot CLI / Gemini CLI | **26 款**：上述 6 款 + Hermes Agent / Trae / Kiro / Qwen Code / OpenClaw / Claw Code / Antigravity / DeerFlow / VS Code / Windsurf / Aider / Qoder / CodeBuddy（腾讯） / CodeArts（华为云码道） / Cline / Kilo Code / Crush / ZCode（智谱）/ DeepSeek Harness / Reasonix |
 | ⚡ **安装方式** | 按工具分别装（每款一条不同的 plugin marketplace 命令） | **`npx superpowers-zh` 一条命令自动识别项目里的工具并安装**；识别不出可 `--tool <name>` 显式指定 |
 | 🇨🇳 Git 平台 | GitHub 为主 | GitHub + Gitee + Coding + 极狐 GitLab + **CNB（腾讯云原生构建）** |
 | 🇨🇳 CI/CD 示例 | GitHub Actions | GitHub Actions + Gitee Go + Coding CI + 极狐 CI + `.cnb.yml` |
@@ -80,9 +80,9 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | 💬 社区 | Discord | 微信公众号「AI不止语」+ 微信群 + QQ 群 |
 | 📜 License | MIT | MIT |
 
-**一句话总结：** 英文上游 = 方法论内核；中文增强版 = 方法论内核 **+** 25 款工具一键适配 **+** 国内 Git/CI 生态 **+** 中文化表达习惯。
+**一句话总结：** 英文上游 = 方法论内核；中文增强版 = 方法论内核 **+** 26 款工具一键适配 **+** 国内 Git/CI 生态 **+** 中文化表达习惯。
 
-### 🤖 支持 25 款主流 AI 编程工具
+### 🤖 支持 26 款主流 AI 编程工具
 
 | 工具 | 类型 | 使用 node 安装 | 手动安装 |
 |------|------|:---:|:---:|
@@ -111,6 +111,7 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | [Crush](https://github.com/charmbracelet/crush) | CLI | `npx superpowers-zh` | `.crush/skills/` |
 | [ZCode](https://zcode.z.ai/) (智谱 ADE) | IDE | `npx superpowers-zh --global --tool zcode` | `~/.zcode/skills/`（仅全局，项目级路径官方未公开） |
 | [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh) | CLI | `npx superpowers-zh` | `.dsh/skills/` + `AGENTS.md` |
+| [Reasonix](https://reasonix.io/) | CLI | `npx superpowers-zh` | `.reasonix/skills/` + `REASONIX.md`（全局 Windows 为 `%APPDATA%\reasonix\skills`） |
 
 > 运行 `node ./bin/superpowers-zh.js` 会自动检测你项目中使用的工具，将 21 个 skills 安装到正确位置。
 
@@ -186,7 +187,7 @@ node ./bin/superpowers-zh.js --global --tool claude   # 或指定工具
 
 全局安装把 skills 装到工具的**用户级目录**（如 `~/.claude/skills`），一次安装所有项目自动可用，更新时也只需重装一次。**项目级优先、全局兜底**，二者可共存。
 
-支持通用全局安装的工具（均为 docs 已证实的用户级加载路径）：**Claude Code · Codex CLI · Qoder · Windsurf · Qwen Code · OpenClaw · OpenCode · Crush · Hermes Agent · CodeBuddy · CodeArts · ZCode · DeepSeek Harness**。其中 **Codex CLI** 全局装到 `~/.agents/skills`（Codex 启动扫描目录）；**Crush** 在 Windows 上装到 `%LOCALAPPDATA%\crush\skills`（其 README 明确 Windows 走这里，不是 `~/.config`）。其余工具（Cursor / Kiro / Trae / Aider / DeerFlow / VS Code / Claw / Cline / Kilo Code）规则是项目级或存于应用内设置，`--global` 会提示改用项目级；**Gemini CLI / Antigravity** 有各自专属的全局方式（Gemini 走扩展目录），见对应 `docs/README.*.md`。
+支持通用全局安装的工具（均为 docs 已证实的用户级加载路径）：**Claude Code · Codex CLI · Qoder · Windsurf · Qwen Code · OpenClaw · OpenCode · Crush · Hermes Agent · CodeBuddy · CodeArts · ZCode · DeepSeek Harness · Reasonix**。其中 **Codex CLI** 全局装到 `~/.agents/skills`（Codex 启动扫描目录）；**Crush** 在 Windows 上装到 `%LOCALAPPDATA%\crush\skills`（其 README 明确 Windows 走这里，不是 `~/.config`）。其余工具（Cursor / Kiro / Trae / Aider / DeerFlow / VS Code / Claw / Cline / Kilo Code）规则是项目级或存于应用内设置，`--global` 会提示改用项目级；**Gemini CLI / Antigravity** 有各自专属的全局方式（Gemini 走扩展目录），见对应 `docs/README.*.md`。
 
 | | 项目级（默认） | 全局（`--global`） |
 |---|---|---|
@@ -341,7 +342,9 @@ MIT License — 自由使用，商业或个人均可。
 > - 🐛 **Crush 在 Windows 上装错目录** —— 官方是 `%LOCALAPPDATA%\crush\skills`，我们两个平台都装 `~/.config`。文档早写对了，代码没跟上
 > - 🐛 **render-graphs.js** —— 取上游的安全加固与 Windows 修复，但**不跟它改 ESM**（那会在 Node 20 的普通项目里直接加载失败）
 > - 🆕 **新增 DeepSeek Harness 支持**（[#122](https://github.com/jnMetaCode/superpowers-zh/issues/122)）—— 项目级 `.dsh/skills/` + 全局 `~/.dsh/skills/`，引导写 `AGENTS.md`；四条路径全部有官方出处
-> - 🆕 **新增 ZCode（智谱）支持**（工具数 23 → 25）—— 只做全局安装：官方文档只公开了 `~/.zcode/skills/`，项目级是应用内 UI 导入、不暴露磁盘路径，所以项目级会被明确拒绝而不是猜路径装进去
+> - 🐛 **在管理员 PowerShell 里跑会把 skills 装进 `C:\Windows\System32`**（[#125](https://github.com/jnMetaCode/superpowers-zh/issues/125)）—— 管理员终端的默认工作目录就是那里。补系统目录护栏，且不提供 `--force` 绕过
+> - 🆕 **新增 Reasonix 支持**（[#42](https://github.com/jnMetaCode/superpowers-zh/issues/42)）—— 项目级 `.reasonix/skills/` + `REASONIX.md`；**Windows 全局是 `%APPDATA%\reasonix\skills`**，与 Unix 不同构
+> - 🆕 **新增 ZCode（智谱）支持**（工具数 23 → 26）—— 只做全局安装：官方文档只公开了 `~/.zcode/skills/`，项目级是应用内 UI 导入、不暴露磁盘路径，所以项目级会被明确拒绝而不是猜路径装进去
 > - 🛡️ **6 条新门禁**（前缀回归、Windows 路径、卸载不误删用户文件、全局-only 工具项目级必拒、上游漂移计量…），`verify-release` 115 → 144
 >
 > 📋 官网侧改动（版本提示条、22 份工具文档入口、结构化数据、分享大图、可访问性、sitemap…）见 **[完整 Release Notes →](RELEASE-NOTES.zh.md)**
@@ -350,7 +353,7 @@ MIT License — 自由使用，商业或个人均可。
 
 <div align="center">
 
-**🦸 AI 编程超能力：让 Claude Code / Hermes Agent / Cursor / Claw Code / Qoder 等 25 款工具真正会干活**
+**🦸 AI 编程超能力：让 Claude Code / Hermes Agent / Cursor / Claw Code / Qoder 等 26 款工具真正会干活**
 
 </div>
 

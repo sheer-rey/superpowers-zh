@@ -37,7 +37,7 @@ skills:
 
 **我们不替你改 `config.yaml`** —— 那是你的配置文件。
 
-项目级安装还会生成 `HERMES.md` 引导文件（含核心规则和 skills 列表），让 Hermes 在合适时机主动检查 skill。全局安装**不写**这个文件 —— Hermes 的用户级指令文件约定没有公开文档，我们不猜路径、也不往你的主目录里写东西。
+项目级安装还会生成 `AGENTS.md` 引导文件（含核心规则和 skills 列表），让 Hermes 在合适时机主动检查 skill。全局安装**不写**这个文件 —— Hermes 的用户级指令文件约定没有公开文档，我们不猜路径、也不往你的主目录里写东西。
 
 ## 同名冲突
 
@@ -95,10 +95,12 @@ skill_view("using-superpowers", "references/hermes-tools.md")
 2. 每个 skill 目录下需要有 `SKILL.md` 文件
 3. 使用 `skills_list` 查看已发现的技能
 
-### HERMES.md 未加载
+### AGENTS.md 未加载
 
 1. 确认文件在项目根目录（与 `.hermes/` 同级）
-2. 文件名可以是 `HERMES.md` 或 `.hermes.md`
+2. 文件名必须是 `AGENTS.md`（项目工作流指令的官方位置）
+
+> ⚠️ **v1.7.12 及更早版本写的是 `HERMES.md`** —— 而 [Hermes 官方文档](https://hermes-agent.nousresearch.com/docs/guides/use-soul-with-hermes)里 `HERMES.md` 出现 **0 次**：「project workflow instructions … Those belong in `AGENTS.md`」。旧版本写的那个文件很可能从未被加载。升级后重装即可；旧的 `HERMES.md` 可以手动删除（`--uninstall` 也会清掉我们写进去的那一段）。
 
 ## 获取帮助
 

@@ -6,10 +6,71 @@
 
 ---
 
+## v1.7.13 (2026-09-08)
+
+**只有 TRAE 国内版用户需要更新。** 处理 [#35](https://github.com/jnMetaCode/superpowers-zh/issues/35) 时发现 Trae 此前**完全没有全局安装**，而国内版的全局目录还跟国际版不同构。
+
+### 🐛 TRAE CN 全局目录是 `~/.trae-cn/skills`，不是 `~/.trae/skills`
+
+[TRAE CN 官方文档「技能所在目录」](https://docs.trae.cn/ide/skills)：
+
+| 作用域 | 路径 |
+|---|---|
+| 全局（macOS/Linux） | `~/.trae-cn/skills` |
+| 全局（Windows） | `%userprofile%/.trae-cn/skills` |
+| 项目 | 项目所在路径下的 `.trae/skills/` 目录 |
+
+全局是 **`.trae-cn`**，差一个后缀就是又一次「装了 20 个文件、工具一个都不读」。而[国际版文档](https://docs.trae.ai/ide/skills)**没有给出全局路径** —— 按本仓一贯口径不猜，所以国际版不做全局。
+
+```bash
+npx superpowers-zh --tool trae             # 项目级，两版通用（.trae/skills/）
+npx superpowers-zh --global --tool traecn  # 全局，仅国内版（~/.trae-cn/skills/）
+```
+
+别名 `traecn` / `trae-cn` / `trae-china`。`%userprofile%` 就是主目录，两平台在「主目录下的 `.trae-cn/skills`」这点上同构，不需要 `dirWin`。
+
+**为什么单独成一条而不是挂到 Trae 上**：挂上去，国际版用户跑 `--global --tool trae` 就会装进一个 TRAE 根本不扫的目录 —— 正是这个 issue 想避免的事。项目级两版同构，仍由 `--tool trae` 一条覆盖。
+
+### 🐛 拒绝文案说了假话
+
+全局-only 工具的项目级拒绝此前是一段写死的通用文案，内容是 ZCode 的情况（「项目级导入是应用内 UI 动作、不暴露磁盘路径」）。**这对 TRAE CN 是假的** —— 它的项目级路径文档写得清清楚楚。
+
+改成按工具可覆盖，TRAE CN 现在说的是真实原因：
+
+```
+❌ TRAE CN 不支持项目级安装。
+
+  TRAE CN 的项目级技能目录与国际版 TRAE 相同（.trae/skills/），
+  已经由 Trae 这一条覆盖，请直接用：
+    npx superpowers-zh --tool trae
+  本条目只用于 TRAE CN 独有的**全局**目录（~/.trae-cn/skills）。
+```
+
+### 🧮 工具数仍是 26，不是 27
+
+`TRAE CN` 在安装器里占一条，但它是**同一个 IDE 的国内发行版**，单独成条只为承载独有的全局路径。计进产品数就是灌水，站点工具墙还会出现两张同名 Trae 卡片让人不知道点哪个。
+
+新增 `editionOf` 标记，audit 的计数口径把这类条目排掉 —— 这是 Copilot CLI 那条例外（共用 `.claude/skills` 但单独计数）的镜像另一半。
+
+### 🛡️ 门禁自己的两个 bug
+
+| 问题 | 后果 |
+|---|---|
+| `verify-release` J 节用 `$( )` 取全局-only 工具名 | 含空格的「TRAE CN」被词分割成 `trae` + `cn` 两个不存在的目标，门禁自己造了两条假失败 |
+| 外链验活不带 User-Agent | `docs.trae.cn` 对默认 curl UA 一律 400、带浏览器 UA 返回 200，新文档的引用被误判成死链 |
+
+加 UA **不是**放宽判活口径：400 仍算死链，只是不再因为「对方不接待 curl」而误判。往文档里塞一条 `reasonix.io` 的真 404 做负向测试，照样被抓。
+
+另外补了一条 dot 流程图门禁：graphviz 遇到「边引用了未声明的节点」不报错、只会静默新建一个孤儿框。同步上游 v6.3.0 时改了 SDD 流程图的节点文案，正是这个场景。
+
+`audit` 163 pass / 0 warn，`verify-release` 163 → **164 pass**。
+
+---
+
 ## v1.7.12 (2026-09-07)
 
 **通过 Claude Code 插件市场安装的用户请更新。** 本版修的是一个「装了，但技能之间互相调不动」的问题，
-并新增两款工具支持：**ZCode（智谱）** 与 **DeepSeek Harness**，工具数 23 → 25。
+并新增三款工具支持：**ZCode（智谱）**、**DeepSeek Harness** 与 **Reasonix**，工具数 23 → 26。
 
 ### 🐛 插件模式下跨技能调用全部失败（[#116 之外最实的一条：#124](https://github.com/jnMetaCode/superpowers-zh/issues/124)）
 
@@ -63,6 +124,37 @@ Windows 走 `%LOCALAPPDATA%\crush\skills\`（它给 Windows 用户的上手命�
 
 实测（`--no-experimental-detect-command` 模拟 Node 20）：上游版报
 `To load an ES module, set "type": "module"` + SyntaxError，我们改后版本正常执行。
+
+### 🔄 对齐上游 v6.3.0：13 个镜像文件、+415 / -44 行正文
+
+旧门禁对已翻译的文件只比「标题数」—— 标题不变，正文改多少行都看不见。上游 v6.3.0
+给 skill 正文加了 415 行，我们这边一声不吭。这一版补了基线文件
+`.upstream-sync.json` 之后，第一次量出了这个缺口，并分四批补完：
+
+| 文件 | 上游改动 | 这次同步了什么 |
+|---|---|---|
+| `brainstorming/SKILL.md` | +108 / -9 | 重译到 v6.3.0：Three Paths 结构、危险信号表、每条路径各自的检查清单 |
+| `using-superpowers/references/codex-tools.md` | +70 / -1 | 我们原来只有 2 节 25 行，上游是 5 节；顺带修掉 `close_agent` 在 V1/V2 里的错误行 |
+| `using-superpowers/references/hermes-tools.md` | +56 | 换成上游的 6 节版本，只保留一条声明过的 fork 注记 |
+| `finishing-a-development-branch/SKILL.md` | +24 | 工作树删除被拒时的处理：绝不自作主张 `--force` |
+| `implementer-prompt.md` / `re-review-prompt.md` / `code-reviewer.md` | +30 | 三份子智能体提示词统一加上「**你不派发子智能体**」契约 |
+| `subagent-driven-development/SKILL.md` | +89 / -24 | 控制者从「遇事问人」改成「**自行裁决 + 记账**」（见下） |
+| `task-reviewer-prompt.md` | +22 | 审查者不派子智能体；证据读不到 ≠ 证据不存在；打包分派要逐文件对 diff |
+| `writing-plans/SKILL.md` / `using-superpowers/SKILL.md` / `visual-companion.md` | +9 / -4 | 计划模板新增 Spec 字段；Hermes 工具参考入口；Copilot CLI 后台启动说明 |
+
+其中 SDD 那条是行为塑造上最实的一处改动。旧版本里，控制者一遇到「审查发现」与
+「计划原文」冲突就停下来问人类伙伴；v6.3.0 改成由控制者自己裁决，每条裁决以
+`Ruling: <决定> — <为什么> — <错了的代价>` 记进账本，收尾时汇总成「我作出的裁决」
+交回来。只留四类硬停止：不可逆或破坏性操作、涉及安全的动作、工作树之外按惯例
+该先问一声的副作用（合并 / 推送共享分支 / 发布）、以及坏到每条路都只能靠猜的计划。
+理由是上游写在正文里的一句话：**一个错误的裁决，代价是看得见也撤得掉的返工；
+一个停在问题上的会话，代价是一整天，而且什么也换不来。**
+
+配套的流程图节点也跟着改了（「询问人类伙伴以哪个为准」→「对冲突作出裁决，把裁决
+记进账本」），预检扫描的产出从一句结论改成一张必须逐行填的表。
+
+**唯一有意不同步的是 `writing-skills/render-graphs.js` 的 CJS → ESM**，理由见上一节。
+这条分歧写进了 `.upstream-sync.json` 的 evidence 字段，免得下次同步时被当成遗漏又"修"一遍。
 
 ### 🆕 新增 ZCode（智谱）支持 —— 只做全局，因为项目级路径官方从未公开（[#95](https://github.com/jnMetaCode/superpowers-zh/issues/95) [#120](https://github.com/jnMetaCode/superpowers-zh/issues/120)）
 
@@ -118,6 +210,57 @@ npx superpowers-zh --global --tool dsh      # -> ~/.dsh/skills/ + ~/.dsh/AGENTS.
 装过 Claude Code 的项目引导那半已生效 —— 但 `.claude/skills` 不在 dsh 的技能根列表里，
 技能仍需单独装。
 
+### 🆕 新增 Reasonix 支持（[#42](https://github.com/jnMetaCode/superpowers-zh/issues/42)）
+
+```bash
+npx superpowers-zh                           # 自动检测 .reasonix/ 或 reasonix.toml
+npx superpowers-zh --global --tool reasonix
+```
+
+[Reasonix](https://reasonix.io/)（esengine/DeepSeek-Reasonix）是 DeepSeek 原生的终端 coding
+agent。#42 的 issue 模板整个没填，但产品是真实存在的，官方文档也齐全：
+
+| 内容 | 路径 | 出处 |
+|---|---|---|
+| skills（项目级） | `.reasonix/skills/` | `docs/CONFIG_PATHS.zh-CN.md`：项目本地 settings / skills / commands 位于项目 `.reasonix/` |
+| skills（全局 macOS/Linux） | `~/.reasonix/skills/` | 同上：全局 skills = `<Reasonix home>/skills/` |
+| skills（全局 **Windows**） | `%APPDATA%\reasonix\skills\` | 同上 Reasonix home 表：Windows 为 `%APPDATA%\reasonix`，**与 Unix 不同构** |
+| 引导（项目级） | 项目根 `REASONIX.md` | `docs/GUIDE.zh-CN.md`：常驻指令分层加载 `REASONIX.md` / `AGENTS.md` / `CLAUDE.md` |
+
+Windows 路径走上一版为 Crush 加的 `dirWin` 机制。**全局安装不写引导文件**：官方说
+「用户全局文件先加载」但没写明那个文件的确切路径，不确认就不写 —— 全局仍装 skills，
+只是不自动触发，想要自动触发用项目级安装。
+
+### 🐛 在管理员 PowerShell 里跑，会把 skills 装进 C:\Windows\System32（[#125](https://github.com/jnMetaCode/superpowers-zh/issues/125)）
+
+issue 正文只有一张截图、模板全空。但那张截图把事情说清楚了：
+
+    PS C:\Windows\system32> npx superpowers-zh --tool trae
+      模式: 项目级
+      目标: C:\Windows\System32
+      ✅ Trae [项目]: 20 个 skills -> C:\Windows\System32\.trae\skills
+      ✅ Trae: bootstrap rule -> C:\Windows\System32\.trae\rules\superpowers-zh.md
+
+**管理员权限打开的 PowerShell，默认工作目录就是 `C:\Windows\System32`。** 用户在那里
+直接跑 npx，我们就老老实实把 20 个 skill 目录写进了 Windows 系统目录。
+
+我们本来就有「拒绝装进用户主目录」的护栏（`--force` 可绕过），却从没拦过系统目录。
+现在补上，且**不提供 --force 绕过** —— 装到系统目录没有任何正当用途，给个开关只会
+让人照着开关走。
+
+    ⚠️  当前目录是系统目录: C:\Windows\System32
+      常见原因：**用管理员权限打开的 PowerShell / cmd，默认工作目录就是
+      C:\Windows\System32**，直接在里面跑 npx 就会装到这里（issue #125）。
+      正确做法 —— 先切到你的项目目录： cd D:\path\to\your\project
+
+覆盖 Windows（`%SystemRoot%`、`%ProgramFiles%`、`%ProgramData%`、盘符根）与
+Unix（`/`、`/usr`、`/etc`、`/bin`、`/sbin`、`/var`、`/opt`、`/System`、`/Library`）。
+主目录与系统临时目录豁免（各有自己的处理）。
+
+> 关于截图里那个「检测到当前版本文件损坏」弹窗：那是 TRAE 自己的完整性检查提示，
+> **我们没有证据表明它是本次安装导致的**，所以不宣称因果。能确认并已修的是：
+> 我们不该往系统目录写东西。
+
 ### 🛡️ 这一版新增 / 修好的门禁
 
 每条都做过反向验证（把问题造回去，必须报错）：
@@ -129,9 +272,10 @@ npx superpowers-zh --global --tool dsh      # -> ~/.dsh/skills/ + ~/.dsh/AGENTS.
 | 11 款全局工具卸载零残留 + **不误删用户自有文件** | 此前只测了 1 款；「误删」一款都没测过 |
 | 上游同步基线 `.upstream-sync.json` + 正文级漂移计量 | 上游改了 415 行正文，旧门禁一个字都没说 |
 | 全局-only 工具的项目级必须明确拒绝（rc≠0 + 零写入） | 猜一个项目级路径装进去 = 第四次「装了不生效」 |
+| 系统目录护栏（Unix + win32 打桩双向验证） | 管理员终端默认 cwd 就是 System32（#125） |
 | audit 3c-bis 的静默分支改为显式 warn | 上游一发新版，检查条数就悄悄少一条 |
 
-`verify-release` 115 → **149 pass**。
+`verify-release` 115 → **163 pass**，`audit` 162 pass / 0 warn。
 
 ### 🌐 官网（不影响安装包）
 

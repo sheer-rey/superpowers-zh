@@ -7,9 +7,9 @@
     "同步完成后更新 commit / version / date 三个字段。"
   ],
   "upstream": "https://github.com/obra/superpowers",
-  "commit": "3dcbd5c4b48e02263fbf4a3c01e3fe4f81d584d9",
-  "version": "v6.2.0",
-  "date": "2026-08-12",
-  "evidence": "RELEASE-NOTES.zh.md v1.7.9 记「上游 v6.2.0 对齐完成」（issue #19 的 A/B/C/D 四块）；把 upstream/main 指回该 commit 后 audit 170 pass / 0 warn / 0 fail。",
+  "commit": "b36e0829c6d0140e93cfef2ca599b1b07d4a7797",
+  "version": "v6.3.0",
+  "date": "2026-09-08",
+  "evidence": "上游 v6.3.0 对齐完成：brainstorming（Three Paths）、codex/hermes tools 参考、finishing-a-development-branch 拒绝删除分支、writing-plans Spec 字段、3 份子智能体提示词的「你不派发子智能体」契约、subagent-driven-development 的「做裁决，不要停摆」（控制者自行裁决 + 账本记录，只留 4 类硬停止）。唯一有意保留的分歧是 skills/writing-skills/render-graphs.js —— 上游把它从 CJS 改成 ESM，我们的 hook 链按 CJS 加载，跟着改会直接断，故不同步。",
   "trackedPaths": ["skills", "hooks"]
 }
