@@ -3,7 +3,7 @@
 #
 # 1. 静态校验：JSON parse / SKILL.md frontmatter / symlink / hook 可执行性
 # 2. Installer 功能：23 款工具装 / 卸载 / 幂等
-# 3. 上游对齐：hooks 3 文件 + brainstorm scripts 3 文件 + 14 翻译 skill 结构层级
+# 3. 上游对齐：hooks 3 文件 + brainstorm scripts 3 文件 + 15 翻译 skill 结构层级
 # 4. 交叉引用：README → docs/ 链接 + skill 间引用 + bootstrap 注入路径
 #
 # 用法：
@@ -187,7 +187,7 @@ else
     if [ "$d" = "0" ]; then ok; else bad "Brainstorm script 漂移: $(basename $f) ($d 行)"; fi
   done
 
-  # 3c. 14 翻译 skill 结构层级（H1-H4 标题数）
+  # 3c. 15 翻译 skill 结构层级（H1-H4 标题数）
   #
   # 必须排除 ``` 围栏内的行：shell 注释（`# 运行测试`）同样匹配 ^#{1,4} ，
   # 会被当成 markdown 标题数进去。用 grep 直接数的话，一个 skill 里多几行
@@ -196,7 +196,7 @@ else
   count_headings() {  # 读 stdin，只数围栏之外的 H1-H4
     awk '/^```/{fence = !fence; next} !fence && /^#{1,4} /{n++} END{print n+0}'
   }
-  declare -a SKILLS=(brainstorming dispatching-parallel-agents executing-plans \
+  declare -a SKILLS=(brainstorming diagnosing-superpowers dispatching-parallel-agents executing-plans \
     finishing-a-development-branch receiving-code-review requesting-code-review \
     subagent-driven-development systematic-debugging test-driven-development \
     using-git-worktrees using-superpowers verification-before-completion \

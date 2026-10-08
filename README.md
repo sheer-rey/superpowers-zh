@@ -16,11 +16,13 @@ Chinese community edition of [superpowers](https://github.com/obra/superpowers) 
 | **chinese-code-review 英文化** | 所有代码示例、代码注释、git commit message 示例全部改为英文，保留中文方法论叙述 |
 | **依赖文件更新** | package.json 版本号、keywords 更新；scripts/audit.sh 添加 cline 工具 |
 
+> 🧠 **新：让 Claude Code / Codex / Cursor / Gemini CLI 不再失忆** → [engram](https://github.com/jnMetaCode/engram)：一条 `npx @jnmetacode/engram install`，自动记住每次会话问过什么、改了哪些文件、最后怎么解决的，下次开会话自动带回（带出处）。**记忆跨工具共享**——Codex 里定的事，Claude Code 也知道。全本地、零依赖、中文友好。
+
 ### 📊 项目规模
 
 | 📦 翻译 Skills | 🇨🇳 中国原创 Skills | 🤖 支持工具 |
 |:---:|:---:|:---:|
-| **14** | **4**<br><sub>另有 2 个上游历史保留</sub> | **Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Codex / Aider / Trae / VS Code (Copilot) / DeerFlow / OpenCode / OpenClaw / Qwen Code / Antigravity / Claw Code / Qoder / CodeBuddy（腾讯）/ CodeArts（华为云码道）/ Cline / Kilo Code / Crush** |
+| **15** | **4**<br><sub>另有 2 个上游历史保留</sub> | **Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Codex / Aider / Trae / VS Code (Copilot) / DeerFlow / OpenCode / OpenClaw / Qwen Code / Antigravity / Claw Code / Qoder / CodeBuddy（腾讯）/ CodeArts（华为云码道）/ Cline / Kilo Code / Crush** |
 
 ---
 
@@ -62,7 +64,7 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | 维度 | superpowers（英文上游） | superpowers-zh（中文增强版） |
 |------|----------------------|---------------------------|
 | ⭐ Star 数 | 250k+ | — |
-| 📦 Skills 总数 | 14 | **20**（14 翻译 + 4 国产原创 + 2 上游历史保留） |
+| 📦 Skills 总数 | 15 | **21**（15 翻译 + 4 国产原创 + 2 上游历史保留） |
 | 🌐 语言 | 英文 | 中文（技术术语保留英文） |
 | 🤖 **支持工具** | **6 款**：Claude Code / Cursor / Codex / OpenCode / Copilot CLI / Gemini CLI | **26 款**：上述 6 款 + Hermes Agent / Trae / Kiro / Qwen Code / OpenClaw / Claw Code / Antigravity / DeerFlow / VS Code / Windsurf / Aider / Qoder / CodeBuddy（腾讯） / CodeArts（华为云码道） / Cline / Kilo Code / Crush / ZCode（智谱）/ DeepSeek Harness / Reasonix |
 | ⚡ **安装方式** | 按工具分别装（每款一条不同的 plugin marketplace 命令） | **`npx superpowers-zh` 一条命令自动识别项目里的工具并安装**；识别不出可 `--tool <name>` 显式指定 |
@@ -115,7 +117,7 @@ AI：在开始实现之前，我需要了解几个关键问题：
 
 > 运行 `node ./bin/superpowers-zh.js` 会自动检测你项目中使用的工具，将 22 个 skills 安装到正确位置。
 
-### 翻译的 Skills（14 个）
+### 翻译的 Skills（15 个）
 
 | Skill | 用途 |
 |-------|------|
@@ -124,6 +126,7 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | **执行计划** (executing-plans) | 按计划逐步实施，每步验证 |
 | **测试驱动开发** (test-driven-development) | 严格 TDD：先写测试，再写代码 |
 | **系统化调试** (systematic-debugging) | 四阶段调试法：定位→分析→假设→修复 |
+| **诊断 Superpowers** (diagnosing-superpowers) | 会话跑偏时读 transcript 取证，每条结论带 `path:line`，可整理成 issue |
 | **请求代码审查** (requesting-code-review) | 派遣审查 agent 检查代码质量 |
 | **接收代码审查** (receiving-code-review) | 技术严谨地处理审查反馈，拒绝敷衍 |
 | **完成前验证** (verification-before-completion) | 证据先行——声称完成前必须跑验证 |
@@ -239,7 +242,7 @@ claude plugin update superpowers-zh@superpowers-zh       # 再升级 plugin（�
 claude plugin uninstall superpowers-zh@superpowers-zh    # 卸载
 ```
 
-> **和方式一怎么选？** marketplace 装的是**完整 plugin**（skills + hooks + bootstrap 由 Claude Code 统一托管、随版本更新），但只服务 Claude Code 一款工具。要装给其余 19 款工具，仍然用方式一的 `npx superpowers-zh`。两者可以共存，但同一个项目里别重复装 Claude Code，否则 skills 会出现两份。
+> **和方式一怎么选？** marketplace 装的是**完整 plugin**（skills + hooks + bootstrap 由 Claude Code 统一托管、随版本更新），但只服务 Claude Code 一款工具。要装给其余 25 款工具，仍然用方式一的 `npx superpowers-zh`。两者可以共存，但同一个项目里别重复装 Claude Code，否则 skills 会出现两份。
 
 ### 方式三：手动安装（low-fidelity，仅作备选）
 

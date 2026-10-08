@@ -1,6 +1,6 @@
 {
   "name": "superpowers-zh",
-  "version": "1.7.13+fork.3",
+  "version": "1.7.14+fork.3",
   "engines": {
     "node": ">=20.0.0"
   },
@@ -26,6 +26,7 @@
     ".codex-plugin/",
     ".opencode/INSTALL.md",
     ".opencode/plugins/",
+    "index.js",
     ".pi/extensions/",
     "CLAUDE.md",
     "GEMINI.md",

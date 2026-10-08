@@ -7,9 +7,12 @@
     "同步完成后更新 commit / version / date 三个字段。"
   ],
   "upstream": "https://github.com/obra/superpowers",
-  "commit": "b36e0829c6d0140e93cfef2ca599b1b07d4a7797",
-  "version": "v6.3.0",
-  "date": "2026-09-08",
-  "evidence": "上游 v6.3.0 对齐完成：brainstorming（Three Paths）、codex/hermes tools 参考、finishing-a-development-branch 拒绝删除分支、writing-plans Spec 字段、3 份子智能体提示词的「你不派发子智能体」契约、subagent-driven-development 的「做裁决，不要停摆」（控制者自行裁决 + 账本记录，只留 4 类硬停止）。唯一有意保留的分歧是 skills/writing-skills/render-graphs.js —— 上游把它从 CJS 改成 ESM，我们的 hook 链按 CJS 加载，跟着改会直接断，故不同步。",
-  "trackedPaths": ["skills", "hooks"]
+  "commit": "8ca22dba9a94f28898bbce59f2537ff4d87c747d",
+  "version": "v6.4.2",
+  "date": "2026-09-26",
+  "evidence": "上游 v6.4.2 对齐完成（含 v6.4.1）：新增 diagnosing-superpowers（github-issues 指向本 fork，先在本仓分流）；executing-plans 按上游重写为「内联执行 + 账本 + 最终审查」，并删去与之冲突的旧 fork 增量「常见异常处理」；writing-plans 更精简的计划（步骤只写决定、审查重点、比例自检、原生/子代理两种执行方式），删除 plan-document-reviewer-prompt.md；brainstorming「建立共同理解」+ 分路径 HARD-GATE；code-reviewer「规格是愿景文档」「不予判断的项」；TDD 跑全套件；SDD 执行方式判定图、sdd-workspace 同名计划去冲突；脚本一律经解释器调用（bash scripts/…）；Claude Code / Muse 工具参考；hooks/session-start 的 Muse 分支。顺带补上 visual-companion.md 此前就落后于 v6.3.0 的整篇翻译（$SCREEN_DIR/.server-info → $STATE_DIR/server-info、--open、会话 key）。有意保留的分歧不变：skills/writing-skills/render-graphs.js 仍为 CJS；subagent-driven-development/scripts/task-brief 额外识别「任务 N」标题。",
+  "trackedPaths": [
+    "skills",
+    "hooks"
+  ]
 }

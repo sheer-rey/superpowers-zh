@@ -120,12 +120,13 @@ const SKILL_META = {
   'using-superpowers':            { group: 'meta',    title: '使用 Superpowers · 引导', titleEn: 'Using Superpowers · Bootstrap', descEn: 'The bootstrap skill — establishes how to discover and invoke skills at the start of every conversation.' },
   'brainstorming':                { group: 'flow',    title: '头脑风暴',           titleEn: 'Brainstorming',            descEn: 'Explore intent, requirements and design before any creative work — feature, component or behavior change.' },
   'writing-plans':                { group: 'flow',    title: '编写实现计划',       titleEn: 'Writing Plans',            descEn: 'Turn a spec into a step-by-step implementation plan before writing any code.' },
-  'executing-plans':              { group: 'flow',    title: '执行计划',           titleEn: 'Executing Plans',          descEn: 'Execute a written plan in a separate session with review checkpoints.' },
+  'executing-plans':              { group: 'flow',    title: '执行计划',           titleEn: 'Executing Plans',          descEn: 'Execute a plan yourself in the current session — inline, with a ledger and one final review.' },
   'subagent-driven-development':  { group: 'flow',    title: '子代理驱动开发',     titleEn: 'Subagent-Driven Dev',      descEn: 'Run a plan of independent tasks within the current session via subagents.' },
   'dispatching-parallel-agents':  { group: 'flow',    title: '并行代理调度',       titleEn: 'Dispatching Parallel Agents', descEn: 'Fan out 2+ independent tasks with no shared state or ordering dependency.' },
   'workflow-runner':              { group: 'flow',    title: '工作流运行器',       titleEn: 'Workflow Runner',          descEn: 'Run agency-orchestrator YAML workflows directly using the current session LLM — no API key.' },
   'test-driven-development':      { group: 'quality', title: '测试驱动开发 · TDD', titleEn: 'Test-Driven Development',   descEn: 'Write the test before the implementation, for every feature and bug fix.' },
   'systematic-debugging':         { group: 'quality', title: '系统化调试',         titleEn: 'Systematic Debugging',     descEn: 'Reproduce and locate the root cause before proposing any fix.' },
+  'diagnosing-superpowers':       { group: 'quality', title: '诊断 Superpowers',   titleEn: 'Diagnosing Superpowers',   descEn: 'When a session went wrong, read its transcripts and report what happened with path:line evidence — optionally as an issue.' },
   'verification-before-completion':{ group: 'quality', title: '完成前验证',        titleEn: 'Verification Before Completion', descEn: 'Run verification and back every claim with evidence before saying it is done.' },
   'requesting-code-review':       { group: 'review',  title: '发起代码审查',       titleEn: 'Requesting Code Review',   descEn: 'Validate work against requirements before merging or shipping.' },
   'receiving-code-review':        { group: 'review',  title: '接收代码审查',       titleEn: 'Receiving Code Review',    descEn: 'Apply review feedback with technical rigor — verify, don\'t blindly comply.' },
@@ -262,9 +263,9 @@ const SPONSORS = [
       zht: '優雲智算 by UCloud — 熱門國產模型按次調用套餐包，低至 49 元/月起',
     },
     desc: {
-      zh: 'UCloud 旗下 AI 云平台，主打包月 / 按次的高性价比国模 Agent Plan 套餐，支持 GLM-5.2，低至 49 元/月起。同时提供官转稳定海外模型，支持接入 Claude Code、Codex 及 API 调用；企业高并发、7×24 技术支持、自助开票。',
-      en: 'UCloud\u2019s AI cloud platform. Cost-effective monthly / pay-per-call Agent Plans for Chinese models (incl. GLM-5.2) from ¥49/month, plus stable access to overseas models. Works with Claude Code, Codex and direct API calls; enterprise concurrency, 24/7 support, self-service invoicing.',
-      zht: 'UCloud 旗下 AI 雲平台，主打包月 / 按次的高性價比國模 Agent Plan 套餐，支援 GLM-5.2，低至 49 元/月起。同時提供官轉穩定海外模型，支援接入 Claude Code、Codex 及 API 呼叫；企業高併發、7×24 技術支援、自助開票。',
+      zh: 'UCloud 旗下 AI 云平台，主打包月 / 按次的高性价比国模 Agent Plan 套餐，支持 GLM-5.2，低至 49 元/月起。最新上线 H3 视频生成套餐包，768P 低至 8 分/秒，支持 2K 画质，最长 30s 视频生成；企业高并发、7×24 技术支持、自助开票。',
+      en: 'UCloud\u2019s AI cloud platform. Cost-effective monthly / pay-per-call Agent Plans for Chinese models (incl. GLM-5.2) from ¥49/month. New H3 video-generation packs: 768P from ¥0.08/sec, up to 2K quality and 30-second clips. Enterprise concurrency, 24/7 support, self-service invoicing.',
+      zht: 'UCloud 旗下 AI 雲平台，主打包月 / 按次的高性價比國模 Agent Plan 套餐，支援 GLM-5.2，低至 49 元/月起。最新上線 H3 影片生成套餐包，768P 低至 8 分/秒，支援 2K 畫質，最長 30s 影片生成；企業高併發、7×24 技術支援、自助開票。',
     },
     perk: {
       zh: '🎁 通过本页链接注册，可得免费 5 元平台体验金',
@@ -327,6 +328,62 @@ const SPONSORS = [
       en: 'Pay-as-you-go, no monthly fee, from $0.006/image',
       zht: '按量付費無月費，GPT-Image-2 低至 $0.006/張',
     },
+  },
+  {
+    tier: 'standard',
+    img: 'volcengine.png', w: 840, h: 200, code: '',
+    logo: 'logo-volcengine-icon.png',
+    url: 'https://www.volcengine.com/activity/ai618?utm_source=OWO&utm_medium=devrel-1&utm_campaign=hw&utm_term=superpowers-zh&utm_content=hw',
+    name: { zh: '字节火山引擎', en: 'Volcano Engine by ByteDance', zht: '字節火山引擎' },
+    tagline: {
+      zh: '火山方舟 Agent/Coding Plan 国模套餐首购 9.9',
+      en: 'Volcano Ark Agent/Coding Plans for Chinese models at ¥9.9 (first purchase)',
+      zht: '火山方舟 Agent/Coding Plan 國模套餐首購 9.9',
+    },
+    alt: {
+      zh: '字节火山引擎 —— 火山方舟 Agent/Coding Plan 国模套餐首购 9.9，注册免费领 2500w Token',
+      en: 'Volcano Engine by ByteDance — Volcano Ark Agent/Coding Plans for Chinese models at ¥9.9 (first purchase), with 25M free tokens on sign-up',
+      zht: '字節火山引擎 —— 火山方舟 Agent/Coding Plan 國模套餐首購 9.9，註冊免費領 2500w Token',
+    },
+    desc: {
+      zh: '火山方舟 Agent/Coding Plan 国模套餐首购 9.9，支持 GLM-5.3、Kimi-K3、DeepSeek、MiniMax、Doubao 等，注册免费领 2500w Token，统一 API，适配编码与智能体开发。',
+      en: 'Volcano Ark Agent/Coding Plans for Chinese models at ¥9.9 on first purchase, covering GLM-5.3, Kimi-K3, DeepSeek, MiniMax, Doubao and more. Get 25M free tokens on sign-up. One unified API, built for coding and agent development.',
+      zht: '火山方舟 Agent/Coding Plan 國模套餐首購 9.9，支援 GLM-5.3、Kimi-K3、DeepSeek、MiniMax、Doubao 等，註冊免費領 2500w Token，統一 API，適配編碼與智慧體開發。',
+    },
+    perk: {
+      zh: '🎁 注册免费领 2500w Token，立即前往火山引擎活动页面',
+      en: '🎁 Get 25M free tokens on sign-up — head to the Volcano Engine campaign page',
+      zht: '🎁 註冊免費領 2500w Token，立即前往火山引擎活動頁面',
+    },
+    perkShort: { zh: '注册免费领 2500w Token', en: '25M free tokens on sign-up', zht: '註冊免費領 2500w Token' },
+  },
+  {
+    tier: 'standard',
+    code: '',
+    logo: 'logo-fluxionai-icon.png',
+    url: 'https://fluxionai.space/register?source=github&campaign=superpowers&promo=SUPERPOWERS',
+    name: { zh: 'Fluxion AI', en: 'Fluxion AI', zht: 'Fluxion AI' },
+    tagline: {
+      zh: '一个入口，接入并管理全球主流 AI 模型',
+      en: 'One entry point to access and manage the world’s mainstream AI models',
+      zht: '一個入口，接入並管理全球主流 AI 模型',
+    },
+    alt: {
+      zh: 'Fluxion AI —— 一个入口，接入并管理全球主流 AI 模型',
+      en: 'Fluxion AI — one entry point to access and manage the world’s mainstream AI models',
+      zht: 'Fluxion AI —— 一個入口，接入並管理全球主流 AI 模型',
+    },
+    desc: {
+      zh: '面向个人开发者、技术团队与企业，通过统一 API 接入并管理全球主流 AI 模型；通过多线路动态调度提升可用性，模型表现、响应时间与费用透明可查。根据不同模型与线路，API 调用成本较官方或基准价格可降低 40%—98%。',
+      en: 'For individual developers, engineering teams and enterprises: access and manage the world’s mainstream AI models through one unified API. Multi-route dynamic scheduling improves availability, with transparent model performance, latency and cost. Depending on the model and route, API costs can be 40%–98% lower than official or benchmark pricing.',
+      zht: '面向個人開發者、技術團隊與企業，透過統一 API 接入並管理全球主流 AI 模型；透過多線路動態調度提升可用性，模型表現、回應時間與費用透明可查。依不同模型與線路，API 呼叫成本較官方或基準價格可降低 40%—98%。',
+    },
+    perk: {
+      zh: '🎁 通过本页链接注册即可获得 $3 API 额度',
+      en: '🎁 Sign up via this link to get $3 in API credit',
+      zht: '🎁 透過本頁連結註冊即可獲得 $3 API 額度',
+    },
+    perkShort: { zh: '注册即得 $3 API 额度', en: '$3 API credit on sign-up', zht: '註冊即得 $3 API 額度' },
   },
 ];
 
@@ -494,7 +551,7 @@ const T = {
     detailInstall: '安装此 skill',
     detailSource: '在 GitHub 查看源文件 ↗',
     features: [
-      { icon: '🧠', t: '20 个实战方法论', d: '不是 prompt 模板，是经过跨会话对抗式压力测试调优的工作方法论 —— 从头脑风暴到 TDD、调试、代码审查。' },
+      { icon: '🧠', t: '21 个实战方法论', d: '不是 prompt 模板，是经过跨会话对抗式压力测试调优的工作方法论 —— 从头脑风暴到 TDD、调试、代码审查。' },
       { icon: '🔌', t: '26 款工具通用', d: '一套 skill，Claude Code / Cursor / Codex / Gemini CLI / Windsurf… 全适配，换工具不用换习惯。' },
       { icon: '⚡', t: '一条命令安装', d: 'npx superpowers-zh 自动识别项目里用的是哪款工具并安装，零配置，装完重启即生效。' },
       { icon: '🇨🇳', t: '中国原创 Skills', d: '中文代码审查话术、中文提交规范、中文文档排版、国内 Git 平台（Gitee/Coding/极狐）配置 —— 上游没有。' },
@@ -1198,7 +1255,7 @@ ${flagSection}${moreSection}
 }
 
 // ---- JSON-LD 结构化数据 ----
-// 站上有 7 条 FAQ、完整的软件信息与 20 个 skill 文档页，却没有任何结构化标记：
+// 站上有 7 条 FAQ、完整的软件信息与 21 个 skill 文档页，却没有任何结构化标记：
 // 搜索引擎拿不到富摘要，AI 抓取时只能从正文里猜。
 //
 // 关于 CSP：ld+json 是**数据块不是可执行脚本**，浏览器不会执行它，爬虫读的也是
@@ -1393,7 +1450,7 @@ function build() {
   // 问「superpowers-zh 是什么、怎么装」，助手就来抓。它现在得爬 66 个页面才能拼出
   // 全貌，多数情况下只抓首页就走，于是回答里缺一半信息。
   // llms.txt（llmstxt.org 约定）给它一份「一次读完就懂」的索引；llms-full.txt 直接
-  // 把 20 个 SKILL.md 正文拼全，让它不用逐页爬。
+  // 把 21 个 SKILL.md 正文拼全，让它不用逐页爬。
   // Cloudflare 的「面向代理的 Markdown」是同一件事的付费版（Pro 套餐），这里自己做。
   // 注意：robots.txt 必须放行这两个文件 —— 上面那份是 Allow: / ，已覆盖。
   const skillLine = s => `- [${s.title}](${SITE_URL}/skills/${s.name}): ${s.desc.replace(/\s+/g, ' ').slice(0, 180)}`;

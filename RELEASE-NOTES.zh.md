@@ -6,6 +6,53 @@
 
 ---
 
+## v1.7.14 (2026-09-26)
+
+**同步上游 v6.4.2（含 v6.4.1），OpenCode 用户尤其建议更新。** 对应 [#133](https://github.com/jnMetaCode/superpowers-zh/issues/133)、[#131](https://github.com/jnMetaCode/superpowers-zh/issues/131)。
+
+### ✨ 新 skill：diagnosing-superpowers（第 21 个）
+
+会话跑偏时——重复劳动、无视计划、太慢、太贵、某个技能没触发——让它读磁盘上的会话记录，按 7 个维度并行分析，出一份**每条结论都带 `path:line`** 的报告；需要时整理成 issue、打包脱敏材料。它只报告发生了什么，不替你诊断 skill 本身。
+
+与上游唯一的有意偏离：**issue 目标是本仓 `jnMetaCode/superpowers-zh`**，不是 obra/superpowers——你跑的是译文，问题先在这里分流，确认是上游行为再转报。
+
+### 🔁 executing-plans 重写：内联执行
+
+从「单独会话 + 检查点」改成**在当前会话里自己当实现者**：`task-start` 取简报和 BASE，`task-done` 跑测试、只有通过才记账本，最后派一个最强模型做整分支审查。与 SDD 共用工作区和账本，中途可以换执行方式。遇到计划缺陷**自己裁决并记账**，只有 4 类硬停止。
+
+旧版里本 fork 自加的「常见异常处理」（计划有误就停下问）与此直接冲突，已删除。
+
+### ✂️ writing-plans：更短的计划
+
+- 步骤只写实现者**无法自己决定**的东西：签名、文件、规格取值、测试断言；函数体由实现者写
+- 新增「审查重点」：规格隐含、但没有测试覆盖的 5 个最可能伤人的输入，交给最终审查逐条检查
+- 自检新增「比例」：计划比规格长好几倍，就是把程序抄了一遍
+- 执行交接改为「子代理驱动 / 原生执行」二选一，并要求先审阅计划
+
+### 其他上游变更
+
+- **brainstorming**：「建立共同理解」——先弄清意图并写回给你确认；HARD-GATE 按路径细分（架构级：设计批准只许写规格，规格批准只许写计划）
+- **code-reviewer**：规格是愿景文档，规格没提的行为按正常人的期待来判；列出「不予判断的项」交执行者裁决
+- **TDD**：宣称完成前跑整个项目测试套件，看到的失败必须写进报告
+- **SDD**：`sdd-workspace` 解决同名计划（`docs/a/plan.md` vs `docs/b/plan.md`）共用工作区的问题；`review-package` 拒绝空区间和非后代 HEAD
+- 技能自带脚本一律经解释器调用（`bash scripts/…`）——有些插件打包器会去掉可执行位
+- 新增 Claude Code、Muse 工具参考；SessionStart hook 支持 Muse
+
+### 🐛 OpenCode 工具映射过期（#131）
+
+插件还停在 v5.0.7：告诉模型用 `@mention` 派子代理——那是 TUI 里用户的输入方式，模型没有这个工具。现已换成上游 v6.4.2 插件：V1 映射到 `task` + `subagent_type`，V2（OpenCode 2.0.4+）映射到 `subagent`，并通过 `setup()` 原生注册 skill；新增根目录 `index.js` 供 V2 目录形式加载。安装文档同步更新。
+
+### 🐛 visual-companion.md 一直是旧版
+
+中文版比 v6.3.0 还旧：教你读 `$SCREEN_DIR/.server-info`，而实际脚本写的是 `$STATE_DIR/server-info`；缺 `--open`、会话 key、4 小时空闲超时等说明。标题数没变，所以 audit 看不出来。已整篇按上游重译。
+
+### 已知问题（上游未修，原样同步）
+
+- `task-done` 在测试命令**完全没有输出**时会误判失败（上游 #2385）
+- `task-done` 账本记的是日志最后一行，`node --test` 会记成 `# duration_ms …`（上游 #2342）
+
+---
+
 ## v1.7.13+fork.3 (2026-10-08)
 
 本 fork 独立发布（上游同步基线仍为 v1.7.13），核心是**引入 archify 架构图生成 skill** 与配套的升级工具链。

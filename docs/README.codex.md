@@ -33,6 +33,32 @@ npx superpowers-zh --tool codex
 Fetch and follow instructions from https://raw.githubusercontent.com/jnMetaCode/superpowers-zh/refs/heads/main/.codex/INSTALL.md
 ```
 
+## Codex 原生插件安装
+
+Codex CLI 自带插件管理，可以直接把本仓库注册为 marketplace 安装，不需要 Node.js / npm（已在 codex-cli 0.147.0、0.154.0 上实测）：
+
+```bash
+codex plugin marketplace add https://github.com/jnMetaCode/superpowers-zh.git
+codex plugin add superpowers-zh@superpowers-zh
+codex plugin list   # 应显示 superpowers-zh@superpowers-zh  installed, enabled
+```
+
+安装后 21 个 skills 全部可被发现；插件清单声明了空 `hooks`，不会注册仅适用于 Claude Code 的 SessionStart hook。
+
+**更新：**
+
+```bash
+codex plugin marketplace upgrade superpowers-zh
+codex plugin add superpowers-zh@superpowers-zh
+```
+
+**卸载：**
+
+```bash
+codex plugin remove superpowers-zh@superpowers-zh
+codex plugin marketplace remove superpowers-zh   # 可选：连同 marketplace 一起移除
+```
+
 ## 手动安装
 
 ### 前置条件

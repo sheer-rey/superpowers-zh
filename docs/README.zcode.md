@@ -42,7 +42,7 @@ cp -r superpowers-zh/skills/* ~/.zcode/skills/
 npx superpowers-zh --global --uninstall
 ```
 
-只移除我们装的那 20 个技能目录，你自建的技能不受影响（已在 verify-release 里有断言守着）。
+只移除我们装的那 21 个技能目录，你自建的技能不受影响（已在 verify-release 里有断言守着）。
 
 ## 关于 AGENTS.md
 

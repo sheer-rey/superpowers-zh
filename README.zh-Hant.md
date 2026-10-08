@@ -12,15 +12,14 @@ Chinese community edition of [superpowers](https://github.com/obra/superpowers) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
 
-> 📖 **免費配套學習** → [從零學會 AI 編程](https://aiolaola.com/zh-Hant?utm_source=github&utm_campaign=superpowers-tw)(180 節)＋ [AI 智能體課程](https://aiolaola.com/zh-Hant/course/agents?utm_source=github&utm_campaign=superpowers-tw)(40 節)— 繁體中文實作課程,免費
+> 📖 **免費配套學習** → [從零學會 AI 編程](https://aiolaola.com/zh-Hant?utm_source=github&utm_campaign=superpowers-tw)(182 節)＋ [AI 智能體課程](https://aiolaola.com/zh-Hant/course/agents?utm_source=github&utm_campaign=superpowers-tw)(40 節)— 繁體中文實作課程,免費（站上共 13 門課、648 節，**全部 ¥0**——另有 AI 繪畫 / 寫小說 / 漫劇 / 量化 / DeepSeek / 深度專注 等）
 
-> 📖 **免費配套學習** → [從零學會 AI 編程](https://aiolaola.com/?utm_source=github&utm_campaign=superpowers)：180 節免費實操課 + 《AI 編程實戰三卷書》線上閱讀 + 實戰社群 · superpowers 裝好後配上方法論效率翻倍 · 永久免費
 
 ### 📊 專案規模
 
 | 📦 翻譯 Skills | 🇨🇳 中國原創 Skills | 🤖 支援工具 |
 |:---:|:---:|:---:|
-| **14** | **4**<br><sub>另有 2 個上游歷史保留</sub> | **Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Codex / Aider / Trae / VS Code (Copilot) / DeerFlow / OpenCode / OpenClaw / Qwen Code / Antigravity / Claw Code / Qoder / CodeBuddy（騰訊）/ CodeArts（華為雲碼道）/ Cline / Kilo Code / Crush** |
+| **15** | **4**<br><sub>另有 2 個上游歷史保留</sub> | **Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Codex / Aider / Trae / VS Code (Copilot) / DeerFlow / OpenCode / OpenClaw / Qwen Code / Antigravity / Claw Code / Qoder / CodeBuddy（騰訊）/ CodeArts（華為雲碼道）/ Cline / Kilo Code / Crush** |
 
 ---
 
@@ -53,7 +52,7 @@ Chinese community edition of [superpowers](https://github.com/obra/superpowers) 
 </td>
 <td width="75%" valign="middle">
 
-感謝 [優雲智算](https://passport.compshare.cn/register?referral_code=ETD3L5JBM13CtKARkMORot&ytag=GPU_YY_YX_git_superpowers-zh) 贊助本專案！優雲智算是 UCloud 旗下 AI 雲平台，主打包月、按次的高性價比國模 Agent Plan 方案，支援 GLM-5.2，低至 **49 元/月**起。同時提供官轉穩定海外模型。支援接入 Claude Code、Codex 及 API 呼叫。支援企業高併發、7×24 技術支援、自助開票。🎁 **透過[此連結](https://passport.compshare.cn/register?referral_code=ETD3L5JBM13CtKARkMORot&ytag=GPU_YY_YX_git_superpowers-zh)註冊的使用者，可得免費 5 元平台體驗金！**
+感謝 [優雲智算](https://passport.compshare.cn/register?referral_code=ETD3L5JBM13CtKARkMORot&ytag=GPU_YY_YX_git_superpowers-zh) 贊助本專案！優雲智算是 UCloud 旗下 AI 雲平台，主打包月、按次的高性價比國模 Agent Plan 方案，支援 GLM-5.2，低至 **49 元/月**起。最新上線 H3 影片生成套餐包，768P 低至 8 分/秒，支援 2K 畫質，最長 30s 影片生成。支援企業高併發、7×24 技術支援、自助開票。🎁 **透過[此連結](https://passport.compshare.cn/register?referral_code=ETD3L5JBM13CtKARkMORot&ytag=GPU_YY_YX_git_superpowers-zh)註冊的使用者，可得免費 5 元平台體驗金！**
 
 </td>
 </tr>
@@ -82,6 +81,34 @@ Chinese community edition of [superpowers](https://github.com/obra/superpowers) 
 <td width="75%" valign="middle">
 
 感謝 [APIMart](https://go.apimart.ai/gh-superpowers-zh) 贊助了本專案！APIMart 是專注 AI 圖片/影片生成的低價 API 平台，**GPT-Image-2 低至 $0.006/張**，1 美元可出圖 160+ 張。圖片、影片一套非同步 API 通吃，提交任務拿 ID、回呼取結果，跑批萬張不逾時、換模型不改程式碼。按量付費、無月費，🎁 **透過[此連結](https://go.apimart.ai/gh-superpowers-zh)註冊即可開用！**
+
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td width="25%">
+  <a href="https://www.volcengine.com/activity/ai618?utm_source=OWO&utm_medium=devrel-1&utm_campaign=hw&utm_term=superpowers-zh&utm_content=hw">
+    <img src="assets/sponsors/volcengine.png" alt="字節火山引擎 —— 火山方舟 Agent/Coding Plan 國模套餐首購 9.9，註冊免費領 2500w Token" width="100%">
+  </a>
+</td>
+<td width="75%" valign="middle">
+
+感謝 [字節火山引擎](https://www.volcengine.com/activity/ai618?utm_source=OWO&utm_medium=devrel-1&utm_campaign=hw&utm_term=superpowers-zh&utm_content=hw) 贊助本專案！火山方舟 Agent/Coding Plan 國模套餐首購 **9.9**，支援 GLM-5.3、Kimi-K3、DeepSeek、MiniMax、Doubao 等，**註冊免費領 2500w Token**，統一 API，適配編碼與智慧體開發。👉 **[立即前往](https://www.volcengine.com/activity/ai618?utm_source=OWO&utm_medium=devrel-1&utm_campaign=hw&utm_term=superpowers-zh&utm_content=hw)**
+
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td width="25%" align="center">
+  <a href="https://fluxionai.space/register?source=github&campaign=superpowers&promo=SUPERPOWERS">
+    <img src="assets/sponsors/logo-fluxionai-icon.png" alt="Fluxion AI —— 一個入口，接入並管理全球主流 AI 模型" width="100%">
+  </a>
+</td>
+<td width="75%" valign="middle">
+
+感謝 [Fluxion AI](https://fluxionai.space/register?source=github&campaign=superpowers&promo=SUPERPOWERS) 贊助本專案！一個入口，接入並管理全球主流 AI 模型。Fluxion AI 面向個人開發者、技術團隊與企業，透過統一 API 接入並管理全球主流 AI 模型；透過多線路動態調度提升可用性，模型表現、回應時間與費用透明可查。依不同模型與線路，API 呼叫成本較官方或基準價格可降低 **40%—98%**。🎁 **透過[此連結](https://fluxionai.space/register?source=github&campaign=superpowers&promo=SUPERPOWERS)註冊即可獲得 $3 API 額度！**
 
 </td>
 </tr>
@@ -127,7 +154,7 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 | 維度 | superpowers（英文上游） | superpowers-zh（中文增強版） |
 |------|----------------------|---------------------------|
 | ⭐ Star 數 | 250k+ | — |
-| 📦 Skills 總數 | 14 | **20**（14 翻譯 + 4 國產原創 + 2 上游歷史保留） |
+| 📦 Skills 總數 | 15 | **21**（15 翻譯 + 4 國產原創 + 2 上游歷史保留） |
 | 🌐 語言 | 英文 | 中文（技術術語保留英文） |
 | 🤖 **支援工具** | **6 款**：Claude Code / Cursor / Codex / OpenCode / Copilot CLI / Gemini CLI | **26 款**：上述 6 款 + Hermes Agent / Trae / Kiro / Qwen Code / OpenClaw / Claw Code / Antigravity / DeerFlow / VS Code / Windsurf / Aider / Qoder / CodeBuddy（騰訊） / CodeArts（華為雲碼道） / Cline / Kilo Code / Crush / ZCode（智譜）/ DeepSeek Harness / Reasonix |
 | ⚡ **安裝方式** | 按工具分別裝（每款一條不同的 plugin marketplace 命令） | **`npx superpowers-zh` 一條命令自動識別專案裡的工具並安裝**；識別不出可 `--tool <name>` 顯式指定 |
@@ -180,7 +207,7 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 
 > 執行 `npx superpowers-zh` 會自動偵測你專案中使用的工具，將 22 個 skills 安裝到正確位置。
 
-### 翻譯的 Skills（14 個）
+### 翻譯的 Skills（15 個）
 
 | Skill | 用途 |
 |-------|------|
@@ -189,6 +216,7 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 | **執行計畫** (executing-plans) | 按計畫逐步實施，每步驗證 |
 | **測試驅動開發** (test-driven-development) | 嚴格 TDD：先寫測試，再寫程式碼 |
 | **系統化除錯** (systematic-debugging) | 四階段除錯法：定位→分析→假設→修復 |
+| **診斷 Superpowers** (diagnosing-superpowers) | 會話跑偏時讀 transcript 取證，每條結論帶 `path:line`，可整理成 issue |
 | **請求程式碼審查** (requesting-code-review) | 派遣審查 agent 檢查程式碼品質 |
 | **接收程式碼審查** (receiving-code-review) | 技術嚴謹地處理審查回饋，拒絕敷衍 |
 | **完成前驗證** (verification-before-completion) | 證據先行——聲稱完成前必須跑驗證 |
@@ -299,7 +327,7 @@ claude plugin update superpowers-zh@superpowers-zh       # 再升級 plugin（�
 claude plugin uninstall superpowers-zh@superpowers-zh    # 卸載
 ```
 
-> **和方式一怎麼選？** marketplace 裝的是**完整 plugin**（skills + hooks + bootstrap 由 Claude Code 統一託管、隨版本更新），但只服務 Claude Code 一款工具。要裝給其餘 19 款工具，仍然用方式一的 `npx superpowers-zh`。兩者可以共存，但同一個專案裡別重複裝 Claude Code，否則 skills 會出現兩份。
+> **和方式一怎麼選？** marketplace 裝的是**完整 plugin**（skills + hooks + bootstrap 由 Claude Code 統一託管、隨版本更新），但只服務 Claude Code 一款工具。要裝給其餘 25 款工具，仍然用方式一的 `npx superpowers-zh`。兩者可以共存，但同一個專案裡別重複裝 Claude Code，否則 skills 會出現兩份。
 
 ### 方式三：手動安裝（low-fidelity，僅作備選）
 
@@ -431,30 +459,31 @@ npx superpowers-zh@latest --uninstall
 
 ## 🌟 相關專案生態
 
-**八個專案組合使用，涵蓋 AI 編程 + AI 影片創作 + 桌面陪伴的完整鏈路。**
+**九個專案組合使用，涵蓋 AI 編程 + AI 影片創作 + 桌面陪伴的完整鏈路。**
 
 | 專案 | 定位 | 一句話 |
 |------|------|-------|
 | **[superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)**（本專案） ![](https://img.shields.io/github/stars/jnMetaCode/superpowers-zh?style=flat&label=⭐) | 🧠 工作方法論 | 22 個 skills 教 AI 怎麼幹活（TDD / 除錯 / 程式碼審查等） |
-| **[agency-agents-zh](https://github.com/jnMetaCode/agency-agents-zh)** ![](https://img.shields.io/github/stars/jnMetaCode/agency-agents-zh?style=flat&label=⭐) | 🎭 專家角色庫 | 211 個**即插即用** AI 專家，含 46 中國原創（小紅書 / 抖音 / 飛書 / 釘釘） |
-| **[agency-orchestrator](https://github.com/jnMetaCode/agency-orchestrator)** | 🚀 編排引擎 | 一句話 → 211 專家協作，**幾分鐘出方案**（9 家 LLM / 6 免費） |
-| **[ai-coding-guide](https://github.com/jnMetaCode/ai-coding-guide)** | 📖 實戰教程 | 66 個 Claude Code 技巧 + 9 款工具最佳實踐 + 設定範本 |
+| **[agency-agents-zh](https://github.com/jnMetaCode/agency-agents-zh)** ![](https://img.shields.io/github/stars/jnMetaCode/agency-agents-zh?style=flat&label=⭐) | 🎭 專家角色庫 | 277 個**即插即用** AI 專家，含 64 中國原創（小紅書 / 抖音 / 飛書 / 釘釘 / Qt 上位機 / 機械設計） |
+| **[agency-orchestrator](https://github.com/jnMetaCode/agency-orchestrator)** ![](https://img.shields.io/github/stars/jnMetaCode/agency-orchestrator?style=flat&label=%E2%AD%90) | 🚀 編排引擎 | 一句話 → 276 專家協作，**幾分鐘出方案**（15 種大模型 / 11 種免 key） |
+| **[ai-coding-guide](https://github.com/jnMetaCode/ai-coding-guide)** | 📖 實戰教程 | 66 個 Claude Code 技巧 + 10 款工具最佳實踐 + 設定範本 |
 | **[shellward](https://github.com/jnMetaCode/shellward)** | 🛡️ 安全中介軟體 | 8 層防禦 + DLP 資料流 + 注入偵測，**零依賴**（含 MCP Server） |
 | 🆕 **[ai-shortfilm-prompts](https://github.com/jnMetaCode/ai-shortfilm-prompts)** | 🎬 影片提示詞 | Mx-Shell《喪屍清道夫》5 段式方法論 + Skill，Seedance / 小雲雀 / Sora / 可靈 / 即夢通用 |
 | 🆕 **[local-agent-toolkit](https://github.com/jnMetaCode/local-agent-toolkit)** | 🛠️ Agent 本地三件套 | 給 agent 配上**記憶 / 技能管理 / 執行追蹤**，零依賴、資料不出本機；本倉庫 skills 可用 `npx @jnmetacode/skillet add jnMetaCode/superpowers-zh/skills/<名稱>` 一鍵安裝 |
 | 🆕 **[codepet](https://github.com/jnMetaCode/codepet)** | 🐾 桌面養成桌寵 | 碼寵 CodePet —— 你寫程式碼 / 用 Claude Code，它就漲經驗、升級、換狀態、跳舞。**全本地、隱私優先、開源** |
+| 🆕 **[openshorts](https://github.com/jnMetaCode/openshorts)** | 🎥 短影片生產線 | 開片 —— 文案進，成片出：腳本 / 配音 / 字幕 / 成片 / 發布包一條龍，**0 元 0 key 跑通第一條**，本地優先 |
 
 ---
 
-### 🔥 重點推薦：[agency-orchestrator](https://github.com/jnMetaCode/agency-orchestrator) — 一句話調度 211 個 AI 專家協作，幾分鐘交付完整方案
+### 🔥 重點推薦：[agency-orchestrator](https://github.com/jnMetaCode/agency-orchestrator) — 一句話調度 276 個 AI 專家協作，幾分鐘交付完整方案
 
 以前寫個方案：你當指揮官，把 AI 輪流扮演 5 個角色，複製貼上 10 次，1 小時沒了。
 
 **現在：** 丟一句話進去 `"做一個電商退款流程"`，**產品 → 架構 → 安全 → 測試 → DBA 自動接力**，幾分鐘完整方案落地。
 
-- 🎭 **211+ 專家角色**（含 46 個中國市場原創：小紅書 / 抖音 / 微信 / 飛書 / 釘釘）
+- 🎭 **276+ 專家角色**（含 64 個中國市場原創：小紅書 / 抖音 / 微信 / 飛書 / 釘釘）
 - 🧩 **零程式碼 YAML**，一行 prompt 就能跑
-- 💰 **9 家 LLM 可選**（DeepSeek / Claude / OpenAI / Ollama 等，**6 家免費**）
+- 💰 **15 種大模型可選**（DeepSeek / Claude / OpenAI / Ollama 等，**11 種免 key**）
 - 🔗 **與 superpowers-zh 互補**：本專案管"**怎麼做**"（方法論），orchestrator 管"**誰來做**"（角色協作）
 
 👉 **[立即體驗 agency-orchestrator →](https://github.com/jnMetaCode/agency-orchestrator)**

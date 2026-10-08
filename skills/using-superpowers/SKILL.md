@@ -58,6 +58,7 @@ metadata:
 
 如果你的运行环境在下面列出，请阅读对应的参考文件获取特殊说明：
 
+- Claude Code：`references/claude-code-tools.md`
 - Codex：`references/codex-tools.md`
 - Pi：`references/pi-tools.md`
 - Antigravity：`references/antigravity-tools.md`
@@ -65,6 +66,7 @@ metadata:
 - Hermes Agent：`references/hermes-tools.md`
 - Qoder：`references/qoder-tools.md`
 - Cline：`references/cline-tools.md`
+- Muse：`references/muse-tools.md`
 
 Gemini CLI 用户通过 GEMINI.md 自动获得 `references/gemini-tools.md` 的工具映射。
 
