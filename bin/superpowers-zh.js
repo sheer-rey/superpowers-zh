@@ -271,6 +271,42 @@ function wrapWithSentinel(body) {
   return `${SENTINEL_BEGIN}\n${body.replace(/\n+$/, '')}\n${SENTINEL_END}\n`;
 }
 
+// Sync the superpowers-zh bootstrap section in a context file:
+//  - If the file already has a sentinel block, replace it entirely with the
+//    current content so descriptions / skill lists always track the repo
+//    (the sentinel explicitly says "do not edit between these markers", so a
+//    whole-block replacement is the intended upgrade path).
+//  - If no sentinel block but a stale superpowers-zh marker exists, leave the
+//    file untouched (conservative — don't append a second section).
+//  - Otherwise append the section.
+//  - If the file does not exist, create it.
+function syncBootstrapSection(filePath, content) {
+  mkdirSync(dirname(filePath), { recursive: true });
+  const newSection = wrapWithSentinel(content);
+  if (!existsSync(filePath)) {
+    writeFileSync(filePath, newSection, 'utf8');
+    return 'created';
+  }
+  const existing = readFileSync(filePath, 'utf8');
+  const sBegin = existing.indexOf(SENTINEL_BEGIN);
+  if (sBegin !== -1) {
+    const sEnd = existing.indexOf(SENTINEL_END, sBegin + SENTINEL_BEGIN.length);
+    if (sEnd !== -1) {
+      writeFileSync(
+        filePath,
+        existing.slice(0, sBegin).replace(/\s+$/, '') + '\n\n' + newSection + existing.slice(sEnd + SENTINEL_END.length),
+        'utf8'
+      );
+      return 'refreshed';
+    }
+  }
+  if (existing.includes('superpowers-zh')) {
+    return 'kept';
+  }
+  writeFileSync(filePath, existing.replace(/\s+$/, '') + '\n\n' + newSection, 'utf8');
+  return 'appended';
+}
+
 function generateTraeBootstrapRule(projectDir) {
   const rulesDir = resolve(projectDir, '.trae', 'rules');
   mkdirSync(rulesDir, { recursive: true });
@@ -550,20 +586,13 @@ ${skillList}
 
   // 写入 CONVENTIONS.md。注意：Aider **不会**自动加载这个文件（见 TARGETS 里的
   // Aider 注释），所以写完必须告诉用户怎么激活，否则装了等于没装。
-  // 如果已有 CONVENTIONS.md，追加而不覆盖
+  // 如果已有 CONVENTIONS.md，已存在的 superpowers-zh 段会被刷新为当前内容，否则追加
   const convPath = resolve(projectDir, 'CONVENTIONS.md');
-  if (existsSync(convPath)) {
-    const existing = readFileSync(convPath, 'utf8');
-    if (!existing.includes('superpowers-zh')) {
-      writeFileSync(convPath, existing.replace(/\s+$/, '') + '\n\n' + wrapWithSentinel(content), 'utf8');
-      console.log(`  ✅ Aider: 追加 skills 引用 -> ${convPath}`);
-    } else {
-      console.log(`  ✅ Aider: CONVENTIONS.md 已包含 superpowers-zh 引用`);
-    }
-  } else {
-    writeFileSync(convPath, wrapWithSentinel(content), 'utf8');
-    console.log(`  ✅ Aider: bootstrap -> ${convPath}`);
-  }
+  const rc = syncBootstrapSection(convPath, content);
+  if (rc === 'refreshed') console.log(`  ✅ Aider: CONVENTIONS.md 已刷新（superpowers-zh 段同步到最新）`);
+  else if (rc === 'created') console.log(`  ✅ Aider: bootstrap -> ${convPath}`);
+  else if (rc === 'appended') console.log(`  ✅ Aider: 追加 skills 引用 -> ${convPath}`);
+  else console.log(`  ✅ Aider: CONVENTIONS.md 已包含 superpowers-zh 引用`);
 
   // 激活提示。不替用户改 .aider.conf.yml —— 那是他们的配置文件。
   console.log('');
@@ -606,18 +635,11 @@ ${skillList}
   // 写入 GEMINI.md（如果已存在则追加）；全局装到 ~/.gemini/GEMINI.md
   const geminiPath = isGlobal ? resolve(baseDir, '.gemini', 'GEMINI.md') : resolve(baseDir, 'GEMINI.md');
   mkdirSync(dirname(geminiPath), { recursive: true });
-  if (existsSync(geminiPath)) {
-    const existing = readFileSync(geminiPath, 'utf8');
-    if (!existing.includes('superpowers-zh')) {
-      writeFileSync(geminiPath, existing.replace(/\s+$/, '') + '\n\n' + wrapWithSentinel(content), 'utf8');
-      console.log(`  ✅ Gemini CLI: 追加 skills 引用 -> ${geminiPath}`);
-    } else {
-      console.log(`  ✅ Gemini CLI: GEMINI.md 已包含 superpowers-zh 引用`);
-    }
-  } else {
-    writeFileSync(geminiPath, wrapWithSentinel(content), 'utf8');
-    console.log(`  ✅ Gemini CLI: bootstrap -> ${geminiPath}`);
-  }
+  const rc = syncBootstrapSection(geminiPath, content);
+  if (rc === 'refreshed') console.log(`  ✅ Gemini CLI: GEMINI.md 已刷新（superpowers-zh 段同步到最新）`);
+  else if (rc === 'created') console.log(`  ✅ Gemini CLI: bootstrap -> ${geminiPath}`);
+  else if (rc === 'appended') console.log(`  ✅ Gemini CLI: 追加 skills 引用 -> ${geminiPath}`);
+  else console.log(`  ✅ Gemini CLI: GEMINI.md 已包含 superpowers-zh 引用`);
 }
 
 // Qwen Code 与 Gemini CLI 同源（前者是后者的 fork），两套机制都对得上：
@@ -654,18 +676,11 @@ ${skillList}
 
   const qwenPath = isGlobal ? resolve(baseDir, '.qwen', 'QWEN.md') : resolve(baseDir, 'QWEN.md');
   mkdirSync(dirname(qwenPath), { recursive: true });
-  if (existsSync(qwenPath)) {
-    const existing = readFileSync(qwenPath, 'utf8');
-    if (!existing.includes('superpowers-zh')) {
-      writeFileSync(qwenPath, existing.replace(/\s+$/, '') + '\n\n' + wrapWithSentinel(content), 'utf8');
-      console.log(`  ✅ Qwen Code: 追加 skills 引用 -> ${qwenPath}`);
-    } else {
-      console.log(`  ✅ Qwen Code: QWEN.md 已包含 superpowers-zh 引用`);
-    }
-  } else {
-    writeFileSync(qwenPath, wrapWithSentinel(content), 'utf8');
-    console.log(`  ✅ Qwen Code: bootstrap -> ${qwenPath}`);
-  }
+  const rc = syncBootstrapSection(qwenPath, content);
+  if (rc === 'refreshed') console.log(`  ✅ Qwen Code: QWEN.md 已刷新（superpowers-zh 段同步到最新）`);
+  else if (rc === 'created') console.log(`  ✅ Qwen Code: bootstrap -> ${qwenPath}`);
+  else if (rc === 'appended') console.log(`  ✅ Qwen Code: 追加 skills 引用 -> ${qwenPath}`);
+  else console.log(`  ✅ Qwen Code: QWEN.md 已包含 superpowers-zh 引用`);
 }
 
 // Claw Code：根指令文件是 CLAW.md（优先级 CLAUDE.md > CLAW.md > AGENTS.md，
@@ -742,18 +757,11 @@ ${skillList}
 `;
 
   const mdPath = resolve(projectDir, 'CLAW.md');
-  if (existsSync(mdPath)) {
-    const existing = readFileSync(mdPath, 'utf8');
-    if (!existing.includes('superpowers-zh')) {
-      writeFileSync(mdPath, existing.replace(/\s+$/, '') + '\n\n' + wrapWithSentinel(content), 'utf8');
-      console.log(`  ✅ Claw Code: 追加 skills 引用 -> ${mdPath}`);
-    } else {
-      console.log(`  ✅ Claw Code: CLAW.md 已包含 superpowers-zh 引用`);
-    }
-  } else {
-    writeFileSync(mdPath, wrapWithSentinel(content), 'utf8');
-    console.log(`  ✅ Claw Code: bootstrap -> ${mdPath}`);
-  }
+  const rc = syncBootstrapSection(mdPath, content);
+  if (rc === 'refreshed') console.log(`  ✅ Claw Code: CLAW.md 已刷新（superpowers-zh 段同步到最新）`);
+  else if (rc === 'created') console.log(`  ✅ Claw Code: bootstrap -> ${mdPath}`);
+  else if (rc === 'appended') console.log(`  ✅ Claw Code: 追加 skills 引用 -> ${mdPath}`);
+  else console.log(`  ✅ Claw Code: CLAW.md 已包含 superpowers-zh 引用`);
 
   // claw 的根指令文件优先级是 CLAUDE.md > CLAW.md。项目里若已有 CLAUDE.md，
   // 它可能压过 CLAW.md —— 说清楚，别让人以为装了没生效。
@@ -821,18 +829,11 @@ ${skillList}
   // 放任务/项目指令的地方，所以全局仍然只装 skills、不写 bootstrap。
   // 这是 Hermes 的第二次「装了不生效」（#45 是第一次，那次错的是 skills 目录）。
   const hermesPath = resolve(projectDir, 'AGENTS.md');
-  if (existsSync(hermesPath)) {
-    const existing = readFileSync(hermesPath, 'utf8');
-    if (!existing.includes('superpowers-zh')) {
-      writeFileSync(hermesPath, existing.replace(/\s+$/, '') + '\n\n' + wrapWithSentinel(content), 'utf8');
-      console.log(`  ✅ Hermes Agent: 追加 skills 引用 -> ${hermesPath}`);
-    } else {
-      console.log(`  ✅ Hermes Agent: AGENTS.md 已包含 superpowers-zh 引用`);
-    }
-  } else {
-    writeFileSync(hermesPath, wrapWithSentinel(content), 'utf8');
-    console.log(`  ✅ Hermes Agent: bootstrap -> ${hermesPath}`);
-  }
+  const rc = syncBootstrapSection(hermesPath, content);
+  if (rc === 'refreshed') console.log(`  ✅ Hermes Agent: AGENTS.md 已刷新（superpowers-zh 段同步到最新）`);
+  else if (rc === 'created') console.log(`  ✅ Hermes Agent: bootstrap -> ${hermesPath}`);
+  else if (rc === 'appended') console.log(`  ✅ Hermes Agent: 追加 skills 引用 -> ${hermesPath}`);
+  else console.log(`  ✅ Hermes Agent: AGENTS.md 已包含 superpowers-zh 引用`);
 
   // 项目级安装 Hermes 认不到 —— 必须显式登记到 config.yaml。不替用户改配置
   // （那是他们的文件），改为打印可直接粘贴的片段。见 issue #45。
@@ -883,18 +884,11 @@ ${skillList}
 
   const mdPath = isGlobal ? resolve(baseDir, '.claude', 'CLAUDE.md') : resolve(baseDir, 'CLAUDE.md');
   mkdirSync(dirname(mdPath), { recursive: true });
-  if (existsSync(mdPath)) {
-    const existing = readFileSync(mdPath, 'utf8');
-    if (!existing.includes('superpowers-zh')) {
-      writeFileSync(mdPath, existing.replace(/\s+$/, '') + '\n\n' + wrapWithSentinel(content), 'utf8');
-      console.log(`  ✅ Claude Code: 追加 skills 引用 -> ${mdPath}`);
-    } else {
-      console.log(`  ✅ Claude Code: CLAUDE.md 已包含 superpowers-zh 引用`);
-    }
-  } else {
-    writeFileSync(mdPath, wrapWithSentinel(content), 'utf8');
-    console.log(`  ✅ Claude Code: bootstrap -> ${mdPath}`);
-  }
+  const rc = syncBootstrapSection(mdPath, content);
+  if (rc === 'refreshed') console.log(`  ✅ Claude Code: CLAUDE.md 已刷新（superpowers-zh 段同步到最新）`);
+  else if (rc === 'created') console.log(`  ✅ Claude Code: bootstrap -> ${mdPath}`);
+  else if (rc === 'appended') console.log(`  ✅ Claude Code: 追加 skills 引用 -> ${mdPath}`);
+  else console.log(`  ✅ Claude Code: CLAUDE.md 已包含 superpowers-zh 引用`);
 }
 
 // CodeBuddy（腾讯 AI IDE）—— 加载机制类似 Claude Code：项目根 CODEBUDDY.md 作 bootstrap，
@@ -930,18 +924,11 @@ ${skillList}
 `;
 
   const mdPath = resolve(projectDir, 'REASONIX.md');
-  if (existsSync(mdPath)) {
-    const existing = readFileSync(mdPath, 'utf8');
-    if (!existing.includes('superpowers-zh')) {
-      writeFileSync(mdPath, existing.replace(/\s+$/, '') + '\n\n' + wrapWithSentinel(content), 'utf8');
-      console.log(`  ✅ Reasonix: 追加 skills 引用 -> ${mdPath}`);
-    } else {
-      console.log(`  ✅ Reasonix: REASONIX.md 已包含 superpowers-zh 引用`);
-    }
-  } else {
-    writeFileSync(mdPath, wrapWithSentinel(content), 'utf8');
-    console.log(`  ✅ Reasonix: bootstrap -> ${mdPath}`);
-  }
+  const rc = syncBootstrapSection(mdPath, content);
+  if (rc === 'refreshed') console.log(`  ✅ Reasonix: REASONIX.md 已刷新（superpowers-zh 段同步到最新）`);
+  else if (rc === 'created') console.log(`  ✅ Reasonix: bootstrap -> ${mdPath}`);
+  else if (rc === 'appended') console.log(`  ✅ Reasonix: 追加 skills 引用 -> ${mdPath}`);
+  else console.log(`  ✅ Reasonix: REASONIX.md 已包含 superpowers-zh 引用`);
 }
 
 // DeepSeek Harness（dsh）。四条路径全部有一手出处：
@@ -982,18 +969,11 @@ ${skillList}
   // 全局指令文件 ~/.dsh/AGENTS.md；项目级放项目根 AGENTS.md（两者都是官方默认候选）
   const mdPath = isGlobal ? resolve(baseDir, '.dsh', 'AGENTS.md') : resolve(baseDir, 'AGENTS.md');
   mkdirSync(dirname(mdPath), { recursive: true });
-  if (existsSync(mdPath)) {
-    const existing = readFileSync(mdPath, 'utf8');
-    if (!existing.includes('superpowers-zh')) {
-      writeFileSync(mdPath, existing.replace(/\s+$/, '') + '\n\n' + wrapWithSentinel(content), 'utf8');
-      console.log(`  ✅ DeepSeek Harness: 追加 skills 引用 -> ${mdPath}`);
-    } else {
-      console.log(`  ✅ DeepSeek Harness: AGENTS.md 已包含 superpowers-zh 引用`);
-    }
-  } else {
-    writeFileSync(mdPath, wrapWithSentinel(content), 'utf8');
-    console.log(`  ✅ DeepSeek Harness: bootstrap -> ${mdPath}`);
-  }
+  const rc = syncBootstrapSection(mdPath, content);
+  if (rc === 'refreshed') console.log(`  ✅ DeepSeek Harness: AGENTS.md 已刷新（superpowers-zh 段同步到最新）`);
+  else if (rc === 'created') console.log(`  ✅ DeepSeek Harness: bootstrap -> ${mdPath}`);
+  else if (rc === 'appended') console.log(`  ✅ DeepSeek Harness: 追加 skills 引用 -> ${mdPath}`);
+  else console.log(`  ✅ DeepSeek Harness: AGENTS.md 已包含 superpowers-zh 引用`);
 }
 
 function generateCodeBuddyBootstrap(baseDir, isGlobal) {
@@ -1024,18 +1004,11 @@ ${skillList}
   // 全局记忆文件在 ~/.codebuddy/CODEBUDDY.md；项目级放项目根（官方称两处等价）
   const mdPath = isGlobal ? resolve(baseDir, '.codebuddy', 'CODEBUDDY.md') : resolve(baseDir, 'CODEBUDDY.md');
   mkdirSync(dirname(mdPath), { recursive: true });
-  if (existsSync(mdPath)) {
-    const existing = readFileSync(mdPath, 'utf8');
-    if (!existing.includes('superpowers-zh')) {
-      writeFileSync(mdPath, existing.replace(/\s+$/, '') + '\n\n' + wrapWithSentinel(content), 'utf8');
-      console.log(`  ✅ CodeBuddy: 追加 skills 引用 -> ${mdPath}`);
-    } else {
-      console.log(`  ✅ CodeBuddy: CODEBUDDY.md 已包含 superpowers-zh 引用`);
-    }
-  } else {
-    writeFileSync(mdPath, wrapWithSentinel(content), 'utf8');
-    console.log(`  ✅ CodeBuddy: bootstrap -> ${mdPath}`);
-  }
+  const rc = syncBootstrapSection(mdPath, content);
+  if (rc === 'refreshed') console.log(`  ✅ CodeBuddy: CODEBUDDY.md 已刷新（superpowers-zh 段同步到最新）`);
+  else if (rc === 'created') console.log(`  ✅ CodeBuddy: bootstrap -> ${mdPath}`);
+  else if (rc === 'appended') console.log(`  ✅ CodeBuddy: 追加 skills 引用 -> ${mdPath}`);
+  else console.log(`  ✅ CodeBuddy: CODEBUDDY.md 已包含 superpowers-zh 引用`);
 }
 
 // CLI 工具的可执行文件名 —— 用于检测落空时扫 PATH 给出针对性建议（issue #48）。
