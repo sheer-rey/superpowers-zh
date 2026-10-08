@@ -1,6 +1,6 @@
 ---
 name: grilling
-description: 仅在用户显式 /grilling 时调用，不要根据上下文自动触发。用于压力测试一个计划、决策或想法，通过逐轮追问暴露隐藏假设和未解风险。
+description: 用于压力测试一个计划、决策或想法，通过逐轮追问暴露隐藏假设和未解风险。仅在用户显式 /grilling 时调用，不要根据上下文自动触发。
 version: "1.0.0"
 license: MIT
 metadata:

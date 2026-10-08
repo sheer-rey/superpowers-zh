@@ -1,6 +1,6 @@
 ---
 name: commit-conventions
-description: 提供提交信息和 changelog 规范指南 — 包括 Conventional Commits 适配、commitlint/husky/commitizen 模板以及 conventional-changelog 配置。当用户需要编写 git commit message、设置提交规范/commitlint/husky 或生成 changelog 时自动触发。
+description: 提供提交信息和 changelog 规范指南 — 包括 Conventional Commits 适配、commitlint/husky/commitizen 模板以及 conventional-changelog 配置。当用户需要编写 git commit message、设置提交规范 /commitlint/husky 或生成 changelog 时自动触发。
 version: "1.0.0"
 license: MIT
 metadata:
