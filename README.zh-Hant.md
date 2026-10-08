@@ -4,7 +4,7 @@
 
 > 🦸 **superpowers（250k+ ⭐）完整漢化 + 4 個中國原創 skills + 2 個額外新增 skills** — 讓 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Qoder 等 **26 款 AI 編程工具**真正會幹活。從頭腦風暴到程式碼審查，從 TDD 到除錯，每個 skill 都是經過實戰驗證的工作方法論。
 
-Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 20 skills across 26 AI coding tools, including full translations and China-specific development skills.
+Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 22 skills across 26 AI coding tools, including full translations and China-specific development skills.
 
 [![官網 sp.aiolaola.com](https://img.shields.io/badge/🌐_官網-sp.aiolaola.com-F59E0B)](https://sp.aiolaola.com)
 [![GitHub stars](https://img.shields.io/github/stars/jnMetaCode/superpowers-zh?style=social)](https://github.com/jnMetaCode/superpowers-zh)
@@ -201,7 +201,7 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 
 ### 🇨🇳 中國原創 Skills（4 個）· 上游歷史保留（2 個）
 
-> ⚠️ **下表前 4 個 chinese-\* 為「手動呼叫」skill**——不會自動觸發，需在對話中顯式輸入 `/chinese-xxx` 才會載入。
+> ⚠️ **下表前 3 個 chinese-\* 為「手動呼叫」skill**——不會自動觸發，需在對話中顯式輸入 `/chinese-xxx` 才會載入。
 > 設計為參考資料而非工作流，避免污染上游 skill 的自動排程（如 `requesting-code-review`、`brainstorming` 等）。
 >
 > ⚠️ **表格最後兩個（mcp-builder / workflow-runner）不是中國原創** —— 它們來自上游，上游後來移除了，本 fork 保留下來繼續維護。全倉 22 個 skill = 14 翻譯 + 4 中國原創 + 2 上游歷史保留 + 2 額外新增（grilling / archify）。
@@ -211,7 +211,7 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 | **中文程式碼審查** (chinese-code-review) | 符合國內團隊文化的程式碼審查規範 | `/chinese-code-review`（手動） | 無 |
 | **中文 Git 工作流** (chinese-git-workflow) | 適配 Gitee/Coding/極狐 GitLab/CNB | `/chinese-git-workflow`（手動） | 無 |
 | **中文技術文件** (chinese-documentation) | 中文排版規範、中英混排、告別機翻味 | `/chinese-documentation`（手動） | 無 |
-| **中文提交規範** (chinese-commit-conventions) | 適配國內團隊的 commit message 規範 | `/chinese-commit-conventions`（手動） | 無 |
+| **Git 提交規範** (commit-conventions) | 適配國內團隊的 commit message 規範 | 自動（寫 commit / 設 commitlint 時觸發） | 無 |
 | **MCP 伺服器建置** (mcp-builder) | 建置生產級 MCP 工具，擴展 AI 能力邊界 | 自動 | 曾有，上游已移除 |
 | **工作流執行器** (workflow-runner) | 在 AI 工具內執行多角色 YAML 工作流 | 自動 | 曾有，上游已移除 |
 
@@ -305,7 +305,7 @@ claude plugin uninstall superpowers-zh@superpowers-zh    # 卸載
 
 > ⚠️ **手動 `cp -r skills` 是低保版安裝，不等同於完整 plugin。**
 >
-> superpowers-zh 是一個完整 plugin，包含：`skills/`（20 個能力）+ `hooks/`（SessionStart 鉤子，讓 skill 在合適時機自動觸發）+ `CLAUDE.md` / `GEMINI.md` 等 bootstrap 引導檔案 + 4 套 plugin manifest（Claude Code / Cursor / Codex / Marketplace）。
+> superpowers-zh 是一個完整 plugin，包含：`skills/`（22 個能力）+ `hooks/`（SessionStart 鉤子，讓 skill 在合適時機自動觸發）+ `CLAUDE.md` / `GEMINI.md` 等 bootstrap 引導檔案 + 4 套 plugin manifest（Claude Code / Cursor / Codex / Marketplace）。
 >
 > **下面的 `cp -r skills` 命令只複製 skills 目錄**，不會自動設定 hooks、不會產生 bootstrap 引導。結果：skills 物理上存在，但 AI 不會在合適時機自動呼叫，需要你每次手動喊 "use brainstorming skill" 之類。
 >
