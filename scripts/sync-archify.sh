@@ -82,7 +82,10 @@ echo "==> Version: $(grep -m1 '"version"' "$WORKDIR_SKILL/skill-release.json" 2>
 
 # ---- 3. Verification ----
 echo "==> Check 1/2: staging copy must be byte-identical to upstream ${TAG} (pure trim, no edits)..."
-bad=$( { diff -qr "$SRC" "$WORKDIR_SKILL" || true; } 2>/dev/null | grep "differ" )
+# Note: under `set -euo pipefail`, a bare `grep` returning 1 inside a command
+# substitution makes the whole assignment exit-nonzero and aborts the script.
+# `|| true` keeps the assignment exit 0 so the `if` below can actually judge.
+bad=$( { diff -qr "$SRC" "$WORKDIR_SKILL" || true; } 2>/dev/null | grep "differ" || true )
 if [ -z "$bad" ]; then
   echo "   ✓ Kept files are byte-identical to upstream (pure trim, no content rewrite)"
 else
