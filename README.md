@@ -2,7 +2,7 @@
 
 🌐 **简体中文** | [繁體中文](README.zh-Hant.md) | [English (upstream)](https://github.com/obra/superpowers)
 
-> 🦸 **superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills + 1 个额外新增 skill** — 让 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Qoder 等 **26 款 AI 编程工具**真正会干活。从头脑风暴到代码审查，从 TDD 到调试，每个 skill 都是经过实战验证的工作方法论。
+> 🦸 **superpowers（250k+ ⭐）完整汉化 + 4 个中国原创 skills + 2 个额外新增 skills** — 让 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Qoder 等 **26 款 AI 编程工具**真正会干活。从头脑风暴到代码审查，从 TDD 到调试，每个 skill 都是经过实战验证的工作方法论。
 
 Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 21 skills across 23 AI coding tools, including full translations and China-specific development skills.
 
@@ -113,7 +113,7 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh) | CLI | `npx superpowers-zh` | `.dsh/skills/` + `AGENTS.md` |
 | [Reasonix](https://reasonix.io/) | CLI | `npx superpowers-zh` | `.reasonix/skills/` + `REASONIX.md`（全局 Windows 为 `%APPDATA%\reasonix\skills`） |
 
-> 运行 `node ./bin/superpowers-zh.js` 会自动检测你项目中使用的工具，将 21 个 skills 安装到正确位置。
+> 运行 `node ./bin/superpowers-zh.js` 会自动检测你项目中使用的工具，将 22 个 skills 安装到正确位置。
 
 ### 翻译的 Skills（14 个）
 
@@ -139,7 +139,7 @@ AI：在开始实现之前，我需要了解几个关键问题：
 > ⚠️ **下表前 3 个 chinese-\* 为「手动调用」skill**——不会自动触发，需在对话中显式输入 `/chinese-xxx` 才会加载。
 > 设计为参考资料而非工作流，避免污染上游 skill 的自动调度（如 `requesting-code-review`、`brainstorming` 等）。
 >
-> ⚠️ **表格最后两个（mcp-builder / workflow-runner）不是中国原创** —— 它们来自上游，上游后来移除了，本 fork 保留下来继续维护。全仓 20 个 skill = 14 翻译 + 4 中国原创 + 2 上游历史保留。
+> ⚠️ **表格最后两个（mcp-builder / workflow-runner）不是中国原创** —— 它们来自上游，上游后来移除了，本 fork 保留下来继续维护。全仓 22 个 skill = 14 翻译 + 4 中国原创 + 2 上游历史保留 + 2 额外新增（grilling / archify）。
 
 | Skill | 用途 | 调用方式 | 上游有吗？ |
 |-------|------|---------|:---:|

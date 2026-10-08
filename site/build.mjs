@@ -631,7 +631,7 @@ const T = {
     detailInstall: 'Install this skill set',
     detailSource: 'View source on GitHub ↗',
     features: [
-      { icon: '🧠', t: '20 battle-tested methods', d: 'Not prompt templates — workflow methodology hardened by cross-session adversarial testing, from brainstorming to TDD, debugging and review.' },
+      { icon: '🧠', t: '22 battle-tested methods', d: 'Not prompt templates — workflow methodology hardened by cross-session adversarial testing, from brainstorming to TDD, debugging and review.' },
       { icon: '🔌', t: 'Works in 26 tools', d: 'One skill set for Claude Code / Cursor / Codex / Gemini CLI / Windsurf and more. Switch tools, keep your habits.' },
       { icon: '⚡', t: 'One-command install', d: 'npx superpowers-zh auto-detects your tool and installs. Zero config; restart to take effect.' },
       { icon: '🇨🇳', t: 'China-native skills', d: 'Chinese code-review phrasing, commit conventions, doc typography, and domestic Git platforms (Gitee/Coding/JiHu) — not in upstream.' },
@@ -1401,7 +1401,7 @@ function build() {
   const llms = [
     '# superpowers-zh',
     '',
-    '> Anthropic superpowers 的中文增强 fork：20 个塑造 AI 编程助手行为的 skill（15 个译自上游 + 5 个本 fork 新增，其中 4 个为中国特色），一条 npx 命令适配 26 款 IDE / CLI。',
+    '> Anthropic superpowers 的中文增强 fork：22 个塑造 AI 编程助手行为的 skill（14 个译自上游 + 4 个中国原创 + 2 个上游历史保留 + 2 个额外新增），一条 npx 命令适配 26 款 IDE / CLI。',
     '',
     '安装（自动检测当前项目使用的工具）：',
     '',

@@ -35,7 +35,7 @@ npx superpowers-zh --tool kiro
 
 | 位置 | 内容 | 是否每轮常驻 |
 |---|---|---|
-| `.kiro/steering/superpowers-zh.md` | 索引：核心规则 + 21 个 skill 的触发条件表（约 4.4 KB） | **是**（`inclusion: always`） |
+| `.kiro/steering/superpowers-zh.md` | 索引：核心规则 + 22 个 skill 的触发条件表（约 4.4 KB） | **是**（`inclusion: always`） |
 | `.kiro/skills/<name>/SKILL.md` | skill 正文 | 否，按需读取 |
 
 ## 工作原理

@@ -40,7 +40,7 @@ mkdir -p .dsh/skills
 cp -r superpowers-zh/skills/* .dsh/skills/
 ```
 
-技能名必须是 kebab-case（官方约束：`^[a-z0-9]+(?:-[a-z0-9]+)*$`），本仓 20 个 skill 全部符合。
+技能名必须是 kebab-case（官方约束：`^[a-z0-9]+(?:-[a-z0-9]+)*$`），本仓 22 个 skill 全部符合。
 
 ## 卸载
 

@@ -12,7 +12,7 @@
 npx superpowers-zh --global --tool hermes
 ```
 
-装到 `~/.hermes/skills/`，装完即生效，用 `skills_list` 就能看到 21 个 skill。
+装到 `~/.hermes/skills/`，装完即生效，用 `skills_list` 就能看到 22 个 skill。
 
 > 📌 v1.7.8 及更早版本只支持项目级安装（装到 `<项目>/.hermes/skills/`）—— 那个目录 Hermes 根本不读，等于装了不生效。这是我们的实现错误，v1.7.9 起修正。见 [#45](https://github.com/jnMetaCode/superpowers-zh/issues/45)。
 

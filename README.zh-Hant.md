@@ -2,7 +2,7 @@
 
 🌐 [简体中文](README.md) | **繁體中文** | [English (upstream)](https://github.com/obra/superpowers)
 
-> 🦸 **superpowers（250k+ ⭐）完整漢化 + 4 個中國原創 skills** — 讓 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Qoder 等 **26 款 AI 編程工具**真正會幹活。從頭腦風暴到程式碼審查，從 TDD 到除錯，每個 skill 都是經過實戰驗證的工作方法論。
+> 🦸 **superpowers（250k+ ⭐）完整漢化 + 4 個中國原創 skills + 2 個額外新增 skills** — 讓 Claude Code / Copilot CLI / Hermes Agent / Cursor / Windsurf / Kiro / Gemini CLI / Qoder 等 **26 款 AI 編程工具**真正會幹活。從頭腦風暴到程式碼審查，從 TDD 到除錯，每個 skill 都是經過實戰驗證的工作方法論。
 
 Chinese community edition of [superpowers](https://github.com/obra/superpowers) — 20 skills across 26 AI coding tools, including full translations and China-specific development skills.
 
@@ -178,7 +178,7 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 | [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (dsh) | CLI | `npx superpowers-zh` | `.dsh/skills/` + `AGENTS.md` |
 | [Reasonix](https://reasonix.io/) | CLI | `npx superpowers-zh` | `.reasonix/skills/` + `REASONIX.md`（全域 Windows 為 `%APPDATA%\reasonix\skills`） |
 
-> 執行 `npx superpowers-zh` 會自動偵測你專案中使用的工具，將 20 個 skills 安裝到正確位置。
+> 執行 `npx superpowers-zh` 會自動偵測你專案中使用的工具，將 22 個 skills 安裝到正確位置。
 
 ### 翻譯的 Skills（14 個）
 
@@ -204,7 +204,7 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 > ⚠️ **下表前 4 個 chinese-\* 為「手動呼叫」skill**——不會自動觸發，需在對話中顯式輸入 `/chinese-xxx` 才會載入。
 > 設計為參考資料而非工作流，避免污染上游 skill 的自動排程（如 `requesting-code-review`、`brainstorming` 等）。
 >
-> ⚠️ **表格最後兩個（mcp-builder / workflow-runner）不是中國原創** —— 它們來自上游，上游後來移除了，本 fork 保留下來繼續維護。全倉 20 個 skill = 14 翻譯 + 4 中國原創 + 2 上游歷史保留。
+> ⚠️ **表格最後兩個（mcp-builder / workflow-runner）不是中國原創** —— 它們來自上游，上游後來移除了，本 fork 保留下來繼續維護。全倉 22 個 skill = 14 翻譯 + 4 中國原創 + 2 上游歷史保留 + 2 額外新增（grilling / archify）。
 
 | Skill | 用途 | 呼叫方式 | 上游有嗎？ |
 |-------|------|---------|:---:|
@@ -214,6 +214,31 @@ AI：在開始實作之前，我需要了解幾個關鍵問題：
 | **中文提交規範** (chinese-commit-conventions) | 適配國內團隊的 commit message 規範 | `/chinese-commit-conventions`（手動） | 無 |
 | **MCP 伺服器建置** (mcp-builder) | 建置生產級 MCP 工具，擴展 AI 能力邊界 | 自動 | 曾有，上游已移除 |
 | **工作流執行器** (workflow-runner) | 在 AI 工具內執行多角色 YAML 工作流 | 自動 | 曾有，上游已移除 |
+
+### ➕ 額外新增 Skills（2 個）
+
+每個 skill 為獨立條目：上方為用途/呼叫方式速查表，下方緊接其來源與引用說明。這些 skill 都是引入自上游或外部倉庫、由本 fork 作為獨立 skill 維護的（SKILL.md 保留原版功能）。
+
+**1️⃣ 架構圖生成**（`archify`，自動觸發）
+
+| 屬性 | 內容 |
+|------|------|
+| 用途 | 從程式碼倉庫或自然語言生成可互動、可校驗的五種技術圖（架構 / 工作流 / 時序 / 資料流 / 生命週期），輸出單檔 HTML，支援 PNG/JPEG/WebP/SVG/WebM 匯出 |
+| 呼叫方式 | 自動觸發（描述寫"畫架構圖 / 把倉庫映射成架構圖"時自動匹配）；也可 `/archify` 手動呼叫 |
+| 來源 | 引入自 [tt-a1i/archify](https://github.com/tt-a1i/archify)（MIT；fork 自 Cocoon-AI/architecture-diagram-generator） |
+| 版本 | 與上游 `skill-release.json` 同步，升級用 `scripts/sync-archify.sh <tag>` |
+
+> 此 skill 由 [tt-a1i](https://github.com/tt-a1i) 原創（MIT 許可），本 fork 原樣引入 `skills/archify/` 作為新增獨立 skill（SKILL.md 未改寫，僅隨上游版本同步）。執行時僅需 `node >= 18`，主鏈路零 npm 依賴，離線可直接使用。
+
+**2️⃣ 追問式設計審查**（`grilling`，手動 `/grilling`）
+
+| 屬性 | 內容 |
+|------|------|
+| 用途 | 把計畫、決策或想法壓瓷實，逐輪追問暴露隱藏假設和未解風險 |
+| 呼叫方式 | `/grilling`（手動，不會自動觸發） |
+| 來源 | 翻譯自 [mattpocock/skills/skills/productivity/grilling](https://github.com/mattpocock/skills/tree/main/skills/productivity/grilling) |
+
+> 此 skill 由 [Matt Pocock](https://github.com/mattpocock) 原創，經漢化/適配後引入本倉庫。
 
 ---
 
@@ -410,7 +435,7 @@ npx superpowers-zh@latest --uninstall
 
 | 專案 | 定位 | 一句話 |
 |------|------|-------|
-| **[superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)**（本專案） ![](https://img.shields.io/github/stars/jnMetaCode/superpowers-zh?style=flat&label=⭐) | 🧠 工作方法論 | 20 個 skills 教 AI 怎麼幹活（TDD / 除錯 / 程式碼審查等） |
+| **[superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)**（本專案） ![](https://img.shields.io/github/stars/jnMetaCode/superpowers-zh?style=flat&label=⭐) | 🧠 工作方法論 | 22 個 skills 教 AI 怎麼幹活（TDD / 除錯 / 程式碼審查等） |
 | **[agency-agents-zh](https://github.com/jnMetaCode/agency-agents-zh)** ![](https://img.shields.io/github/stars/jnMetaCode/agency-agents-zh?style=flat&label=⭐) | 🎭 專家角色庫 | 211 個**即插即用** AI 專家，含 46 中國原創（小紅書 / 抖音 / 飛書 / 釘釘） |
 | **[agency-orchestrator](https://github.com/jnMetaCode/agency-orchestrator)** | 🚀 編排引擎 | 一句話 → 211 專家協作，**幾分鐘出方案**（9 家 LLM / 6 免費） |
 | **[ai-coding-guide](https://github.com/jnMetaCode/ai-coding-guide)** | 📖 實戰教程 | 66 個 Claude Code 技巧 + 9 款工具最佳實踐 + 設定範本 |

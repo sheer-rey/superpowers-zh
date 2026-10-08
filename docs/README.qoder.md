@@ -11,7 +11,7 @@ npx superpowers-zh
 
 安装脚本会自动检测 `.qoder/` 目录并：
 
-1. 把 21 个 skills 复制到 `.qoder/skills/<name>/SKILL.md`
+1. 把 22 个 skills 复制到 `.qoder/skills/<name>/SKILL.md`
 2. 生成一个**始终生效**的 bootstrap rule `.qoder/rules/superpowers-zh.md`（`trigger: always_on`），让 Qoder 每个会话都加载核心规则与 skill 索引
 
 如果项目目录里还没有 `.qoder/`，可以显式指定：

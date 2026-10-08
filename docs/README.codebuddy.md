@@ -18,7 +18,7 @@ npx superpowers-zh --tool codebuddy
 
 安装内容：
 
-- `.codebuddy/skills/` — 21 个 skill（每个含 `SKILL.md`）
+- `.codebuddy/skills/` — 22 个 skill（每个含 `SKILL.md`）
 - `CODEBUDDY.md` — bootstrap 引导（已存在则在哨兵注释间追加，不覆盖你的内容）
 
 ## 全局安装

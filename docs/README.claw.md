@@ -15,7 +15,7 @@ npx superpowers-zh --tool claw
 
 | 位置 | 内容 |
 |---|---|
-| `.claw/skills/<name>/SKILL.md` | 20 个 skill 正文 |
+| `.claw/skills/<name>/SKILL.md` | 22 个 skill 正文 |
 | `CLAW.md` | bootstrap：核心规则 + skill 清单 |
 
 > 📌 v1.7.10 及更早**只装 skills、不写 `CLAW.md`**。skills 能被发现，但没有引导就不会在恰当时机自动触发。v1.7.11 起补上。

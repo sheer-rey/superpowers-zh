@@ -27,7 +27,7 @@ npx superpowers-zh --global --tool qwen
 
 | 位置 | 内容 |
 |---|---|
-| `.qwen/skills/<name>/SKILL.md`（全局为 `~/.qwen/skills/`） | 21 个 skill 正文 |
+| `.qwen/skills/<name>/SKILL.md`（全局为 `~/.qwen/skills/`） | 22 个 skill 正文 |
 | `QWEN.md`（全局为 `~/.qwen/QWEN.md`） | bootstrap：核心规则 + skill 清单，引导 AI 在恰当时机去读对应 SKILL.md |
 
 > 📌 v1.7.10 及更早**只装 skills、不写 bootstrap**。skills 能被 Qwen Code 发现，但没有引导就不会在恰当时机自动触发 —— 文件在磁盘上，实际很少被调用。v1.7.11 起补上。

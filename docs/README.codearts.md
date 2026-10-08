@@ -18,7 +18,7 @@ npx superpowers-zh --tool codearts
 
 安装内容：
 
-- `.codeartsdoer/skills/` — 21 个 skill（每个含 `SKILL.md` 及其 `scripts/` 等附属文件）
+- `.codeartsdoer/skills/` — 22 个 skill（每个含 `SKILL.md` 及其 `scripts/` 等附属文件）
 
 ## Skill 加载优先级
 

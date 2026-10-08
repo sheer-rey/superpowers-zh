@@ -14,7 +14,7 @@ npx superpowers-zh --tool kilocode
 装完会得到：
 
 ```
-.kilocode/skills/         # 21 个 skill 本体，按需读取
+.kilocode/skills/         # 22 个 skill 本体，按需读取
 .kilocode/rules/
 └── superpowers-zh.md     # 一份小索引，自动生效
 ```
@@ -27,7 +27,7 @@ superpowers-zh 的做法：
 
 | 放哪 | 内容 | 何时进 prompt |
 |------|------|--------------|
-| `.kilocode/rules/superpowers-zh.md` | 核心规则 + 21 个 skill 的索引表 | 常驻（很小） |
+| `.kilocode/rules/superpowers-zh.md` | 核心规则 + 22 个 skill 的索引表 | 常驻（很小） |
 | `.kilocode/skills/<name>/SKILL.md` | skill 完整流程正文 | 仅当任务匹配、Kilo 主动读取时 |
 
 ## 为什么用 `.kilocode/rules/` 而不是新版的 `kilo.jsonc`

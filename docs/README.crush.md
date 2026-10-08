@@ -18,7 +18,7 @@ Crush 遵循 **Agent Skills 开放标准**，项目级会**自动发现**下面�
 ls .claude/skills .cursor/skills .agents/skills .crush/skills 2>/dev/null
 ```
 
-只要上面任一目录里已有 21 个 skill，你就不用做任何事。
+只要上面任一目录里已有 22 个 skill，你就不用做任何事。
 
 ## 快速安装
 

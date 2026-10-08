@@ -6,6 +6,34 @@
 
 ---
 
+## v1.7.13+fork.3 (2026-10-08)
+
+本 fork 独立发布（上游同步基线仍为 v1.7.13），核心是**引入 archify 架构图生成 skill** 与配套的升级工具链。
+
+### ➕ 新增「架构图生成」skill（archify）
+
+新增自动触发 skill `archify`，引入自 [tt-a1i/archify](https://github.com/tt-a1i/archify)（MIT 协议，fork 自 Cocoon-AI/architecture-diagram-generator），随**当前稳定版 v3.0.1** 引入，SKILL.md 原样透传（未改写，仅裁剪掉 dev/test 产物）。
+
+- **调用方式**：自动触发——用户描述"画系统架构 / 基础设施 / 云拓扑图"、转 workflow / 时序 / 数据流 / 状态机、把代码仓库映射成架构图、美化 Mermaid 时自动匹配
+- **用途**：从代码仓库或自然语言生成可交互、可校验的五种技术图（架构 / 工作流 / 时序 / 数据流 / 生命周期），输出单文件 HTML，支持 PNG/JPEG/WebP/SVG/WebM 导出
+- **运行时**：仅需 `node >= 18`，主链路零 npm 依赖，离线可直接使用
+- **产物位置**：`skills/archify/`（2.6MB，94 文件，与上游 v3.0.1 逐字节一致）
+
+### 🛠️ 新增升级脚本 `scripts/sync-archify.sh`
+
+提供 archify 的上游版本跟进：`scripts/sync-archify.sh <tag>` 重新拉取上游指定 tag、按同一套裁剪规则重建 `skills/archify/`。全量替换（`rm -rf` + 重拷）不产生脏文件；带两道校验（逐字节一致 + `archify doctor` 全绿），任一不过就中止不覆盖。
+
+### 🎊 commit-conventions 改为自动触发
+
+`commit-conventions` 由"仅显式 `/commit-conventions` 手动调用"改为**自动触发**（写 git commit message / 设 commitlint-husky / 生成 changelog 时触发）。同步更新 `using-superpowers` 手动路由表（移除该 skill，剩 4 个手动 skill + 变更记录）与 README 的手动标注。
+
+### 🔧 安装器 bootstrap 刷新 + 空行修复
+
+- **bootstrap 刷新**：`bin/superpowers-zh.js` 新增 `syncBootstrapSection()`，重跑安装时若上下文文件已有「superpowers-zh」sentinel 段，则整体替换为最新内容（描述 / skill 列表跟随仓库），解决老用户装完后 skill 描述陈旧的问题。
+- **空行累积修复**：重复执行 `--global` / 项目级安装时，reinstall 在 sentinel 段前后（`<!-- superpowers-zh:begin -->` 前、`<!-- superpowers-zh:end -->` 后）累积多余空行——修复为双向规范化空白、重复刷新幂等（前后各恰好 1 空行，实测 5 次安装不再累积）。
+
+---
+
 ## v1.7.13 (2026-09-08)
 
 **只有 TRAE 国内版用户需要更新。** 处理 [#35](https://github.com/jnMetaCode/superpowers-zh/issues/35) 时发现 Trae 此前**完全没有全局安装**，而国内版的全局目录还跟国际版不同构。

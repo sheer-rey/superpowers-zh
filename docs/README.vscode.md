@@ -46,7 +46,7 @@ npx superpowers-zh --tool vscode
 
 | 位置 | 内容 | Copilot 是否自动读 |
 |---|---|---|
-| `.github/instructions/superpowers-zh.instructions.md` | 索引：核心规则 + 21 个 skill 的触发条件表 | **是**（`applyTo: "**"`） |
+| `.github/instructions/superpowers-zh.instructions.md` | 索引：核心规则 + 22 个 skill 的触发条件表 | **是**（`applyTo: "**"`） |
 | `.github/superpowers/<name>/SKILL.md` | skill 正文 | 否，由索引引导按需读取 |
 
 **为什么不直接改 `.github/copilot-instructions.md`：** 那是你的文件。我们用自己的 `.instructions.md`，两者互不干扰，卸载时也能精确删掉而不碰你的内容。
