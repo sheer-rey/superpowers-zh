@@ -292,18 +292,24 @@ function syncBootstrapSection(filePath, content) {
   if (sBegin !== -1) {
     const sEnd = existing.indexOf(SENTINEL_END, sBegin + SENTINEL_BEGIN.length);
     if (sEnd !== -1) {
-      writeFileSync(
-        filePath,
-        existing.slice(0, sBegin).replace(/\s+$/, '') + '\n\n' + newSection + existing.slice(sEnd + SENTINEL_END.length),
-        'utf8'
-      );
+      // Normalize whitespace at both boundaries so repeated refreshes are
+      // idempotent: trim trailing whitespace before the sentinel and leading
+      // whitespace after it, then join with exactly one blank line on each
+      // side. Without this, the trailing \n of newSection plus the tail's
+      // preserved newlines accumulate extra blank lines on every reinstall.
+      const before = existing.slice(0, sBegin).replace(/\s+$/, '');
+      const after = existing.slice(sEnd + SENTINEL_END.length).replace(/^\s+/, '');
+      const section = newSection.replace(/\n+$/, '');
+      const parts = [before, section, after].filter(p => p.length > 0);
+      writeFileSync(filePath, parts.join('\n\n'), 'utf8');
       return 'refreshed';
     }
   }
   if (existing.includes('superpowers-zh')) {
     return 'kept';
   }
-  writeFileSync(filePath, existing.replace(/\s+$/, '') + '\n\n' + newSection, 'utf8');
+  const section = newSection.replace(/\n+$/, '');
+  writeFileSync(filePath, existing.replace(/\s+$/, '') + '\n\n' + section, 'utf8');
   return 'appended';
 }
 
