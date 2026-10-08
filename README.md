@@ -150,11 +150,28 @@ AI：在开始实现之前，我需要了解几个关键问题：
 | **MCP 服务器构建** (mcp-builder) | 构建生产级 MCP 工具，扩展 AI 能力边界 | 自动 | 曾有，上游已移除 |
 | **工作流执行器** (workflow-runner) | 在 AI 工具内运行多角色 YAML 工作流 | 自动 | 曾有，上游已移除 |
 
-### ➕ 额外新增 Skills（1 个）
+### ➕ 额外新增 Skills（2 个）
 
-| Skill | 用途 | 调用方式 | 来源 |
-|-------|------|---------|------|
-| **追问式设计审查** (grilling) | 把计划、决策或想法压瓷实，逐轮追问暴露隐藏假设 | `/grilling`（手动） | 翻译自 [mattpocock/skills/skills/productivity/grilling](https://github.com/mattpocock/skills/tree/main/skills/productivity/grilling) |
+每个 skill 为独立条目：上方为用途/调用方式速查表，下方紧接其来源与引用说明。这些 skill 都是引入自上游或外部仓库、由本 fork 作为独立 skill 维护的（仅中文化/适配，SKILL.md 保留原版功能）。
+
+**1️⃣ 架构图生成**（`archify`，自动触发）
+
+| 属性 | 内容 |
+|------|------|
+| 用途 | 从代码仓库或自然语言生成可交互、可校验的五种技术图（架构 / 工作流 / 时序 / 数据流 / 生命周期），输出单文件 HTML，支持 PNG/JPEG/WebP/SVG/WebM 导出 |
+| 调用方式 | 自动触发（描述写"画架构图 / 把仓库映射成架构图"时自动匹配）；也可 `/archify` 手动调 |
+| 来源 | 引入自 [tt-a1i/archify](https://github.com/tt-a1i/archify)（MIT；fork 自 Cocoon-AI/architecture-diagram-generator） |
+| 版本 | 与上游 `skill-release.json` 同步，升级用 `scripts/sync-archify.sh <tag>` |
+
+> 此 skill 由 [tt-a1i](https://github.com/tt-a1i) 原创（MIT 许可），本 fork 原样引入 `skills/archify/` 作为新增独立 skill（SKILL.md 未改写，仅随上游版本同步）。运行时仅需 `node >= 18`，主链路零 npm 依赖，离线可直接使用。
+
+**2️⃣ 追问式设计审查**（`grilling`，手动 `/grilling`）
+
+| 属性 | 内容 |
+|------|------|
+| 用途 | 把计划、决策或想法压瓷实，逐轮追问暴露隐藏假设和未解风险 |
+| 调用方式 | `/grilling`（手动，不会自动触发） |
+| 来源 | 翻译自 [mattpocock/skills/skills/productivity/grilling](https://github.com/mattpocock/skills/tree/main/skills/productivity/grilling) |
 
 > 此 skill 由 [Matt Pocock](https://github.com/mattpocock) 原创，经汉化/适配后引入本仓库。
 
